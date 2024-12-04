@@ -5,14 +5,34 @@ body {
     background-color: #f4f4f9;
 }
 
-h1 {
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 20px;
     text-align: center;
-    margin-top: 20px;
+}
+
+h1 {
+    margin: 0;
 }
 
 #timeline {
     display: flex;
-    justify-content: center;
-    margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
+.event {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 15px;
+    width: 80%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.event:hover {
+    background: #f9f9f9;
+}
