@@ -26,11 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Добавляем событие на таймлайн
                 timeline.appendChild(eventDiv);
 
-                // Добавляем интерактивность при наведении и клике
+                // Добавляем интерактивность при наведении
                 eventDiv.addEventListener("mouseover", () => {
-                    eventDiv.setAttribute("data-title", event.title); // Показать всплывающее описание
+                    // Отображаем всплывающее описание
+                    eventDiv.setAttribute("data-title", event.title);
                 });
 
+                // Открытие модального окна при клике
                 eventDiv.addEventListener("click", () => {
                     modalTitle.textContent = event.title;
                     modalDescription.textContent = event.description;
@@ -40,8 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => console.error("Ошибка загрузки данных:", error));
 
-    // Закрытие модального окна
+    // Закрытие модального окна при клике на крестик
     closeModal.addEventListener("click", () => {
         modal.classList.add("hidden");
+    });
+
+    // Закрытие модального окна при клике вне его
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.classList.add("hidden");
+        }
     });
 });
