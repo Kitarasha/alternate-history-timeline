@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 eventDiv.addEventListener("click", () => {
                     modalTitle.textContent = event.title;
                     modalDescription.textContent = event.description;
-                    modal.classList.remove("hidden"); // Показать модальное окно
+                    modal.classList.add("show"); // Показать модальное окно
                 });
             });
         })
@@ -44,13 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Закрытие модального окна при клике на крестик
     closeModal.addEventListener("click", () => {
-        modal.classList.add("hidden");
+        modal.classList.remove("show");
     });
 
     // Закрытие модального окна при клике вне его
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
-            modal.classList.add("hidden");
+            modal.classList.remove("show");
         }
     });
 });
