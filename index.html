@@ -11,30 +11,34 @@
     <!-- Подключение шрифта Orbitron -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Favicon для большинства браузеров -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
-
-    <!-- Альтернативные иконки для разных устройств -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
-
-    <!-- Иконка для устройств Apple -->
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-
-    <!-- Иконки для Android -->
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/android-chrome-512x512.png">
-
-    <!-- Manifest для устройств -->
-    <link rel="manifest" href="assets/icons/site.webmanifest">
 </head>
 <body>
     <header>
         <h1>Alternate History Timeline</h1>
     </header>
     <main>
+        <!-- Таймлайн -->
         <div id="timeline">
-            <!-- Сюда будет загружаться содержимое из timeline_data.json -->
+            <div class="event" data-title="Падение Рима">
+                <div class="circle"></div>
+            </div>
+            <div class="event" data-title="Изобретение печатного станка">
+                <div class="circle"></div>
+            </div>
+            <div class="event" data-title="Первая мировая война">
+                <div class="circle"></div>
+            </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div id="modal" class="hidden">
+            <div class="modal-content">
+                <span id="close-modal">&times;</span>
+                <h2 id="event-title"></h2>
+                <p id="event-description">Описание события появится здесь...</p>
+            </div>
         </div>
     </main>
     <script src="script.js"></script>
