@@ -20,6 +20,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 5px; /* Добавлено для плавных краёв */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Лёгкая тень */
 }
 
 .event {
@@ -32,11 +34,12 @@ body {
     height: 20px;
     background-color: #00bcd4;
     border-radius: 50%;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .event:hover .circle {
     transform: scale(1.5);
+    background-color: #03a9f4; /* Цвет меняется при наведении */
 }
 
 .event::after {
@@ -46,14 +49,30 @@ body {
     left: 50%;
     transform: translateX(-50%);
     background-color: #222;
+    color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 0.8em;
     display: none;
+    white-space: nowrap;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Тень для подсказки */
 }
 
 .event:hover::after {
     display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Анимация появления подсказки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 /* Модальное окно */
@@ -82,6 +101,7 @@ body {
     width: 50%;
     text-align: center;
     position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* Тень для модального окна */
 }
 
 #close-modal {
