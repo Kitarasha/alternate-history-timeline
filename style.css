@@ -18,6 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: visible; /* Убедимся, что элементы не обрезаются */
 }
 
 /* Таймлайн */
@@ -54,19 +55,19 @@ body {
 /* События */
 .event {
     position: absolute;
-    bottom: -8px; /* Привязка чуть ниже линии */
+    bottom: -12px; /* Привязка чуть ниже линии */
     transform: translateX(-50%); /* Центровка по горизонтали */
     cursor: pointer;
     z-index: 5;
 }
 
 .event .circle {
-    width: 20px; /* Чуть увеличили размер для лучшей видимости */
-    height: 20px;
+    width: 18px; /* Сбалансированный размер */
+    height: 18px;
     background-color: #00bcd4;
     border-radius: 50%;
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-    box-shadow: 0 0 5px rgba(0, 188, 212, 0.8);
+    box-shadow: 0 0 8px rgba(0, 188, 212, 0.8); /* Более заметная тень */
 }
 
 .event:hover .circle {
