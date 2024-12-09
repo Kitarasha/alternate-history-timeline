@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const endYear = 2050;   // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
+    // Загрузка данных из файла timeline_data.json
     fetch('timeline_data.json')
         .then(response => {
             if (!response.ok) {
@@ -73,4 +74,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
