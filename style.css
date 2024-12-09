@@ -23,11 +23,10 @@ body {
 /* Таймлайн */
 #timeline {
     position: relative;
-    width: 100%; /* Растягивается на всю ширину */
-    height: 10px; /* Высота линии */
-    background-color: red; /* Сделаем линию красной для проверки */
-    margin: 50px auto; /* Центрируем */
-    border-radius: 5px;
+    width: 100%; /* Растянуть на всю ширину контейнера */
+    height: 10px; /* Сделать высоту 10px для линии */
+    background-color: red; /* Сделать линию красной для теста */
+    margin: 50px auto; /* Центрировать */
 }
 
 /* Метки времени */
