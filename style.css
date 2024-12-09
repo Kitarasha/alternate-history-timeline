@@ -24,8 +24,8 @@ body {
 #timeline {
     position: relative;
     width: 100%;
-    height: 5px; /* Тонкая линия */
-    background-color: white; /* Сделаем временно белой */
+    height: 6px; /* Сделал чуть толще для лучшей видимости */
+    background-color: white; /* Цвет временной линии */
     margin: 50px auto; /* Центрирование */
     border-radius: 5px; /* Скруглённые края */
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Лёгкая тень */
@@ -54,15 +54,15 @@ body {
 /* События */
 .event {
     position: absolute;
-    bottom: 0; /* Привязка к нижней части линии */
+    bottom: -12px; /* Привязка чуть ниже линии */
     transform: translateX(-50%); /* Центровка по горизонтали */
     cursor: pointer;
     z-index: 5;
 }
 
 .event .circle {
-    width: 20px;
-    height: 20px;
+    width: 15px; /* Уменьшил размер для эстетики */
+    height: 15px;
     background-color: #00bcd4;
     border-radius: 50%;
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
