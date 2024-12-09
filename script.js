@@ -12,44 +12,54 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch('timeline_data.json')
         .then(response => response.json())
         .then(data => {
+            if (data.length === 0) {
+                console.error("Данные пусты!");
+                return;
+            }
+
             data.forEach(event => {
+                const eventYear = event.year;
+                if (!eventYear || isNaN(eventYear)) {
+                    console.error(`Некорректный год у события: ${JSON.stringify(event)}`);
+                    return;
+                }
+
+                // Создание события
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
 
                 // Расчёт позиции события
-                const positionPercent = ((event.year - startYear) / totalYears) * 100;
+                const positionPercent = ((eventYear - startYear) / totalYears) * 100;
                 eventDiv.style.left = `${positionPercent}%`;
 
-                // Добавление атрибутов данных
-                eventDiv.setAttribute("data-title", `${event.year} — ${event.title}`);
+                console.log(`Событие "${event.title}" расположено на ${positionPercent}% от начала`);
+
+                // Добавление атрибутов
+                eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
                 eventDiv.setAttribute("data-description", event.description);
 
+                // Создание кружка
                 const circle = document.createElement("div");
                 circle.className = "circle";
                 eventDiv.appendChild(circle);
+
                 timeline.appendChild(eventDiv);
 
-                // Наведение для отображения заголовка
-                eventDiv.addEventListener("mouseover", () => {
-                    eventDiv.setAttribute("data-title", `${event.year} — ${event.title}`);
-                });
-
-                // Открытие модального окна при клике
+                // Добавляем интерактивность
                 eventDiv.addEventListener("click", () => {
-                    modalTitle.textContent = `${event.year} — ${event.title}`;
+                    modalTitle.textContent = `${eventYear} — ${event.title}`;
                     modalDescription.textContent = event.description;
-                    modal.classList.add("show"); // Показать модальное окно
+                    modal.classList.add("show");
                 });
             });
         })
         .catch(error => console.error("Ошибка загрузки данных:", error));
 
-    // Закрытие модального окна при клике на крестик
+    // Закрытие модального окна
     closeModal.addEventListener("click", () => {
         modal.classList.remove("show");
     });
 
-    // Закрытие модального окна при клике вне его
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
             modal.classList.remove("show");
