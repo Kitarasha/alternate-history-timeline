@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const endYear = 2050;   // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
-    // Проверка ширины таймлайна
-    console.log(`Ширина таймлайна: ${timeline.offsetWidth}px`);
+    console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
 
     // Загрузка данных из файла timeline_data.json
     fetch('timeline_data.json')
@@ -29,20 +28,24 @@ document.addEventListener("DOMContentLoaded", () => {
             data.forEach(event => {
                 const eventYear = event.year;
 
+                // Логируем данные о событии
+                console.log(`Обработка события: ${JSON.stringify(event)}`);
+
                 if (!eventYear || isNaN(eventYear)) {
                     console.error(`Некорректный год у события: ${JSON.stringify(event)}`);
                     return;
                 }
 
+                // Расчёт позиции события
+                const positionPercent = ((eventYear - startYear) / totalYears) * 100;
+
+                // Логируем расчёты
+                console.log(`Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%`);
+
                 // Создание элемента события
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
-
-                // Расчёт позиции события
-                const positionPercent = ((eventYear - startYear) / totalYears) * 100;
                 eventDiv.style.left = `${positionPercent}%`;
-
-                console.log(`Событие "${event.title}" расположено на ${positionPercent.toFixed(2)}% от начала`);
 
                 // Добавление атрибутов
                 eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
@@ -77,4 +80,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
