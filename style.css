@@ -23,10 +23,12 @@ body {
 /* Таймлайн */
 #timeline {
     position: relative;
-    width: 100%; /* Растянуть на всю ширину контейнера */
-    height: 10px; /* Сделать высоту 10px для линии */
-    background-color: red; /* Сделать линию красной для теста */
-    margin: 50px auto; /* Центрировать */
+    width: 100%;
+    height: 5px; /* Тонкая линия */
+    background-color: white; /* Сделаем временно белой */
+    margin: 50px auto; /* Центрирование */
+    border-radius: 5px; /* Скруглённые края */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Лёгкая тень */
 }
 
 /* Метки времени */
@@ -36,25 +38,24 @@ body {
     color: #bbb;
     font-weight: bold;
     z-index: 2;
+    white-space: nowrap;
 }
 
 #start-label {
-    left: -5%;
+    left: 0;
     top: -25px; /* Сместим метку вверх */
-    white-space: nowrap;
 }
 
 #end-label {
-    right: -5%;
+    right: 0;
     top: -25px; /* Сместим метку вверх */
-    white-space: nowrap;
 }
 
 /* События */
 .event {
     position: absolute;
-    bottom: 5px; /* Расположение относительно таймлайна */
-    transform: translateX(-50%); /* Центровка */
+    bottom: 0; /* Привязка к нижней части линии */
+    transform: translateX(-50%); /* Центровка по горизонтали */
     cursor: pointer;
     z-index: 5;
 }
