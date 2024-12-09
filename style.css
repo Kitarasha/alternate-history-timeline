@@ -13,7 +13,7 @@ body {
 /* Контейнер таймлайна */
 #timeline-container {
     position: relative;
-    width: 80%; /* Используем проценты для адаптивности */
+    width: 80vw; /* Используем проценты для адаптивности */
     margin: 50px auto; /* Центрирование */
     display: flex;
     flex-direction: column;
