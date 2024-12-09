@@ -13,7 +13,7 @@ body {
 /* Контейнер таймлайна */
 #timeline-container {
     position: relative;
-    width: 106px; /* Ширина контейнера */
+    width: 80%; /* Используем проценты для адаптивности */
     margin: 50px auto; /* Центрирование */
     display: flex;
     flex-direction: column;
@@ -23,12 +23,12 @@ body {
 /* Таймлайн */
 #timeline {
     position: relative;
-    width: 106px;
+    width: 100%; /* Растягиваем линию на всю ширину контейнера */
     height: 6px; /* Сделал чуть толще для лучшей видимости */
     background-color: white; /* Цвет временной линии */
     margin: 50px auto; /* Центрирование */
     border-radius: 5px; /* Скруглённые края */
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Лёгкая тень */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Более заметная тень */
 }
 
 /* Метки времени */
@@ -42,27 +42,27 @@ body {
 }
 
 #start-label {
-    left: 0;
-    top: -25px; /* Сместим метку вверх */
+    left: 0; /* Привязываем к началу */
+    top: -30px; /* Сместим метку выше */
 }
 
 #end-label {
-    right: 0;
-    top: -25px; /* Сместим метку вверх */
+    right: 0; /* Привязываем к концу */
+    top: -30px; /* Сместим метку выше */
 }
 
 /* События */
 .event {
     position: absolute;
-    bottom: -12px; /* Привязка чуть ниже линии */
+    bottom: -8px; /* Привязка чуть ниже линии */
     transform: translateX(-50%); /* Центровка по горизонтали */
     cursor: pointer;
     z-index: 5;
 }
 
 .event .circle {
-    width: 15px; /* Уменьшил размер для эстетики */
-    height: 15px;
+    width: 20px; /* Чуть увеличили размер для лучшей видимости */
+    height: 20px;
     background-color: #00bcd4;
     border-radius: 50%;
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
