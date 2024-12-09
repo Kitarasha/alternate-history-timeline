@@ -55,8 +55,8 @@ body {
 /* События */
 .event {
     position: absolute;
-    bottom: -12px; /* Привязка чуть ниже линии */
-    transform: translateX(-50%); /* Центровка по горизонтали */
+    top: 50%; /* Центрирование по вертикали линии */
+    transform: translate(-50%, -50%); /* Центровка по горизонтали и вертикали */
     cursor: pointer;
     z-index: 5;
 }
