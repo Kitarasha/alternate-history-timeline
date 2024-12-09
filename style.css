@@ -10,22 +10,46 @@ body {
     align-items: center;
 }
 
+/* Контейнер таймлайна */
+#timeline-container {
+    position: relative;
+    width: 80%;
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* Таймлайн */
 #timeline {
     position: relative;
-    width: 80%;
+    width: 100%;
     height: 10px;
     background-color: #333;
-    margin: 50px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px; /* Добавлено для плавных краёв */
+    border-radius: 5px; /* Плавные края */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Лёгкая тень */
 }
 
+/* Метки времени */
+#start-label, #end-label {
+    position: absolute;
+    font-size: 0.9em;
+    color: #bbb;
+}
+
+#start-label {
+    left: 0;
+    top: -25px; /* Сместим метку вверх */
+}
+
+#end-label {
+    right: 0;
+    top: -25px; /* Сместим метку вверх */
+}
+
+/* События */
 .event {
-    position: relative;
+    position: absolute;
     cursor: pointer;
 }
 
@@ -116,4 +140,3 @@ body {
 #close-modal:hover {
     color: #ff5252;
 }
-
