@@ -13,7 +13,7 @@ body {
 /* Контейнер таймлайна */
 #timeline-container {
     position: relative;
-    width: 80%; /* Ширина контейнера */
+    width: 106px; /* Ширина контейнера */
     margin: 50px auto; /* Центрирование */
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@ body {
 /* Таймлайн */
 #timeline {
     position: relative;
-    width: 100%;
+    width: 106px;
     height: 6px; /* Сделал чуть толще для лучшей видимости */
     background-color: white; /* Цвет временной линии */
     margin: 50px auto; /* Центрирование */
