@@ -11,31 +11,28 @@
     <!-- Подключение шрифта Orbitron -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Favicon для большинства браузеров -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
 
-    <!-- Альтернативные иконки для разных устройств -->
+    <!-- Иконки -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
-
-    <!-- Иконка для устройств Apple -->
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-
-    <!-- Иконки для Android -->
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/android-chrome-512x512.png">
-
-    <!-- Manifest для устройств -->
     <link rel="manifest" href="assets/icons/site.webmanifest">
 </head>
 <body>
     <header>
-        <h1>Alternate History Timeline</h1>
+        <h1>Time Shifter</h1>
     </header>
     <main>
-        <!-- Таймлайн -->
-        <div id="timeline">
-            <!-- Сюда загружаются данные из timeline_data.json -->
+        <!-- Контейнер таймлайна -->
+        <div id="timeline-container">
+            <div id="timeline">
+                <!-- Сюда загружаются события -->
+            </div>
+            <!-- Метки времени -->
+            <div id="start-label">4000 до н.э.</div>
+            <div id="end-label">2050</div>
         </div>
 
         <!-- Модальное окно -->
