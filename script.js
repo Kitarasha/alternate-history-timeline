@@ -17,13 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Создание события на таймлайне
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
-                eventDiv.setAttribute("data-title", event.title);
-                eventDiv.setAttribute("data-description", event.description);
 
                 // Расчёт позиции события
                 const eventYear = event.year; // Год события
                 const positionPercent = ((eventYear - startYear) / totalYears) * 100; // Позиция в %
                 eventDiv.style.left = `${positionPercent}%`; // Привязка к таймлайну
+
+                // Добавление данных для отображения
+                eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
+                eventDiv.setAttribute("data-description", event.description);
 
                 // Создание кружка для события
                 const circle = document.createElement("div");
@@ -35,15 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Добавляем событие на таймлайн
                 timeline.appendChild(eventDiv);
 
-                // Добавляем интерактивность при наведении
+                // Добавляем всплывающее описание при наведении
                 eventDiv.addEventListener("mouseover", () => {
-                    // Показываем название события
-                    eventDiv.setAttribute("data-title", event.title);
+                    eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
                 });
 
                 // Открытие модального окна при клике
                 eventDiv.addEventListener("click", () => {
-                    modalTitle.textContent = event.title;
+                    modalTitle.textContent = `${eventYear} — ${event.title}`;
                     modalDescription.textContent = event.description;
                     modal.classList.add("show"); // Показать модальное окно
                 });
@@ -63,4 +64,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
