@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalDescription = document.getElementById("event-description");
     const closeModal = document.getElementById("close-modal");
 
+    const startYear = -4000; // Начало шкалы времени (4000 до н.э.)
+    const endYear = 2050;   // Конец шкалы времени
+    const totalYears = endYear - startYear; // Всего лет на таймлайне
+
     // Загрузка данных из timeline_data.json
     fetch('timeline_data.json')
         .then(response => response.json())
@@ -15,6 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 eventDiv.className = "event";
                 eventDiv.setAttribute("data-title", event.title);
                 eventDiv.setAttribute("data-description", event.description);
+
+                // Расчёт позиции события
+                const eventYear = event.year; // Год события
+                const positionPercent = ((eventYear - startYear) / totalYears) * 100; // Позиция в %
+                eventDiv.style.left = `${positionPercent}%`; // Привязка к таймлайну
 
                 // Создание кружка для события
                 const circle = document.createElement("div");
@@ -28,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Добавляем интерактивность при наведении
                 eventDiv.addEventListener("mouseover", () => {
-                    // Отображаем всплывающее описание
+                    // Показываем название события
                     eventDiv.setAttribute("data-title", event.title);
                 });
 
@@ -54,3 +63,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
