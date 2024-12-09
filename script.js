@@ -10,21 +10,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
     fetch('timeline_data.json')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка загрузки файла: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.length === 0) {
-                console.error("Данные пусты!");
+            if (!Array.isArray(data) || data.length === 0) {
+                console.error("Данные пусты или не являются массивом!");
                 return;
             }
 
             data.forEach(event => {
                 const eventYear = event.year;
+
                 if (!eventYear || isNaN(eventYear)) {
                     console.error(`Некорректный год у события: ${JSON.stringify(event)}`);
                     return;
                 }
 
-                // Создание события
+                // Создание элемента события
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
 
@@ -32,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const positionPercent = ((eventYear - startYear) / totalYears) * 100;
                 eventDiv.style.left = `${positionPercent}%`;
 
-                console.log(`Событие "${event.title}" расположено на ${positionPercent}% от начала`);
+                console.log(`Событие "${event.title}" расположено на ${positionPercent.toFixed(2)}% от начала`);
 
                 // Добавление атрибутов
                 eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
@@ -45,21 +51,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 timeline.appendChild(eventDiv);
 
-                // Добавляем интерактивность
+                // Обработка клика на событие
                 eventDiv.addEventListener("click", () => {
                     modalTitle.textContent = `${eventYear} — ${event.title}`;
-                    modalDescription.textContent = event.description;
+                    modalDescription.textContent = event.description || "Нет описания для этого события.";
                     modal.classList.add("show");
                 });
             });
         })
-        .catch(error => console.error("Ошибка загрузки данных:", error));
+        .catch(error => console.error(`Ошибка обработки данных: ${error.message}`));
 
-    // Закрытие модального окна
+    // Закрытие модального окна при клике на крестик
     closeModal.addEventListener("click", () => {
         modal.classList.remove("show");
     });
 
+    // Закрытие модального окна при клике вне его
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
             modal.classList.remove("show");
