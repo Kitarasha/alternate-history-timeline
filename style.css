@@ -44,33 +44,34 @@ body {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Более заметная тень */
 }
 
-/* Метки времени */
-#start-label, #end-label {
+/* Линии делений на таймлайне */
+#timeline-marks {
     position: absolute;
-    font-size: 1.5em; /* Увеличиваем шрифт для большей выразительности */
-    color: #ffeb3b; /* Яркий жёлтый цвет для контраста с фоном */
-    font-weight: bold; /* Делаем текст жирным */
-    z-index: 3; /* Поверх других элементов */
-    white-space: nowrap;
-    text-shadow: 0 0 15px rgba(255, 235, 59, 0.8); /* Добавляем светящееся свечение */
+    top: 50%; /* Центрируем на уровне таймлайна */
+    left: 0;
+    width: 100%;
+    height: 6px; /* Совпадает с высотой таймлайна */
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between; /* Размещаем равномерно */
 }
 
-#start-label {
-    left: -50px; /* Сдвигаем немного влево для красивого расположения */
-    top: 50%; /* По вертикали центрируем на уровне таймлайна */
-    transform: translateY(-50%); /* Центрирование по вертикали */
+#timeline-marks .mark {
+    position: relative;
+    width: 1px; /* Тонкая линия */
+    height: 20px; /* Высота деления */
+    background-color: rgba(255, 235, 59, 0.2); /* Едва заметная жёлтая линия */
 }
 
-#end-label {
-    right: -70px; /* Увеличиваем отступ от края */
-    top: 50%; /* Центрируем вертикально */
-    transform: translateY(-50%); /* Центрирование по вертикали */
-    font-size: 1.5em; /* Оставляем крупный размер шрифта */
-    color: #ffeb3b; /* Жёлтый цвет для контраста */
-    font-weight: bold; /* Жирный текст */
-    z-index: 3; /* Поверх других элементов */
-    white-space: nowrap;
-    text-shadow: 0 0 15px rgba(255, 235, 59, 0.8); /* Свечение для видимости */
+#timeline-marks .mark span {
+    position: absolute;
+    top: -25px; /* Размещаем число над делением */
+    font-size: 0.8em; /* Мелкий текст */
+    color: #ffeb3b; /* Жёлтый цвет */
+    font-weight: bold;
+    text-align: center;
+    width: 50px; /* Для центрирования текста */
+    transform: translateX(-50%);
 }
 
 /* События */
