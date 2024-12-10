@@ -84,12 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("stars-canvas");
     const ctx = canvas.getContext("2d");
 
-    // Установка размеров canvas
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
     let stars = [];
-    const numStars = 100;
+    const numStars = 200;
     const maxLineDistance = 100;
     const mouseRadius = 150;
 
@@ -178,6 +174,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars(); // Пересоздаём звёзды при изменении размера окна
+    }
+
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         stars.forEach((star) => star.update());
@@ -186,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    initStars();
+    window.addEventListener("resize", resizeCanvas); // Пересоздание фона при изменении размера окна
+    resizeCanvas(); // Установка начальных размеров
     animate();
 });
-
