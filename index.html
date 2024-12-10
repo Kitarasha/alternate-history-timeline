@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time Shifter</title>
-
+    
     <!-- Подключение стилей -->
     <link rel="stylesheet" href="style.css">
 
@@ -13,123 +13,27 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+
+    <!-- Иконки -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <link rel="manifest" href="assets/icons/site.webmanifest">
-
-    <style>
-        body {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        #stars-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        header {
-            text-align: center;
-            padding: 20px;
-            color: white;
-        }
-
-        #timeline-container {
-            position: relative;
-            margin: 50px auto;
-            width: 80%;
-            height: 100px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid white;
-            border-radius: 10px;
-        }
-
-        #timeline {
-            position: absolute;
-            height: 5px;
-            background-color: white;
-            top: 50%;
-            left: 5%;
-            right: 5%;
-            transform: translateY(-50%);
-        }
-
-        #start-label, #end-label {
-            position: absolute;
-            top: calc(50% - 10px);
-            color: white;
-            font-size: 14px;
-        }
-
-        #start-label {
-            left: 0;
-        }
-
-        #end-label {
-            right: 0;
-        }
-
-        .mark {
-            position: absolute;
-            height: 10px;
-            width: 2px;
-            background: white;
-            top: 45%;
-        }
-
-        .mark span {
-            position: absolute;
-            top: 15px;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: white;
-        }
-
-        #modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            display: none;
-        }
-
-        #modal.hidden {
-            display: none;
-        }
-
-        .modal-content {
-            position: relative;
-        }
-
-        #close-modal {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <!-- Canvas для звёздного фона -->
     <canvas id="stars-canvas"></canvas>
-
+    
     <header>
         <h1>Time Shifter</h1>
     </header>
-
     <main>
         <!-- Контейнер таймлайна -->
         <div id="timeline-container">
             <div id="timeline"></div>
+            <!-- Метки времени -->
+            <div id="start-label">1.</div>
+            <div id="end-label">2050</div>
         </div>
 
         <!-- Модальное окно -->
@@ -141,155 +45,151 @@
             </div>
         </div>
     </main>
-
+    
     <script>
+        // Отладка для проверки размеров
         document.addEventListener("DOMContentLoaded", () => {
             const timeline = document.getElementById("timeline");
+            console.log(`Ширина элемента #timeline: ${timeline.offsetWidth}px`);
+        });
+    </script>
+    
+    <script src="script.js"></script>
 
-            // Удаляем старые метки, если есть
-            const existingMarks = document.getElementById("timeline-marks");
-            if (existingMarks) {
-                existingMarks.remove();
+    <!-- Скрипт для звёздного фона -->
+    <script>
+        const canvas = document.getElementById("stars-canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Установка размеров canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Массив звёзд
+        let stars = [];
+        const numStars = 100; // Количество звёзд
+        const maxLineDistance = 100; // Максимальная длина линии
+        const mouseRadius = 150; // Радиус для соединения с мышкой
+
+        // Позиция мышки
+        const mouse = {
+            x: null,
+            y: null,
+        };
+
+        // Обновляем позицию мышки
+        window.addEventListener("mousemove", (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Убираем мышку из фокуса
+        window.addEventListener("mouseout", () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Создаём звезду
+        class Star {
+            constructor(x, y, dx, dy, size) {
+                this.x = x;
+                this.y = y;
+                this.dx = dx;
+                this.dy = dy;
+                this.size = size;
             }
 
-            // Добавляем метки времени
-            const timelineMarks = document.createElement("div");
-            timelineMarks.id = "timeline-marks";
-            timeline.appendChild(timelineMarks);
-
-            const significantYears = [1, 100, 200, 300, 400, 500, 600, 2000, 2050]; // Заданные годы
-            const timelineWidth = timeline.offsetWidth; // Ширина таймлайна
-            const startYear = 1;
-            const endYear = 2050;
-            const totalYears = endYear - startYear;
-
-            significantYears.forEach((year) => {
-                const mark = document.createElement("div");
-                mark.className = "mark";
-                const positionPercentage = ((year - startYear) / totalYears) * 100;
-                mark.style.left = `${positionPercentage}%`;
-
-                const label = document.createElement("span");
-                label.textContent = year;
-                mark.appendChild(label);
-
-                timelineMarks.appendChild(mark);
-            });
-
-            console.log("Метки времени добавлены: ", significantYears);
-
-            // Звёздный фон
-            const canvas = document.getElementById("stars-canvas");
-            const ctx = canvas.getContext("2d");
-
-            let stars = [];
-            const numStars = 200; // Количество звёзд
-            const maxLineDistance = 100; // Максимальное расстояние для соединения звёзд
-            const mouseRadius = 150; // Радиус взаимодействия мышки со звёздами
-
-            const mouse = { x: null, y: null };
-
-            window.addEventListener("mousemove", (event) => {
-                mouse.x = event.x;
-                mouse.y = event.y;
-            });
-
-            window.addEventListener("mouseout", () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
-
-            class Star {
-                constructor(x, y, dx, dy, size) {
-                    this.x = x;
-                    this.y = y;
-                    this.dx = dx;
-                    this.dy = dy;
-                    this.size = size;
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = "white";
-                    ctx.fill();
-                }
-
-                update() {
-                    if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-                    if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-                    this.x += this.dx;
-                    this.y += this.dy;
-
-                    this.draw();
-                }
+            // Рисуем звезду
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = "white";
+                ctx.fill();
             }
 
-            function initStars() {
-                stars = [];
-                for (let i = 0; i < numStars; i++) {
-                    const size = Math.random() * 2 + 1;
-                    const x = Math.random() * canvas.width;
-                    const y = Math.random() * canvas.height;
-                    const dx = (Math.random() - 0.5) * 1;
-                    const dy = (Math.random() - 0.5) * 1;
-                    stars.push(new Star(x, y, dx, dy, size));
+            // Обновляем позицию
+            update() {
+                if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                    this.dx = -this.dx;
                 }
-            }
-
-            function connectStars() {
-                for (let i = 0; i < stars.length; i++) {
-                    for (let j = i + 1; j < stars.length; j++) {
-                        const distance = Math.sqrt(
-                            (stars[i].x - stars[j].x) ** 2 +
-                            (stars[i].y - stars[j].y) ** 2
-                        );
-                        if (distance < maxLineDistance) {
-                            ctx.beginPath();
-                            ctx.moveTo(stars[i].x, stars[i].y);
-                            ctx.lineTo(stars[j].x, stars[j].y);
-                            ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxLineDistance})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
+                if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                    this.dy = -this.dy;
                 }
-            }
+                this.x += this.dx;
+                this.y += this.dy;
 
-            function connectToMouse() {
-                for (let i = 0; i < stars.length; i++) {
+                this.draw();
+            }
+        }
+
+        // Создаём звёзды
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                const size = Math.random() * 2 + 1; // Размер звезды
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const dx = (Math.random() - 0.5) * 1; // Скорость по x
+                const dy = (Math.random() - 0.5) * 1; // Скорость по y
+                stars.push(new Star(x, y, dx, dy, size));
+            }
+        }
+
+        // Рисуем линии между звёздами
+        function connectStars() {
+            for (let i = 0; i < stars.length; i++) {
+                for (let j = i + 1; j < stars.length; j++) {
                     const distance = Math.sqrt(
-                        (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
+                        (stars[i].x - stars[j].x) ** 2 +
+                        (stars[i].y - stars[j].y) ** 2
                     );
-                    if (distance < mouseRadius) {
+                    if (distance < maxLineDistance) {
                         ctx.beginPath();
                         ctx.moveTo(stars[i].x, stars[i].y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / mouseRadius})`;
-                        ctx.lineWidth = 0.8;
+                        ctx.lineTo(stars[j].x, stars[j].y);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${
+                            1 - distance / maxLineDistance
+                        })`;
+                        ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
                 }
             }
+        }
 
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                initStars(); // Пересоздаём звёзды при изменении размера окна
+        // Соединение звёзд с мышкой
+        function connectToMouse() {
+            for (let i = 0; i < stars.length; i++) {
+                const distance = Math.sqrt(
+                    (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
+                );
+                if (distance < mouseRadius) {
+                    ctx.beginPath();
+                    ctx.moveTo(stars[i].x, stars[i].y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${
+                        1 - distance / mouseRadius
+                    })`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
             }
+        }
 
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                stars.forEach((star) => star.update());
-                connectStars();
-                if (mouse.x !== null && mouse.y !== null) connectToMouse();
-                requestAnimationFrame(animate);
+        // Анимация
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach((star) => star.update());
+            connectStars();
+            if (mouse.x !== null && mouse.y !== null) {
+                connectToMouse();
             }
+            requestAnimationFrame(animate);
+        }
 
-            window.addEventListener("resize", resizeCanvas); // Пересоздание фона при изменении размера окна
-            resizeCanvas(); // Установка начальных размеров
-            animate();
-        });
+        // Инициализация
+        initStars();
+        animate();
     </script>
 </body>
 </html>
