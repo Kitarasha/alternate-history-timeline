@@ -44,33 +44,32 @@ body {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Более заметная тень */
 }
 
-/* Линии делений на таймлайне */
+/* Метки и деления на таймлайне */
 #timeline-marks {
     position: absolute;
     top: 50%; /* Центрируем на уровне таймлайна */
     left: 0;
     width: 100%;
-    height: 6px; /* Совпадает с высотой таймлайна */
+    height: 6px; /* Высота совпадает с линией таймлайна */
     transform: translateY(-50%);
     display: flex;
-    justify-content: space-between; /* Размещаем равномерно */
+    justify-content: space-between; /* Равномерное распределение делений */
 }
 
 #timeline-marks .mark {
     position: relative;
     width: 1px; /* Тонкая линия */
-    height: 20px; /* Высота деления */
-    background-color: rgba(255, 235, 59, 0.2); /* Едва заметная жёлтая линия */
+    height: 15px; /* Высота деления */
+    background-color: rgba(255, 235, 59, 0.4); /* Едва заметная линия */
 }
 
 #timeline-marks .mark span {
     position: absolute;
-    top: -25px; /* Размещаем число над делением */
+    top: -25px; /* Размещаем подписи над делением */
     font-size: 0.8em; /* Мелкий текст */
-    color: #ffeb3b; /* Жёлтый цвет */
+    color: #ffeb3b; /* Жёлтый цвет для контраста */
     font-weight: bold;
     text-align: center;
-    width: 50px; /* Для центрирования текста */
     transform: translateX(-50%);
 }
 
