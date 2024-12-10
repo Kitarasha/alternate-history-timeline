@@ -57,12 +57,12 @@ body {
 
 #start-label {
     left: 0;
-    top: 100px; /* Опустим ниже */
+    top: 500px; /* Опустим ниже */
 }
 
 #end-label {
     right: 0;
-    top: 100px; /* Опустим ниже */
+    top: 500px; /* Опустим ниже */
 }
 /* События */
 .event {
