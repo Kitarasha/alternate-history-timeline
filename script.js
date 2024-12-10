@@ -5,11 +5,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalDescription = document.getElementById("event-description");
     const closeModal = document.getElementById("close-modal");
 
-    const startYear = 1; // Начало шкалы времени (1 н.э.)
-    const endYear = 2050;   // Конец шкалы времени
+    const startYear = 1; // Начало шкалы времени
+    const endYear = 2050; // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
+    // Логируем диапазон
     console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
+
+    // Добавляем деления на таймлайн
+    const timelineMarks = document.createElement("div");
+    timelineMarks.id = "timeline-marks";
+    timeline.appendChild(timelineMarks);
+
+    const totalMarks = 20; // Количество делений
+    const step = Math.floor(totalYears / totalMarks); // Шаг между числами
+
+    for (let i = 0; i <= totalMarks; i++) {
+        const year = startYear + step * i;
+
+        // Создаём деление
+        const mark = document.createElement("div");
+        mark.className = "mark";
+
+        // Добавляем подпись к делению каждые 5 шагов
+        if (i % 5 === 0 || i === totalMarks) {
+            const label = document.createElement("span");
+            label.textContent = year; // Устанавливаем текст года
+            mark.appendChild(label);
+        }
+
+        timelineMarks.appendChild(mark);
+    }
 
     // Загрузка данных из файла timeline_data.json
     fetch('timeline_data.json')
