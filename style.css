@@ -10,6 +10,17 @@ body {
     align-items: center;
 }
 
+/* Фон со звёздами */
+#stars-canvas {
+    position: fixed; /* Фиксируем фон */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Убираем фон за всё содержимое */
+    pointer-events: none; /* Отключаем взаимодействие с фоном */
+}
+
 /* Контейнер таймлайна */
 #timeline-container {
     position: relative;
