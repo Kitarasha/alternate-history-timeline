@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.height = window.innerHeight;
 
     let stars = [];
-    const numStars = 100;
+    const numStars = 200;
     const maxLineDistance = 100;
     const mouseRadius = 150;
 
