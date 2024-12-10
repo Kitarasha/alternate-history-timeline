@@ -102,30 +102,55 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     class Star {
-        constructor(x, y, dx, dy, size) {
-            this.x = x;
-            this.y = y;
-            this.dx = dx;
-            this.dy = dy;
-            this.size = size;
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = "white";
-            ctx.fill();
-        }
-
-        update() {
-            if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-            if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-            this.x += this.dx;
-            this.y += this.dy;
-
-            this.draw();
-        }
+    constructor(x, y, dx, dy, size) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.size = size;
     }
+
+    draw() {
+        ctx.beginPath();
+        let outerRadius = this.size;
+        let innerRadius = this.size / 2;
+        let spikes = 5;
+
+        let rotation = Math.PI / 2 * 3;
+        let x = this.x;
+        let y = this.y;
+        ctx.moveTo(x, y - outerRadius);
+
+        for (let i = 0; i < spikes; i++) {
+            ctx.lineTo(
+                x + Math.cos(rotation) * outerRadius,
+                y + Math.sin(rotation) * outerRadius
+            );
+            rotation += Math.PI / spikes;
+
+            ctx.lineTo(
+                x + Math.cos(rotation) * innerRadius,
+                y + Math.sin(rotation) * innerRadius
+            );
+            rotation += Math.PI / spikes;
+        }
+
+        ctx.lineTo(x, y - outerRadius);
+        ctx.closePath();
+        ctx.fillStyle = "white";
+        ctx.fill();
+    }
+
+    update() {
+        if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+        if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+        this.x += this.dx;
+        this.y += this.dy;
+
+        this.draw();
+    }
+}
+
 
     function initStars() {
         stars = [];
