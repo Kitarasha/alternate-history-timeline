@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModal = document.getElementById("close-modal");
 
     const startYear = 0; // Начало шкалы времени (0 н.э.)
-    const endYear = 2050;   // Конец шкалы времени
+    const endYear = 2100;   // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
     console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
