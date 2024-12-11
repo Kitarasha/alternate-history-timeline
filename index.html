@@ -30,33 +30,7 @@
     <main>
         <!-- Контейнер таймлайна -->
         <div id="timeline-container">
-            <div id="timeline">
-                <!-- Пример точек -->
-                <div class="point" data-id="1"></div>
-                <div class="point" data-id="2"></div>
-                <div class="point" data-id="3"></div>
-            </div>
-
-            <!-- Контейнер для веток -->
-            <div id="branches-container" class="hidden">
-                <!-- Ветка 1 -->
-                <div class="branch red">
-                    <button class="forward-btn" data-branch="red">Вперед</button>
-                    <div class="line"></div>
-                </div>
-                <!-- Ветка 2 -->
-                <div class="branch green">
-                    <button class="forward-btn" data-branch="green">Вперед</button>
-                    <div class="line"></div>
-                </div>
-                <!-- Ветка 3 -->
-                <div class="branch blue">
-                    <button class="forward-btn" data-branch="blue">Вперед</button>
-                    <div class="line"></div>
-                </div>
-            </div>
-        </div>
-
+            <div id="timeline"></div>
         <!-- Модальное окно -->
         <div id="modal" class="hidden">
             <div class="modal-content">
@@ -67,16 +41,18 @@
         </div>
     </main>
     
-    <!-- Скрипт для отладки -->
     <script>
+        // Отладка для проверки размеров
         document.addEventListener("DOMContentLoaded", () => {
             const timeline = document.getElementById("timeline");
-            console.log(`Ширина элемента #timeline: ${timeline.offsetWidth}px`);
+            console.log(Ширина элемента #timeline: ${timeline.offsetWidth}px);
         });
     </script>
     
+    <script src="script.js"></script>
+
+    <!-- Скрипт для звёздного фона -->
     <script>
-        // Анимация звёздного фона
         const canvas = document.getElementById("stars-canvas");
         const ctx = canvas.getContext("2d");
 
@@ -91,7 +67,10 @@
         const mouseRadius = 150; // Радиус для соединения с мышкой
 
         // Позиция мышки
-        const mouse = { x: null, y: null };
+        const mouse = {
+            x: null,
+            y: null,
+        };
 
         // Обновляем позицию мышки
         window.addEventListener("mousemove", (event) => {
@@ -163,9 +142,9 @@
                         ctx.beginPath();
                         ctx.moveTo(stars[i].x, stars[i].y);
                         ctx.lineTo(stars[j].x, stars[j].y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${
+                        ctx.strokeStyle = rgba(255, 255, 255, ${
                             1 - distance / maxLineDistance
-                        })`;
+                        });
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
@@ -183,9 +162,9 @@
                     ctx.beginPath();
                     ctx.moveTo(stars[i].x, stars[i].y);
                     ctx.lineTo(mouse.x, mouse.y);
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${
+                    ctx.strokeStyle = rgba(255, 255, 255, ${
                         1 - distance / mouseRadius
-                    })`;
+                    });
                     ctx.lineWidth = 0.8;
                     ctx.stroke();
                 }
