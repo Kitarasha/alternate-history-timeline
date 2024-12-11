@@ -43,38 +43,18 @@ body {
     border-radius: 5px; /* Скруглённые края */
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Более заметная тень */
 }
-
-/* Метки времени */
-#start-label, #end-label {
-    position: absolute;
-    font-size: 1.2em; /* Немного увеличим шрифт для большего акцента */
-    color: #FFE8A8; /* Яркий неоновый желтый */
-    font-weight: bold;
-    z-index: 2;
-    white-space: nowrap;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Добавим легкую тень для объема */
-}
-
-#start-label {
-    left: 0;
-    top: 500px; /* Опустим ниже */
-}
-
-#end-label {
-    right: 0;
-    top: 500px; /* Опустим ниже */
-}
 /* Метки на таймлайне */
 .timeline-mark {
     position: absolute;
     top: -20px; /* Расположение над линией */
     transform: translateX(-50%);
-    font-size: 0.9em;
+    font-size: 0.6em;
     color: #FFE8A8;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Лёгкая тень */
     white-space: nowrap;
     pointer-events: none;
 }
+
 .timeline-mark::after {
     content: "";
     display: block;
@@ -182,3 +162,4 @@ body {
 #close-modal:hover {
     color: #ff5252;
 }
+~
