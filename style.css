@@ -163,3 +163,52 @@ body {
     color: #ff5252;
 }
 
+/* Ветки */
+#branches-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    visibility: hidden; /* Скрыто по умолчанию */
+    margin-top: 30px;
+}
+
+.branch {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 80%; /* Ширина ветки */
+    margin: 0 auto;
+}
+
+/* Кнопка "Вперед" */
+.forward-btn {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.forward-btn:hover {
+    background-color: #e65100;
+}
+
+/* Линия */
+.line {
+    flex-grow: 1;
+    height: 6px;
+    background-color: white;
+    margin-left: 10px;
+    border-radius: 3px;
+    transform-origin: left; /* Для анимации */
+    transition: transform 0.5s ease, background-color 0.3s ease;
+}
+
+/* Анимация линии */
+.line.active {
+    transform: scaleX(1); /* Линия "улетает" вправо */
+    background-color: #03a9f4;
+}
