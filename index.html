@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time Shifter</title>
-    
+
     <!-- Подключение стилей -->
     <link rel="stylesheet" href="style.css">
 
@@ -23,7 +23,7 @@
 <body>
     <!-- Canvas для звёздного фона -->
     <canvas id="stars-canvas"></canvas>
-    
+
     <header>
         <h1>Time Shifter</h1>
     </header>
@@ -31,6 +31,10 @@
         <!-- Контейнер таймлайна -->
         <div id="timeline-container">
             <div id="timeline"></div>
+            <!-- Метки времени -->
+            <div id="start-label">1</div>
+            <div id="end-label">2050</div>
+        </div>
         <!-- Модальное окно -->
         <div id="modal" class="hidden">
             <div class="modal-content">
@@ -40,15 +44,15 @@
             </div>
         </div>
     </main>
-    
+
     <script>
         // Отладка для проверки размеров
         document.addEventListener("DOMContentLoaded", () => {
             const timeline = document.getElementById("timeline");
-            console.log(Ширина элемента #timeline: ${timeline.offsetWidth}px);
+            console.log(`Ширина элемента #timeline: ${timeline.offsetWidth}px`);
         });
     </script>
-    
+
     <script src="script.js"></script>
 
     <!-- Скрипт для звёздного фона -->
@@ -142,9 +146,9 @@
                         ctx.beginPath();
                         ctx.moveTo(stars[i].x, stars[i].y);
                         ctx.lineTo(stars[j].x, stars[j].y);
-                        ctx.strokeStyle = rgba(255, 255, 255, ${
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${
                             1 - distance / maxLineDistance
-                        });
+                        })`;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
@@ -162,9 +166,9 @@
                     ctx.beginPath();
                     ctx.moveTo(stars[i].x, stars[i].y);
                     ctx.lineTo(mouse.x, mouse.y);
-                    ctx.strokeStyle = rgba(255, 255, 255, ${
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${
                         1 - distance / mouseRadius
-                    });
+                    })`;
                     ctx.lineWidth = 0.8;
                     ctx.stroke();
                 }
