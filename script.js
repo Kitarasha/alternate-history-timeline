@@ -4,30 +4,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTitle = document.getElementById("event-title");
     const modalDescription = document.getElementById("event-description");
     const closeModal = document.getElementById("close-modal");
+    const branchesContainer = document.getElementById("branches-container");
 
     const startYear = 0; // Начало шкалы времени (0 н.э.)
     const endYear = 2100;   // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
     console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
+
     // Генерация меток на таймлайне
-const createTimelineMarks = (start, end, step) => {
-    for (let year = start; year <= end; year += step) {
-        const positionPercent = ((year - start) / totalYears) * 100;
+    const createTimelineMarks = (start, end, step) => {
+        for (let year = start; year <= end; year += step) {
+            const positionPercent = ((year - start) / totalYears) * 100;
 
-        // Создание метки
-        const mark = document.createElement("div");
-        mark.className = "timeline-mark";
-        mark.style.left = `${positionPercent}%`;
-        mark.textContent = year;
+            // Создание метки
+            const mark = document.createElement("div");
+            mark.className = "timeline-mark";
+            mark.style.left = `${positionPercent}%`;
+            mark.textContent = year;
 
-        timeline.appendChild(mark);
-    }
-};
+            timeline.appendChild(mark);
+        }
+    };
 
-// Вызов функции для создания меток каждые 100 лет
-createTimelineMarks(startYear, endYear, 100);
-
+    // Вызов функции для создания меток каждые 100 лет
+    createTimelineMarks(startYear, endYear, 100);
 
     // Загрузка данных из файла timeline_data.json
     fetch('timeline_data.json')
@@ -46,7 +47,6 @@ createTimelineMarks(startYear, endYear, 100);
             data.forEach(event => {
                 const eventYear = event.year;
 
-                // Логируем данные о событии
                 console.log(`Обработка события: ${JSON.stringify(event)}`);
 
                 if (!eventYear || isNaN(eventYear)) {
@@ -54,49 +54,53 @@ createTimelineMarks(startYear, endYear, 100);
                     return;
                 }
 
-                // Расчёт позиции события
                 const positionPercent = ((eventYear - startYear) / totalYears) * 100;
 
-                // Логируем расчёты
                 console.log(`Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%`);
-                
 
-                // Создание элемента события
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
                 eventDiv.style.left = `${positionPercent}%`;
 
-                // Добавление атрибутов
                 eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
                 eventDiv.setAttribute("data-description", event.description);
 
-                // Создание кружка
                 const circle = document.createElement("div");
                 circle.className = "circle";
                 eventDiv.appendChild(circle);
 
                 timeline.appendChild(eventDiv);
 
-                // Обработка клика на событие
                 eventDiv.addEventListener("click", () => {
-                    modalTitle.textContent = `${eventYear} — ${event.title}`;
-                    modalDescription.textContent = event.description || "Нет описания для этого события.";
-                    modal.classList.add("show");
+                    branchesContainer.style.visibility = "visible";
                 });
             });
         })
         .catch(error => console.error(`Ошибка обработки данных: ${error.message}`));
 
-    // Закрытие модального окна при клике на крестик
+    // Закрытие модального окна
     closeModal.addEventListener("click", () => {
         modal.classList.remove("show");
     });
 
-    // Закрытие модального окна при клике вне его
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
             modal.classList.remove("show");
         }
+    });
+
+    // Логика анимации линий и открытия модального окна
+    document.querySelectorAll('.forward-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const line = e.target.nextElementSibling;
+            line.classList.add('active');
+
+            setTimeout(() => {
+                modal.classList.add('show');
+                modalTitle.textContent = `Вы выбрали ветку: ${e.target.dataset.branch}`;
+                modalDescription.textContent = "Описание этой ветки будет здесь.";
+            }, 500);
+        });
     });
 
     // Звёздный фон
@@ -121,55 +125,54 @@ createTimelineMarks(startYear, endYear, 100);
     });
 
     class Star {
-    constructor(x, y, dx, dy, size) {
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
-        this.size = size;
-    }
-
-    draw() {
-        ctx.beginPath();
-        let outerRadius = this.size;
-        let innerRadius = this.size / 2;
-        let spikes = 5;
-
-        let rotation = Math.PI / 2 * 3;
-        let x = this.x;
-        let y = this.y;
-        ctx.moveTo(x, y - outerRadius);
-
-        for (let i = 0; i < spikes; i++) {
-            ctx.lineTo(
-                x + Math.cos(rotation) * outerRadius,
-                y + Math.sin(rotation) * outerRadius
-            );
-            rotation += Math.PI / spikes;
-
-            ctx.lineTo(
-                x + Math.cos(rotation) * innerRadius,
-                y + Math.sin(rotation) * innerRadius
-            );
-            rotation += Math.PI / spikes;
+        constructor(x, y, dx, dy, size) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.size = size;
         }
 
-        ctx.lineTo(x, y - outerRadius);
-        ctx.closePath();
-        ctx.fillStyle = "white";
-        ctx.fill();
+        draw() {
+            ctx.beginPath();
+            let outerRadius = this.size;
+            let innerRadius = this.size / 2;
+            let spikes = 5;
+
+            let rotation = Math.PI / 2 * 3;
+            let x = this.x;
+            let y = this.y;
+            ctx.moveTo(x, y - outerRadius);
+
+            for (let i = 0; i < spikes; i++) {
+                ctx.lineTo(
+                    x + Math.cos(rotation) * outerRadius,
+                    y + Math.sin(rotation) * outerRadius
+                );
+                rotation += Math.PI / spikes;
+
+                ctx.lineTo(
+                    x + Math.cos(rotation) * innerRadius,
+                    y + Math.sin(rotation) * innerRadius
+                );
+                rotation += Math.PI / spikes;
+            }
+
+            ctx.lineTo(x, y - outerRadius);
+            ctx.closePath();
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        update() {
+            if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+            if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+            this.x += this.dx;
+            this.y += this.dy;
+
+            this.draw();
+        }
     }
-
-    update() {
-        if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-        if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-        this.x += this.dx;
-        this.y += this.dy;
-
-        this.draw();
-    }
-}
-
 
     function initStars() {
         stars = [];
