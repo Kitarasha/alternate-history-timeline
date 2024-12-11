@@ -64,6 +64,26 @@ body {
     right: 0;
     top: 500px; /* Опустим ниже */
 }
+/* Метки на таймлайне */
+.timeline-mark {
+    position: absolute;
+    top: -20px; /* Расположение над линией */
+    transform: translateX(-50%);
+    font-size: 0.9em;
+    color: #FFE8A8;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Лёгкая тень */
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.timeline-mark::after {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 10px;
+    background-color: white;
+    margin: 5px auto 0; /* Пространство между числом и чертой */
+}
 /* События */
 .event {
     position: absolute;
