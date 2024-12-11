@@ -10,6 +10,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
     console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
+    // Генерация меток на таймлайне
+const createTimelineMarks = (start, end, step) => {
+    for (let year = start; year <= end; year += step) {
+        const positionPercent = ((year - start) / totalYears) * 100;
+
+        // Создание метки
+        const mark = document.createElement("div");
+        mark.className = "timeline-mark";
+        mark.style.left = `${positionPercent}%`;
+        mark.textContent = year;
+
+        timeline.appendChild(mark);
+    }
+};
+
+// Вызов функции для создания меток каждые 100 лет
+createTimelineMarks(startYear, endYear, 100);
+
 
     // Загрузка данных из файла timeline_data.json
     fetch('timeline_data.json')
@@ -41,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Логируем расчёты
                 console.log(`Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%`);
+                
 
                 // Создание элемента события
                 const eventDiv = document.createElement("div");
