@@ -48,7 +48,7 @@ body {
 #start-label, #end-label {
     position: absolute;
     font-size: 1.2em; /* Немного увеличим шрифт для большего акцента */
-    color: #FFD700; /* Яркий неоновый желтый */
+    color: #FFE8A8; /* Яркий неоновый желтый */
     font-weight: bold;
     z-index: 2;
     white-space: nowrap;
