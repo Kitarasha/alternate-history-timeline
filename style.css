@@ -170,6 +170,7 @@ body {
 /* ========================= */
 
 #alternatives-modal, #scenario-modal {
+    font-family: 'Orbitron', sans-serif;
     position: fixed;
     top: 0;
     left: 0;
