@@ -4,195 +4,362 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTitle = document.getElementById("event-title");
     const modalDescription = document.getElementById("event-description");
     const closeModal = document.getElementById("close-modal");
-    const alternativeContainer = document.getElementById("alternative-timelines-container");
 
-    const startYear = 0;
-    const endYear = 2100;
-    const totalYears = endYear - startYear;
+    const startYear = 0; // Начало шкалы времени (0 н.э.)
+    const endYear = 2100; // Конец шкалы времени
+    const totalYears = endYear - startYear; // Всего лет на таймлайне
 
-    // Создаем метки на основном таймлайне
-    function createTimelineMarks(start, end, step, container, markClass="timeline-mark", lineStart=startYear, lineTotal=totalYears) {
-        for(let year=start; year<=end; year+=step) {
-            const posPercent=((year-lineStart)/lineTotal)*100;
-            const mark=document.createElement("div");
-            mark.className=markClass;
-            mark.style.left=posPercent+"%";
-            mark.textContent=year;
-            container.appendChild(mark);
+    console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
+
+    // Генерация меток на таймлайне
+    const createTimelineMarks = (start, end, step) => {
+        for (let year = start; year <= end; year += step) {
+            const positionPercent = ((year - start) / totalYears) * 100;
+            const mark = document.createElement("div");
+            mark.className = "timeline-mark";
+            mark.style.left = `${positionPercent}%`;
+            mark.textContent = year;
+            timeline.appendChild(mark);
         }
-    }
+    };
 
-    createTimelineMarks(startYear, endYear, 100, timeline);
+    // Создание меток каждые 100 лет
+    createTimelineMarks(startYear, endYear, 100);
 
-    // Пример альтернативных данных
-    const alternativesData={
-        "476-Падение Римской Империи":[
+    // === Новое ===
+    // Пример альтернативных сценариев. В будущем можно вынести в отдельный файл или дополнять при загрузке данных.
+    // Ключ формата: "год - название события"
+    const alternativesData = {
+        "476-Падение Римской Империи": [
             {
-                title:"Римская империя не распалась",
-                color:"#aabbcc",
-                scenario:[
-                    {year:500, text:"К 500 году империя процветала... Технологии, искусство, культура..."},
-                    {year:600, text:"К 600 году Рим освоил новые территории и технологии..."}
+                title: "Римская империя не распалась",
+                color: "#aabbcc",
+                scenario: [
+                    { year: 500, text: "К 500 году империя процветала... Технологии, искусство, культура..." },
+                    { year: 600, text: "К 600 году Рим освоил новые территории и технологии..." }
                 ]
             },
             {
-                title:"Империя распалась, но позже",
-                color:"#ffcc00",
-                scenario:[
-                    {year:500,text:"Империя держалась, но трещины были очевидны..."},
-                    {year:550,text:"К 550 году империя всё же пала, но последствия были иными..."}
+                title: "Империя распалась, но позже",
+                color: "#ffcc00",
+                scenario: [
+                    { year: 500, text: "Империя держалась, но трещины были очевидны..." },
+                    { year: 550, text: "К 550 году империя всё же пала, но последствия были иными..." }
                 ]
             },
             {
-                title:"Открытие электричества в Риме",
-                color:"#66ff66",
-                scenario:[
-                    {year:480,text:"В 480 году римляне случайно открыли электричество..."},
-                    {year:550,text:"К 550 году электричество изменило всё: досрочная индустриализация..."}
+                title: "Открытие электричества в Риме",
+                color: "#66ff66",
+                scenario: [
+                    { year: 480, text: "В 480 году римляне случайно открыли электричество, шокируя современников..." },
+                    { year: 550, text: "К 550 году электричество изменило всё: началась досрочная индустриализация..." }
                 ]
             }
         ]
     };
 
-    function createTimelineMarksForAlternative(container) {
-        for(let year=startYear; year<=endYear; year+=200) {
-            const posPercent=((year - startYear)/totalYears)*100;
-            const mark=document.createElement("div");
-            mark.className="alternative-timeline-mark";
-            mark.style.left=posPercent+"%";
-            mark.textContent=year;
-            container.appendChild(mark);
+    // === Новое ===
+    // Получаем элементы новых модалок
+    const alternativesModal = document.getElementById("alternatives-modal");
+    const closeAlternatives = document.getElementById("close-alternatives");
+    const alternativesList = document.getElementById("alternatives-list");
+
+    const scenarioModal = document.getElementById("scenario-modal");
+    const closeScenario = document.getElementById("close-scenario");
+    const scenarioTitle = document.getElementById("scenario-title");
+    const scenarioText = document.getElementById("scenario-text");
+    const scenarioNext = document.getElementById("scenario-next");
+
+    let currentScenario = [];
+    let currentScenarioIndex = 0;
+
+    closeAlternatives.addEventListener("click", () => {
+        alternativesModal.classList.remove("show");
+    });
+
+    closeScenario.addEventListener("click", () => {
+        scenarioModal.classList.remove("show");
+        currentScenario = [];
+        currentScenarioIndex = 0;
+        scenarioText.textContent = "";
+    });
+
+    alternativesModal.addEventListener("click", (event) => {
+        if (event.target === alternativesModal) {
+            alternativesModal.classList.remove("show");
+        }
+    });
+
+    scenarioModal.addEventListener("click", (event) => {
+        if (event.target === scenarioModal) {
+            scenarioModal.classList.remove("show");
+        }
+    });
+
+    scenarioNext.addEventListener("click", () => {
+        currentScenarioIndex++;
+        if (currentScenarioIndex < currentScenario.length) {
+            showScenarioStep(currentScenarioIndex);
+        } else {
+            scenarioText.textContent += "\n\nКонец альтернативного сценария.";
+            scenarioNext.disabled = true;
+        }
+    });
+
+    function showScenarioStep(index) {
+        scenarioNext.disabled = false;
+        scenarioText.textContent = "";
+        const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
+        let charIndex = 0;
+        const interval = setInterval(() => {
+            scenarioText.textContent += fullText.charAt(charIndex);
+            charIndex++;
+            if (charIndex >= fullText.length) {
+                clearInterval(interval);
+            }
+        }, 25);
+    }
+
+    function showAlternatives(year, title) {
+        const key = `${year}-${title}`;
+        const eventAlternatives = alternativesData[key];
+        if (!eventAlternatives) return;
+
+        alternativesList.innerHTML = "";
+        eventAlternatives.forEach((alt) => {
+            const altDiv = document.createElement("div");
+            altDiv.className = "alternative-option";
+            altDiv.textContent = alt.title;
+            altDiv.style.backgroundColor = alt.color || "#444";
+            altDiv.addEventListener("click", () => {
+                showScenario(alt.scenario);
+            });
+            alternativesList.appendChild(altDiv);
+        });
+
+        alternativesModal.classList.add("show");
+    }
+
+    function showScenario(scenario) {
+        alternativesModal.classList.remove("show");
+        scenarioModal.classList.add("show");
+        currentScenario = scenario;
+        currentScenarioIndex = 0;
+        scenarioNext.disabled = false;
+        showScenarioStep(currentScenarioIndex);
+    }
+
+    // Загрузка данных из файла timeline_data.json
+    fetch('timeline_data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка загрузки файла: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                console.error("Данные пусты или не являются массивом!");
+                return;
+            }
+
+            data.forEach(event => {
+                const eventYear = event.year;
+                console.log(`Обработка события: ${JSON.stringify(event)}`);
+
+                if (!eventYear || isNaN(eventYear)) {
+                    console.error(`Некорректный год у события: ${JSON.stringify(event)}`);
+                    return;
+                }
+
+                const positionPercent = ((eventYear - startYear) / totalYears) * 100;
+                console.log(`Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%`);
+
+                const eventDiv = document.createElement("div");
+                eventDiv.className = "event";
+                eventDiv.style.left = `${positionPercent}%`;
+
+                eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
+                eventDiv.setAttribute("data-description", event.description);
+
+                const circle = document.createElement("div");
+                circle.className = "circle";
+                eventDiv.appendChild(circle);
+
+                timeline.appendChild(eventDiv);
+
+                eventDiv.addEventListener("click", () => {
+                    modalTitle.textContent = `${eventYear} — ${event.title}`;
+                    modalDescription.textContent = event.description || "Нет описания для этого события.";
+                    modal.classList.add("show");
+
+                    // === Новое ===
+                    // Проверяем, есть ли альтернативы
+                    const key = `${eventYear}-${event.title}`;
+                    let altButton = document.getElementById("view-alternatives-btn");
+                    if (!altButton) {
+                        altButton = document.createElement("button");
+                        altButton.id = "view-alternatives-btn";
+                        altButton.textContent = "Альтернативные сценарии";
+                        modal.querySelector(".modal-content").appendChild(altButton);
+                    }
+                    const eventAlternatives = alternativesData[key];
+                    if (eventAlternatives && eventAlternatives.length > 0) {
+                        altButton.style.display = "inline-block";
+                        altButton.onclick = () => {
+                            showAlternatives(eventYear, event.title);
+                        };
+                    } else {
+                        altButton.style.display = "none";
+                    }
+                });
+            });
+        })
+        .catch(error => console.error(`Ошибка обработки данных: ${error.message}`));
+
+    closeModal.addEventListener("click", () => {
+        modal.classList.remove("show");
+    });
+
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.classList.remove("show");
+        }
+    });
+
+    // Звёздный фон
+    const canvas = document.getElementById("stars-canvas");
+    const ctx = canvas.getContext("2d");
+
+    let stars = [];
+    const numStars = 200;
+    const maxLineDistance = 100;
+    const mouseRadius = 150;
+    const mouse = { x: null, y: null };
+
+    window.addEventListener("mousemove", (event) => {
+        mouse.x = event.x;
+        mouse.y = event.y;
+    });
+
+    window.addEventListener("mouseout", () => {
+        mouse.x = null;
+        mouse.y = null;
+    });
+
+    class Star {
+        constructor(x, y, dx, dy, size) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.size = size;
+        }
+
+        draw() {
+            ctx.beginPath();
+            let outerRadius = this.size;
+            let innerRadius = this.size / 2;
+            let spikes = 5;
+
+            let rotation = Math.PI / 2 * 3;
+            let x = this.x;
+            let y = this.y;
+            ctx.moveTo(x, y - outerRadius);
+
+            for (let i = 0; i < spikes; i++) {
+                ctx.lineTo(
+                    x + Math.cos(rotation) * outerRadius,
+                    y + Math.sin(rotation) * outerRadius
+                );
+                rotation += Math.PI / spikes;
+
+                ctx.lineTo(
+                    x + Math.cos(rotation) * innerRadius,
+                    y + Math.sin(rotation) * innerRadius
+                );
+                rotation += Math.PI / spikes;
+            }
+
+            ctx.lineTo(x, y - outerRadius);
+            ctx.closePath();
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        update() {
+            if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+            if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+            this.x += this.dx;
+            this.y += this.dy;
+            this.draw();
         }
     }
 
-    function showAlternativeScenario(alt, scEvent, eventDiv) {
-        // Удаляем предыдущий сценарий
-        let old = eventDiv.querySelector(".alt-scenario-block");
-        if(old) old.remove();
-
-        let scenarioBlock = document.createElement("div");
-        scenarioBlock.className="alt-scenario-block";
-        let h3=document.createElement("h3");
-        h3.textContent=`${scEvent.year} год — Альтернативный сценарий:\n${alt.title}`;
-        let txt=document.createElement("div");
-        txt.textContent=scEvent.text;
-
-        scenarioBlock.appendChild(h3);
-        scenarioBlock.appendChild(txt);
-        eventDiv.appendChild(scenarioBlock);
+    function initStars() {
+        stars = [];
+        for (let i = 0; i < numStars; i++) {
+            const size = Math.random() * 2 + 1;
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const dx = (Math.random() - 0.5) * 1;
+            const dy = (Math.random() - 0.5) * 1;
+            stars.push(new Star(x, y, dx, dy, size));
+        }
     }
 
-    function createAlternativeTimelines(alternatives, eventYear, eventTitle, eventX, eventY) {
-        alternativeContainer.innerHTML="";
-
-        const key = `${eventYear}-${eventTitle}`;
-        const eventAlternatives = alternativesData[key];
-        if(!eventAlternatives) return;
-
-        // Ветки будем располагать вокруг события.
-        // eventX,eventY - координаты события в px относительно контейнера.
-        // Расположим ветки под углом: первая чуть выше, вторая ниже, и т.д.
-        // Смещения по вертикали:
-        const verticalOffsets=[-50,50,-100,100]; // Для 4 альтернатив, можно больше
-        // Если альтернатив больше, будут использоваться эти смещения циклически.
-
-        eventAlternatives.forEach((alt, i)=>{
-            const wrapper=document.createElement("div");
-            wrapper.className="alternative-timeline-wrapper";
-
-            wrapper.style.left=(eventX)+"px";
-            wrapper.style.top=(eventY+verticalOffsets[i%verticalOffsets.length])+"px";
-
-            const line=document.createElement("div");
-            line.className="alternative-timeline";
-            line.style.backgroundColor=alt.color||"#ff5555";
-            wrapper.appendChild(line);
-
-            // Метки
-            createTimelineMarksForAlternative(wrapper);
-
-            // События
-            alt.scenario.forEach(sce=>{
-                const posPercent=((sce.year - startYear)/totalYears)*100;
-                const ev=document.createElement("div");
-                ev.className="alternative-event";
-                ev.style.left=posPercent+"%";
-                const c=document.createElement("div");
-                c.className="circle";
-                c.style.backgroundColor=alt.color||"#ff5555";
-                ev.appendChild(c);
-                ev.setAttribute("data-title",`${sce.year} — Альтернатива`);
-                ev.addEventListener("click",(e)=>{
-                    e.stopPropagation();
-                    showAlternativeScenario(alt, sce, ev);
-                });
-                wrapper.appendChild(ev);
-            });
-
-            alternativeContainer.appendChild(wrapper);
-            requestAnimationFrame(()=>{line.classList.add("show");});
-        });
+    function connectStars() {
+        for (let i = 0; i < stars.length; i++) {
+            for (let j = i + 1; j < stars.length; j++) {
+                const distance = Math.sqrt(
+                    (stars[i].x - stars[j].x) ** 2 +
+                    (stars[i].y - stars[j].y) ** 2
+                );
+                if (distance < maxLineDistance) {
+                    ctx.beginPath();
+                    ctx.moveTo(stars[i].x, stars[i].y);
+                    ctx.lineTo(stars[j].x, stars[j].y);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxLineDistance})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
     }
 
-    // Загружаем основные данные
-    fetch('timeline_data.json')
-    .then(r=>{
-        if(!r.ok) throw new Error("Ошибка загрузки:"+r.status);
-        return r.json();
-    })
-    .then(data=>{
-        if(!Array.isArray(data)||data.length===0) return;
-
-        data.forEach(event=>{
-            const eventYear=event.year;
-            if(!eventYear||isNaN(eventYear))return;
-            const posPercent=((eventYear - startYear)/totalYears)*100;
-            const ediv=document.createElement("div");
-            ediv.className="event";
-            ediv.style.left=posPercent+"%";
-            ediv.setAttribute("data-title",`${eventYear} — ${event.title}`);
-            ediv.setAttribute("data-description",event.description||"");
-            const circ=document.createElement("div");
-            circ.className="circle";
-            ediv.appendChild(circ);
-            timeline.appendChild(ediv);
-
-            ediv.addEventListener("click",()=>{
-                modalTitle.textContent=`${eventYear} — ${event.title}`;
-                modalDescription.textContent=event.description||"Нет описания.";
-                modal.classList.add("show");
-
-                let altBtn=document.getElementById("view-alternatives-btn");
-                if(!altBtn) {
-                    altBtn=document.createElement("button");
-                    altBtn.id="view-alternatives-btn";
-                    altBtn.textContent="Альтернативные сценарии";
-                    modal.querySelector(".modal-content").appendChild(altBtn);
+    function connectToMouse() {
+        if (mouse.x !== null && mouse.y !== null) {
+            for (let i = 0; i < stars.length; i++) {
+                const distance = Math.sqrt(
+                    (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
+                );
+                if (distance < mouseRadius) {
+                    ctx.beginPath();
+                    ctx.moveTo(stars[i].x, stars[i].y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / mouseRadius})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
                 }
+            }
+        }
+    }
 
-                const key=`${eventYear}-${event.title}`;
-                const hasAlt=alternativesData[key];
-                if(hasAlt&&hasAlt.length>0) {
-                    altBtn.style.display="inline-block";
-                    altBtn.onclick=()=>{
-                        modal.classList.remove("show");
-                        // Получаем точное положение события
-                        const containerRect=document.getElementById("timeline-container").getBoundingClientRect();
-                        const eventRect=ediv.getBoundingClientRect();
-                        const eventX=eventRect.left - containerRect.left;
-                        const eventY=(eventRect.top - containerRect.top);
-                        createAlternativeTimelines(hasAlt,eventYear,event.title,eventX,eventY);
-                    };
-                } else {
-                    altBtn.style.display="none";
-                }
-            });
-        });
-    })
-    .catch(e=>console.error(e));
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars();
+    }
 
-    closeModal.addEventListener("click",()=>{modal.classList.remove("show");});
-    modal.addEventListener("click",(e)=>{
-        if(e.target===modal) modal.classList.remove("show");
-    });
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((star) => star.update());
+        connectStars();
+        connectToMouse();
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    animate();
 });
