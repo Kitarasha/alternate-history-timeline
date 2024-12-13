@@ -6,28 +6,148 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModal = document.getElementById("close-modal");
 
     const startYear = 0; // Начало шкалы времени (0 н.э.)
-    const endYear = 2100;   // Конец шкалы времени
+    const endYear = 2100; // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
     console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
+
     // Генерация меток на таймлайне
-const createTimelineMarks = (start, end, step) => {
-    for (let year = start; year <= end; year += step) {
-        const positionPercent = ((year - start) / totalYears) * 100;
+    const createTimelineMarks = (start, end, step) => {
+        for (let year = start; year <= end; year += step) {
+            const positionPercent = ((year - start) / totalYears) * 100;
+            const mark = document.createElement("div");
+            mark.className = "timeline-mark";
+            mark.style.left = `${positionPercent}%`;
+            mark.textContent = year;
+            timeline.appendChild(mark);
+        }
+    };
 
-        // Создание метки
-        const mark = document.createElement("div");
-        mark.className = "timeline-mark";
-        mark.style.left = `${positionPercent}%`;
-        mark.textContent = year;
+    // Создание меток каждые 100 лет
+    createTimelineMarks(startYear, endYear, 100);
 
-        timeline.appendChild(mark);
+    // === Новое ===
+    // Пример альтернативных сценариев. В будущем можно вынести в отдельный файл или дополнять при загрузке данных.
+    // Ключ формата: "год - название события"
+    const alternativesData = {
+        "476-Падение Римской Империи": [
+            {
+                title: "Римская империя не распалась",
+                color: "#aabbcc",
+                scenario: [
+                    { year: 500, text: "К 500 году империя процветала... Технологии, искусство, культура..." },
+                    { year: 600, text: "К 600 году Рим освоил новые территории и технологии..." }
+                ]
+            },
+            {
+                title: "Империя распалась, но позже",
+                color: "#ffcc00",
+                scenario: [
+                    { year: 500, text: "Империя держалась, но трещины были очевидны..." },
+                    { year: 550, text: "К 550 году империя всё же пала, но последствия были иными..." }
+                ]
+            },
+            {
+                title: "Открытие электричества в Риме",
+                color: "#66ff66",
+                scenario: [
+                    { year: 480, text: "В 480 году римляне случайно открыли электричество, шокируя современников..." },
+                    { year: 550, text: "К 550 году электричество изменило всё: началась досрочная индустриализация..." }
+                ]
+            }
+        ]
+    };
+
+    // === Новое ===
+    // Получаем элементы новых модалок
+    const alternativesModal = document.getElementById("alternatives-modal");
+    const closeAlternatives = document.getElementById("close-alternatives");
+    const alternativesList = document.getElementById("alternatives-list");
+
+    const scenarioModal = document.getElementById("scenario-modal");
+    const closeScenario = document.getElementById("close-scenario");
+    const scenarioTitle = document.getElementById("scenario-title");
+    const scenarioText = document.getElementById("scenario-text");
+    const scenarioNext = document.getElementById("scenario-next");
+
+    let currentScenario = [];
+    let currentScenarioIndex = 0;
+
+    closeAlternatives.addEventListener("click", () => {
+        alternativesModal.classList.remove("show");
+    });
+
+    closeScenario.addEventListener("click", () => {
+        scenarioModal.classList.remove("show");
+        currentScenario = [];
+        currentScenarioIndex = 0;
+        scenarioText.textContent = "";
+    });
+
+    alternativesModal.addEventListener("click", (event) => {
+        if (event.target === alternativesModal) {
+            alternativesModal.classList.remove("show");
+        }
+    });
+
+    scenarioModal.addEventListener("click", (event) => {
+        if (event.target === scenarioModal) {
+            scenarioModal.classList.remove("show");
+        }
+    });
+
+    scenarioNext.addEventListener("click", () => {
+        currentScenarioIndex++;
+        if (currentScenarioIndex < currentScenario.length) {
+            showScenarioStep(currentScenarioIndex);
+        } else {
+            scenarioText.textContent += "\n\nКонец альтернативного сценария.";
+            scenarioNext.disabled = true;
+        }
+    });
+
+    function showScenarioStep(index) {
+        scenarioNext.disabled = false;
+        scenarioText.textContent = "";
+        const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
+        let charIndex = 0;
+        const interval = setInterval(() => {
+            scenarioText.textContent += fullText.charAt(charIndex);
+            charIndex++;
+            if (charIndex >= fullText.length) {
+                clearInterval(interval);
+            }
+        }, 25);
     }
-};
 
-// Вызов функции для создания меток каждые 100 лет
-createTimelineMarks(startYear, endYear, 100);
+    function showAlternatives(year, title) {
+        const key = `${year}-${title}`;
+        const eventAlternatives = alternativesData[key];
+        if (!eventAlternatives) return;
 
+        alternativesList.innerHTML = "";
+        eventAlternatives.forEach((alt) => {
+            const altDiv = document.createElement("div");
+            altDiv.className = "alternative-option";
+            altDiv.textContent = alt.title;
+            altDiv.style.backgroundColor = alt.color || "#444";
+            altDiv.addEventListener("click", () => {
+                showScenario(alt.scenario);
+            });
+            alternativesList.appendChild(altDiv);
+        });
+
+        alternativesModal.classList.add("show");
+    }
+
+    function showScenario(scenario) {
+        alternativesModal.classList.remove("show");
+        scenarioModal.classList.add("show");
+        currentScenario = scenario;
+        currentScenarioIndex = 0;
+        scenarioNext.disabled = false;
+        showScenarioStep(currentScenarioIndex);
+    }
 
     // Загрузка данных из файла timeline_data.json
     fetch('timeline_data.json')
@@ -45,8 +165,6 @@ createTimelineMarks(startYear, endYear, 100);
 
             data.forEach(event => {
                 const eventYear = event.year;
-
-                // Логируем данные о событии
                 console.log(`Обработка события: ${JSON.stringify(event)}`);
 
                 if (!eventYear || isNaN(eventYear)) {
@@ -54,45 +172,55 @@ createTimelineMarks(startYear, endYear, 100);
                     return;
                 }
 
-                // Расчёт позиции события
                 const positionPercent = ((eventYear - startYear) / totalYears) * 100;
-
-                // Логируем расчёты
                 console.log(`Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%`);
 
-
-                // Создание элемента события
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
                 eventDiv.style.left = `${positionPercent}%`;
 
-                // Добавление атрибутов
                 eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
                 eventDiv.setAttribute("data-description", event.description);
 
-                // Создание кружка
                 const circle = document.createElement("div");
                 circle.className = "circle";
                 eventDiv.appendChild(circle);
 
                 timeline.appendChild(eventDiv);
 
-                // Обработка клика на событие
                 eventDiv.addEventListener("click", () => {
                     modalTitle.textContent = `${eventYear} — ${event.title}`;
                     modalDescription.textContent = event.description || "Нет описания для этого события.";
                     modal.classList.add("show");
+
+                    // === Новое ===
+                    // Проверяем, есть ли альтернативы
+                    const key = `${eventYear}-${event.title}`;
+                    let altButton = document.getElementById("view-alternatives-btn");
+                    if (!altButton) {
+                        altButton = document.createElement("button");
+                        altButton.id = "view-alternatives-btn";
+                        altButton.textContent = "Альтернативные сценарии";
+                        modal.querySelector(".modal-content").appendChild(altButton);
+                    }
+                    const eventAlternatives = alternativesData[key];
+                    if (eventAlternatives && eventAlternatives.length > 0) {
+                        altButton.style.display = "inline-block";
+                        altButton.onclick = () => {
+                            showAlternatives(eventYear, event.title);
+                        };
+                    } else {
+                        altButton.style.display = "none";
+                    }
                 });
             });
         })
         .catch(error => console.error(`Ошибка обработки данных: ${error.message}`));
 
-    // Закрытие модального окна при клике на крестик
     closeModal.addEventListener("click", () => {
         modal.classList.remove("show");
     });
 
-    // Закрытие модального окна при клике вне его
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
             modal.classList.remove("show");
@@ -107,7 +235,6 @@ createTimelineMarks(startYear, endYear, 100);
     const numStars = 200;
     const maxLineDistance = 100;
     const mouseRadius = 150;
-
     const mouse = { x: null, y: null };
 
     window.addEventListener("mousemove", (event) => {
@@ -121,55 +248,53 @@ createTimelineMarks(startYear, endYear, 100);
     });
 
     class Star {
-    constructor(x, y, dx, dy, size) {
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
-        this.size = size;
-    }
-
-    draw() {
-        ctx.beginPath();
-        let outerRadius = this.size;
-        let innerRadius = this.size / 2;
-        let spikes = 5;
-
-        let rotation = Math.PI / 2 * 3;
-        let x = this.x;
-        let y = this.y;
-        ctx.moveTo(x, y - outerRadius);
-
-        for (let i = 0; i < spikes; i++) {
-            ctx.lineTo(
-                x + Math.cos(rotation) * outerRadius,
-                y + Math.sin(rotation) * outerRadius
-            );
-            rotation += Math.PI / spikes;
-
-            ctx.lineTo(
-                x + Math.cos(rotation) * innerRadius,
-                y + Math.sin(rotation) * innerRadius
-            );
-            rotation += Math.PI / spikes;
+        constructor(x, y, dx, dy, size) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.size = size;
         }
 
-        ctx.lineTo(x, y - outerRadius);
-        ctx.closePath();
-        ctx.fillStyle = "white";
-        ctx.fill();
+        draw() {
+            ctx.beginPath();
+            let outerRadius = this.size;
+            let innerRadius = this.size / 2;
+            let spikes = 5;
+
+            let rotation = Math.PI / 2 * 3;
+            let x = this.x;
+            let y = this.y;
+            ctx.moveTo(x, y - outerRadius);
+
+            for (let i = 0; i < spikes; i++) {
+                ctx.lineTo(
+                    x + Math.cos(rotation) * outerRadius,
+                    y + Math.sin(rotation) * outerRadius
+                );
+                rotation += Math.PI / spikes;
+
+                ctx.lineTo(
+                    x + Math.cos(rotation) * innerRadius,
+                    y + Math.sin(rotation) * innerRadius
+                );
+                rotation += Math.PI / spikes;
+            }
+
+            ctx.lineTo(x, y - outerRadius);
+            ctx.closePath();
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        update() {
+            if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+            if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+            this.x += this.dx;
+            this.y += this.dy;
+            this.draw();
+        }
     }
-
-    update() {
-        if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-        if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-        this.x += this.dx;
-        this.y += this.dy;
-
-        this.draw();
-    }
-}
-
 
     function initStars() {
         stars = [];
@@ -203,17 +328,19 @@ createTimelineMarks(startYear, endYear, 100);
     }
 
     function connectToMouse() {
-        for (let i = 0; i < stars.length; i++) {
-            const distance = Math.sqrt(
-                (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
-            );
-            if (distance < mouseRadius) {
-                ctx.beginPath();
-                ctx.moveTo(stars[i].x, stars[i].y);
-                ctx.lineTo(mouse.x, mouse.y);
-                ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / mouseRadius})`;
-                ctx.lineWidth = 0.8;
-                ctx.stroke();
+        if (mouse.x !== null && mouse.y !== null) {
+            for (let i = 0; i < stars.length; i++) {
+                const distance = Math.sqrt(
+                    (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
+                );
+                if (distance < mouseRadius) {
+                    ctx.beginPath();
+                    ctx.moveTo(stars[i].x, stars[i].y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / mouseRadius})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
             }
         }
     }
@@ -221,18 +348,18 @@ createTimelineMarks(startYear, endYear, 100);
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        initStars(); // Пересоздаём звёзды при изменении размера окна
+        initStars();
     }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         stars.forEach((star) => star.update());
         connectStars();
-        if (mouse.x !== null && mouse.y !== null) connectToMouse();
+        connectToMouse();
         requestAnimationFrame(animate);
     }
 
-    window.addEventListener("resize", resizeCanvas); // Пересоздание фона при изменении размера окна
-    resizeCanvas(); // Установка начальных размеров
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
     animate();
 });
