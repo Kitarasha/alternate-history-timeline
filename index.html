@@ -31,18 +31,42 @@
         <!-- Контейнер таймлайна -->
         <div id="timeline-container">
             <div id="timeline"></div>
-        <!-- Модальное окно -->
+        </div> <!-- Закрываем #timeline-container -->
+
+        <!-- Модальное окно для основного события -->
         <div id="modal" class="hidden">
             <div class="modal-content">
                 <span id="close-modal">&times;</span>
                 <h2 id="event-title"></h2>
                 <p id="event-description">Описание события появится здесь...</p>
+                <!-- Кнопка для просмотра альтернативных сценариев будет добавляться через JS -->
+            </div>
+        </div>
+
+        <!-- Модальное окно для выбора альтернативных сценариев -->
+        <div id="alternatives-modal" class="hidden">
+            <div class="modal-content">
+                <span id="close-alternatives">&times;</span>
+                <h2 id="alternatives-title">Альтернативные сценарии</h2>
+                <div id="alternatives-list">
+                    <!-- Список альтернатив будет генерироваться JavaScript-ом -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для показа сценария (графической новеллы) -->
+        <div id="scenario-modal" class="hidden">
+            <div class="modal-content scenario-content">
+                <span id="close-scenario">&times;</span>
+                <h2 id="scenario-title">Сценарий развития</h2>
+                <div id="scenario-text"></div>
+                <button id="scenario-next">Далее</button>
             </div>
         </div>
     </main>
 
     <script>
-        // Отладка для проверки размеров
+        // Отладка для проверки размеров таймлайна
         document.addEventListener("DOMContentLoaded", () => {
             const timeline = document.getElementById("timeline");
             console.log(`Ширина элемента #timeline: ${timeline.offsetWidth}px`);
@@ -94,7 +118,6 @@
                 this.size = size;
             }
 
-            // Рисуем звезду
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -102,7 +125,6 @@
                 ctx.fill();
             }
 
-            // Обновляем позицию
             update() {
                 if (this.x + this.size > canvas.width || this.x - this.size < 0) {
                     this.dx = -this.dx;
@@ -117,7 +139,6 @@
             }
         }
 
-        // Создаём звёзды
         function initStars() {
             stars = [];
             for (let i = 0; i < numStars; i++) {
@@ -130,7 +151,6 @@
             }
         }
 
-        // Рисуем линии между звёздами
         function connectStars() {
             for (let i = 0; i < stars.length; i++) {
                 for (let j = i + 1; j < stars.length; j++) {
@@ -152,8 +172,8 @@
             }
         }
 
-        // Соединение звёзд с мышкой
         function connectToMouse() {
+            if (mouse.x === null || mouse.y === null) return;
             for (let i = 0; i < stars.length; i++) {
                 const distance = Math.sqrt(
                     (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
@@ -171,18 +191,14 @@
             }
         }
 
-        // Анимация
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             stars.forEach((star) => star.update());
             connectStars();
-            if (mouse.x !== null && mouse.y !== null) {
-                connectToMouse();
-            }
+            connectToMouse();
             requestAnimationFrame(animate);
         }
 
-        // Инициализация
         initStars();
         animate();
     </script>
