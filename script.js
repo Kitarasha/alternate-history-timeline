@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalDescription = document.getElementById("event-description");
     const closeModal = document.getElementById("close-modal");
 
-    const alternativeContainer = document.getElementById("alternative-timelines-container"); // === Новое ===
+    const alternativeContainer = document.getElementById("alternative-timelines-container");
 
     const startYear = 0; // Начало шкалы времени (0 н.э.)
     const endYear = 2100; // Конец шкалы времени
@@ -28,9 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Создание меток каждые 100 лет
     createTimelineMarks(startYear, endYear, 100, timeline);
 
-    // === Новое/Изменено ===
     // Пример альтернативных сценариев.
-    // В будущем можно вынести в отдельный файл или дополнять при загрузке данных.
     const alternativesData = {
         "476-Падение Римской Империи": [
             {
@@ -60,9 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
+    // === Изменено ===
     // Функция для создания альтернативных таймлайнов
-    function createAlternativeTimelines(alternatives, eventYear, eventTitle) {
-        // Очистим контейнер от предыдущих веток, если были
+    // Теперь она принимает координаты события, от которого строим альтернативы
+    function createAlternativeTimelines(alternatives, eventYear, eventTitle, eventLeftPercent, eventTopPercent) {
         alternativeContainer.innerHTML = "";
 
         const key = `${eventYear}-${eventTitle}`;
@@ -70,27 +69,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!eventAlternatives) return;
 
-        eventAlternatives.forEach((alt) => {
+        // Допустим, мы расположим ветки на разной высоте от основной линии.
+        // Основная линия примерно по середине контейнера.
+        // Можно чередовать направления: одну ветку выше, другую ниже.
+        // Например, первая ветка на 40%, вторая на 60%, третья на 45%, четвёртая на 55% и т.д.
+        // Для упрощения: первая выше на -10%, вторая ниже на +10% от eventTopPercent.
+        
+        let offsetIndex = 0;
+        eventAlternatives.forEach((alt, i) => {
             const altTimelineWrapper = document.createElement("div");
-            altTimelineWrapper.style.position = "relative";
-            altTimelineWrapper.style.width = "100%";
+            altTimelineWrapper.style.position = "absolute";
+
+            // Позиция альтернативной линии:
+            // Ставим левый край в то же место, что и событие (eventLeftPercent)
+            altTimelineWrapper.style.left = eventLeftPercent;
+
+            // Рассчитаем вертикальное смещение: чередуем ±10%
+            const verticalOffsetPercent = (i % 2 === 0) ? -10 * (i+1) : 10 * (i+1);
+            const finalTop = parseFloat(eventTopPercent) + verticalOffsetPercent;
+
+            altTimelineWrapper.style.top = finalTop + "%";
+            altTimelineWrapper.style.width = "30%"; // длина ветки. Можно изменить
 
             // Создаем альтернативный таймлайн
             const altLine = document.createElement("div");
             altLine.className = "alternative-timeline";
             altLine.style.backgroundColor = alt.color || "#ff5555";
+            // Линия будет рисоваться слева направо
+            // Зафиксируем её ширину на 100% родителя
+            altLine.style.width = "100%";
 
             altTimelineWrapper.appendChild(altLine);
 
-            // Создадим метки для альтернативного таймлайна
-            // Предположим, что альтернативный сценарий развивается в том же диапазоне лет, что и основной
+            // Создадим метки для альтернативного таймлайна (реже, например каждые 200 лет)
             createTimelineMarks(startYear, endYear, 200, altTimelineWrapper, "alternative-timeline-mark");
 
-            // Создаем события альтернативного сценария
+            // События альтернативного сценария
             alt.scenario.forEach((scEvent) => {
                 const positionPercent = ((scEvent.year - startYear) / totalYears) * 100;
                 const altEventDiv = document.createElement("div");
                 altEventDiv.className = "alternative-event";
+                // Позиционируем событие относительно начала ветки
+                // Сейчас ветка начинается в точке события, 0% - это край ветки слева
+                // Поскольку мы задали ширину ветки в 30%, positionPercent относится к основному timeline
+                // Нужно пересчитать процент для ветки: она короче.
+                // Допустим, мы используем те же проценты, но ветка короче, значит события будут ближе к началу.
+                // Для упрощения: просто оставим как есть, но нужно понимать, что это упрощение.
                 altEventDiv.style.left = `${positionPercent}%`;
                 altEventDiv.setAttribute("data-title", `${scEvent.year} — Альтернатива`);
 
@@ -99,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 circle.style.backgroundColor = alt.color || "#ff5555";
                 altEventDiv.appendChild(circle);
 
-                // При клике на альтернативное событие показываем сценарий (текст)
                 altEventDiv.addEventListener("click", () => {
                     showAlternativeScenario(alt, scEvent, altTimelineWrapper);
                 });
@@ -107,19 +130,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 altTimelineWrapper.appendChild(altEventDiv);
             });
 
-            // Добавляем в контейнер
             alternativeContainer.appendChild(altTimelineWrapper);
-
-            // Небольшая задержка, чтобы CSS-анимация сработала
             requestAnimationFrame(() => {
                 altLine.classList.add("show");
             });
         });
     }
 
-    // Функция отображения сценария (графической новеллы) прямо под альтернативной веткой
     function showAlternativeScenario(alt, clickedEvent, parentWrapper) {
-        // Очистим предыдущий сценарий
         let scenarioBlock = parentWrapper.querySelector(".alt-scenario-block");
         if (scenarioBlock) {
             scenarioBlock.remove();
@@ -147,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
         parentWrapper.appendChild(scenarioBlock);
     }
 
-    // Загрузка данных из файла timeline_data.json
+    // Загружаем данные о событиях
     fetch('timeline_data.json')
         .then(response => {
             if (!response.ok) {
@@ -163,16 +181,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             data.forEach(event => {
                 const eventYear = event.year;
-                console.log(`Обработка события: ${JSON.stringify(event)}`);
-
                 if (!eventYear || isNaN(eventYear)) {
                     console.error(`Некорректный год у события: ${JSON.stringify(event)}`);
                     return;
                 }
 
                 const positionPercent = ((eventYear - startYear) / totalYears) * 100;
-                console.log(`Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%`);
-
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
                 eventDiv.style.left = `${positionPercent}%`;
@@ -191,7 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     modalDescription.textContent = event.description || "Нет описания для этого события.";
                     modal.classList.add("show");
 
-                    // Проверяем, есть ли альтернативы
                     const key = `${eventYear}-${event.title}`;
                     let altButton = document.getElementById("view-alternatives-btn");
                     if (!altButton) {
@@ -206,7 +219,23 @@ document.addEventListener("DOMContentLoaded", () => {
                         altButton.style.display = "inline-block";
                         altButton.onclick = () => {
                             modal.classList.remove("show");
-                            createAlternativeTimelines(eventAlternatives, eventYear, event.title);
+
+                            // === Изменено ===
+                            // Получаем позицию события относительно контейнера
+                            const timelineRect = timeline.getBoundingClientRect();
+                            const eventRect = eventDiv.getBoundingClientRect();
+
+                            // Рассчитаем процент по вертикали, основной timeline по вертикали ~ в центре контейнера (50%)
+                            // Можно ориентироваться на top линии:
+                            const timelineContainerRect = document.getElementById("timeline-container").getBoundingClientRect();
+                            const containerHeight = timelineContainerRect.height;
+
+                            // Центр основной линии по вертикали ~50%
+                            // Позиция события по вертикали примерно 50% сейчас.
+                            const eventTopPercent = 50; // можно использовать вычисления, если нужно более точно
+                            const eventLeftPercent = ((eventRect.left - timelineRect.left) / timelineRect.width) * 100 + "%";
+
+                            createAlternativeTimelines(eventAlternatives, eventYear, event.title, eventLeftPercent, eventTopPercent);
                         };
                     } else {
                         altButton.style.display = "none";
@@ -260,7 +289,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let outerRadius = this.size;
             let innerRadius = this.size / 2;
             let spikes = 5;
-
             let rotation = Math.PI / 2 * 3;
             let x = this.x;
             let y = this.y;
@@ -301,8 +329,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const size = Math.random() * 2 + 1;
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height;
-            const dx = (Math.random() - 0.5) * 1;
-            const dy = (Math.random() - 0.5) * 1;
+            const dx = (Math.random() - 0.5);
+            const dy = (Math.random() - 0.5);
             stars.push(new Star(x, y, dx, dy, size));
         }
     }
