@@ -43,6 +43,7 @@ body {
     border-radius: 5px; /* Скруглённые края */
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Более заметная тень */
 }
+
 /* Метки на таймлайне */
 .timeline-mark {
     position: absolute;
@@ -63,6 +64,7 @@ body {
     background-color: white;
     margin: 5px auto 0; /* Пространство между числом и чертой */
 }
+
 /* События */
 .event {
     position: absolute;
@@ -162,4 +164,128 @@ body {
 #close-modal:hover {
     color: #ff5252;
 }
-~
+
+/* ========================= */
+/* Новые модалки для альтернатив и сценария */
+/* ========================= */
+
+#alternatives-modal, #scenario-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none; /* По умолчанию скрыто */
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+#alternatives-modal.show, #scenario-modal.show {
+    display: flex;
+}
+
+#alternatives-modal .modal-content,
+#scenario-modal .modal-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+#close-alternatives, #close-scenario {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #fff;
+}
+
+#close-alternatives:hover, #close-scenario:hover {
+    color: #ff5252;
+}
+
+#alternatives-title {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+#alternatives-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.alternative-option {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: center;
+    color: #fff;
+}
+.alternative-option:hover {
+    background-color: #666;
+}
+
+/* Стиль для сценария (графической новеллы) */
+.scenario-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#scenario-title {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+#scenario-text {
+    min-height: 200px;
+    margin-bottom: 20px;
+    font-size: 1em;
+    line-height: 1.5em;
+    text-align: left;
+    width: 100%;
+    max-width: 500px;
+    white-space: pre-wrap;
+}
+
+#scenario-next {
+    background-color: #03a9f4;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#scenario-next:hover {
+    background-color: #0288d1;
+}
+
+/* Кнопка альтернатив в основном модальном окне (будет добавляться JS-ом) */
+#view-alternatives-btn {
+    margin-top: 20px;
+    background-color: #5c5c5c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    transition: background-color 0.3s;
+}
+
+#view-alternatives-btn:hover {
+    background-color: #757575;
+}
