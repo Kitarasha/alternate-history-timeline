@@ -1,6 +1,6 @@
 /* Общий стиль */
 body {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     background-color: #1e1e2f;
     color: #fff;
     margin: 0;
@@ -170,7 +170,7 @@ body {
 /* ========================= */
 
 #alternatives-modal, #scenario-modal {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     position: fixed;
     top: 0;
     left: 0;
@@ -265,7 +265,7 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     color: #fff;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -283,7 +283,7 @@ body {
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     transition: background-color 0.3s;
 }
 
