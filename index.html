@@ -8,11 +8,17 @@
     <!-- Подключение стилей -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Подключение шрифта Roboto Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Подключение шрифта Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+
+    <!-- Иконки -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="assets/icons/site.webmanifest">
 </head>
 <body>
     <!-- Canvas для звёздного фона -->
@@ -21,32 +27,34 @@
     <header>
         <h1>Time Shifter</h1>
     </header>
-
     <main>
-        <!-- Контейнер для временной шкалы -->
+        <!-- Контейнер таймлайна -->
         <div id="timeline-container">
             <div id="timeline"></div>
-        </div>
+        </div> <!-- Закрываем #timeline-container -->
 
-        <!-- Модальное окно для события -->
+        <!-- Модальное окно для основного события -->
         <div id="modal" class="hidden">
             <div class="modal-content">
                 <span id="close-modal">&times;</span>
                 <h2 id="event-title"></h2>
                 <p id="event-description">Описание события появится здесь...</p>
+                <!-- Кнопка для просмотра альтернативных сценариев будет добавляться через JS -->
             </div>
         </div>
 
-        <!-- Модальное окно для альтернативных сценариев -->
+        <!-- Модальное окно для выбора альтернативных сценариев -->
         <div id="alternatives-modal" class="hidden">
             <div class="modal-content">
                 <span id="close-alternatives">&times;</span>
                 <h2 id="alternatives-title">Альтернативные сценарии</h2>
-                <div id="alternatives-list"></div>
+                <div id="alternatives-list">
+                    <!-- Список альтернатив будет генерироваться JavaScript-ом -->
+                </div>
             </div>
         </div>
 
-        <!-- Модальное окно для сценариев -->
+        <!-- Модальное окно для показа сценария (графической новеллы) -->
         <div id="scenario-modal" class="hidden">
             <div class="modal-content scenario-content">
                 <span id="close-scenario">&times;</span>
@@ -57,19 +65,29 @@
         </div>
     </main>
 
+    <script>
+        // Отладка для проверки размеров таймлайна
+        document.addEventListener("DOMContentLoaded", () => {
+            const timeline = document.getElementById("timeline");
+            console.log(`Ширина элемента #timeline: ${timeline.offsetWidth}px`);
+        });
+    </script>
+
+    <script src="script.js"></script>
+
     <!-- Скрипт для звёздного фона -->
     <script>
         const canvas = document.getElementById("stars-canvas");
         const ctx = canvas.getContext("2d");
 
-        // Устанавливаем размеры canvas на размер окна
+        // Установка размеров canvas
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Массив для звёзд
+        // Массив звёзд
         let stars = [];
         const numStars = 250; // Количество звёзд
-        const maxLineDistance = 100; // Максимальное расстояние для линий
+        const maxLineDistance = 100; // Максимальная длина линии
         const mouseRadius = 150; // Радиус для соединения с мышкой
 
         // Позиция мышки
@@ -84,23 +102,22 @@
             mouse.y = event.y;
         });
 
-        // Убираем фокус мышки
+        // Убираем мышку из фокуса
         window.addEventListener("mouseout", () => {
             mouse.x = null;
             mouse.y = null;
         });
 
-        // Класс для создания звёзд
+        // Создаём звезду
         class Star {
             constructor(x, y, dx, dy, size) {
-                this.x = x; // Координата X
-                this.y = y; // Координата Y
-                this.dx = dx; // Скорость по X
-                this.dy = dy; // Скорость по Y
-                this.size = size; // Размер звезды
+                this.x = x;
+                this.y = y;
+                this.dx = dx;
+                this.dy = dy;
+                this.size = size;
             }
 
-            // Рисуем звезду
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -108,7 +125,6 @@
                 ctx.fill();
             }
 
-            // Обновляем положение звезды
             update() {
                 if (this.x + this.size > canvas.width || this.x - this.size < 0) {
                     this.dx = -this.dx;
@@ -123,20 +139,18 @@
             }
         }
 
-        // Создаём массив звёзд
         function initStars() {
             stars = [];
             for (let i = 0; i < numStars; i++) {
                 const size = Math.random() * 2 + 1; // Размер звезды
-                const x = Math.random() * canvas.width; // Координата X
-                const y = Math.random() * canvas.height; // Координата Y
-                const dx = (Math.random() - 0.5) * 1; // Скорость по X
-                const dy = (Math.random() - 0.5) * 1; // Скорость по Y
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const dx = (Math.random() - 0.5) * 1; // Скорость по x
+                const dy = (Math.random() - 0.5) * 1; // Скорость по y
                 stars.push(new Star(x, y, dx, dy, size));
             }
         }
 
-        // Соединяем звёзды линиями
         function connectStars() {
             for (let i = 0; i < stars.length; i++) {
                 for (let j = i + 1; j < stars.length; j++) {
@@ -158,7 +172,6 @@
             }
         }
 
-        // Соединяем звёзды с мышкой
         function connectToMouse() {
             if (mouse.x === null || mouse.y === null) return;
             for (let i = 0; i < stars.length; i++) {
@@ -178,17 +191,16 @@
             }
         }
 
-        // Анимация
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем canvas
-            stars.forEach((star) => star.update()); // Обновляем звёзды
-            connectStars(); // Соединяем звёзды
-            connectToMouse(); // Соединяем звёзды с мышкой
-            requestAnimationFrame(animate); // Цикл анимации
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach((star) => star.update());
+            connectStars();
+            connectToMouse();
+            requestAnimationFrame(animate);
         }
 
-        initStars(); // Инициализация звёзд
-        animate(); // Запуск анимации
+        initStars();
+        animate();
     </script>
 </body>
 </html>
