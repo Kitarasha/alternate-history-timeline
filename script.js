@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalDescription = document.getElementById("event-description");
     const closeModal = document.getElementById("close-modal");
 
+    const alternativeContainer = document.getElementById("alternative-timelines-container"); // === Новое ===
+
     const startYear = 0; // Начало шкалы времени (0 н.э.)
     const endYear = 2100; // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
@@ -12,23 +14,23 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
 
     // Генерация меток на таймлайне
-    const createTimelineMarks = (start, end, step) => {
+    const createTimelineMarks = (start, end, step, container, markClass = "timeline-mark", lineStart = startYear, lineTotal = totalYears) => {
         for (let year = start; year <= end; year += step) {
-            const positionPercent = ((year - start) / totalYears) * 100;
+            const positionPercent = ((year - lineStart) / lineTotal) * 100;
             const mark = document.createElement("div");
-            mark.className = "timeline-mark";
+            mark.className = markClass;
             mark.style.left = `${positionPercent}%`;
             mark.textContent = year;
-            timeline.appendChild(mark);
+            container.appendChild(mark);
         }
     };
 
     // Создание меток каждые 100 лет
-    createTimelineMarks(startYear, endYear, 100);
+    createTimelineMarks(startYear, endYear, 100, timeline);
 
-    // === Новое ===
-    // Пример альтернативных сценариев. В будущем можно вынести в отдельный файл или дополнять при загрузке данных.
-    // Ключ формата: "год - название события"
+    // === Новое/Изменено ===
+    // Пример альтернативных сценариев.
+    // В будущем можно вынести в отдельный файл или дополнять при загрузке данных.
     const alternativesData = {
         "476-Падение Римской Империи": [
             {
@@ -58,95 +60,91 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    // === Новое ===
-    // Получаем элементы новых модалок
-    const alternativesModal = document.getElementById("alternatives-modal");
-    const closeAlternatives = document.getElementById("close-alternatives");
-    const alternativesList = document.getElementById("alternatives-list");
+    // Функция для создания альтернативных таймлайнов
+    function createAlternativeTimelines(alternatives, eventYear, eventTitle) {
+        // Очистим контейнер от предыдущих веток, если были
+        alternativeContainer.innerHTML = "";
 
-    const scenarioModal = document.getElementById("scenario-modal");
-    const closeScenario = document.getElementById("close-scenario");
-    const scenarioTitle = document.getElementById("scenario-title");
-    const scenarioText = document.getElementById("scenario-text");
-    const scenarioNext = document.getElementById("scenario-next");
-
-    let currentScenario = [];
-    let currentScenarioIndex = 0;
-
-    closeAlternatives.addEventListener("click", () => {
-        alternativesModal.classList.remove("show");
-    });
-
-    closeScenario.addEventListener("click", () => {
-        scenarioModal.classList.remove("show");
-        currentScenario = [];
-        currentScenarioIndex = 0;
-        scenarioText.textContent = "";
-    });
-
-    alternativesModal.addEventListener("click", (event) => {
-        if (event.target === alternativesModal) {
-            alternativesModal.classList.remove("show");
-        }
-    });
-
-    scenarioModal.addEventListener("click", (event) => {
-        if (event.target === scenarioModal) {
-            scenarioModal.classList.remove("show");
-        }
-    });
-
-    scenarioNext.addEventListener("click", () => {
-        currentScenarioIndex++;
-        if (currentScenarioIndex < currentScenario.length) {
-            showScenarioStep(currentScenarioIndex);
-        } else {
-            scenarioText.textContent += "\n\nКонец альтернативного сценария.";
-            scenarioNext.disabled = true;
-        }
-    });
-
-    function showScenarioStep(index) {
-        scenarioNext.disabled = false;
-        scenarioText.textContent = "";
-        const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
-        let charIndex = 0;
-        const interval = setInterval(() => {
-            scenarioText.textContent += fullText.charAt(charIndex);
-            charIndex++;
-            if (charIndex >= fullText.length) {
-                clearInterval(interval);
-            }
-        }, 25);
-    }
-
-    function showAlternatives(year, title) {
-        const key = `${year}-${title}`;
+        const key = `${eventYear}-${eventTitle}`;
         const eventAlternatives = alternativesData[key];
+
         if (!eventAlternatives) return;
 
-        alternativesList.innerHTML = "";
         eventAlternatives.forEach((alt) => {
-            const altDiv = document.createElement("div");
-            altDiv.className = "alternative-option";
-            altDiv.textContent = alt.title;
-            altDiv.style.backgroundColor = alt.color || "#444";
-            altDiv.addEventListener("click", () => {
-                showScenario(alt.scenario);
-            });
-            alternativesList.appendChild(altDiv);
-        });
+            const altTimelineWrapper = document.createElement("div");
+            altTimelineWrapper.style.position = "relative";
+            altTimelineWrapper.style.width = "100%";
 
-        alternativesModal.classList.add("show");
+            // Создаем альтернативный таймлайн
+            const altLine = document.createElement("div");
+            altLine.className = "alternative-timeline";
+            altLine.style.backgroundColor = alt.color || "#ff5555";
+
+            altTimelineWrapper.appendChild(altLine);
+
+            // Создадим метки для альтернативного таймлайна
+            // Предположим, что альтернативный сценарий развивается в том же диапазоне лет, что и основной
+            createTimelineMarks(startYear, endYear, 200, altTimelineWrapper, "alternative-timeline-mark");
+
+            // Создаем события альтернативного сценария
+            alt.scenario.forEach((scEvent) => {
+                const positionPercent = ((scEvent.year - startYear) / totalYears) * 100;
+                const altEventDiv = document.createElement("div");
+                altEventDiv.className = "alternative-event";
+                altEventDiv.style.left = `${positionPercent}%`;
+                altEventDiv.setAttribute("data-title", `${scEvent.year} — Альтернатива`);
+
+                const circle = document.createElement("div");
+                circle.className = "circle";
+                circle.style.backgroundColor = alt.color || "#ff5555";
+                altEventDiv.appendChild(circle);
+
+                // При клике на альтернативное событие показываем сценарий (текст)
+                altEventDiv.addEventListener("click", () => {
+                    showAlternativeScenario(alt, scEvent, altTimelineWrapper);
+                });
+
+                altTimelineWrapper.appendChild(altEventDiv);
+            });
+
+            // Добавляем в контейнер
+            alternativeContainer.appendChild(altTimelineWrapper);
+
+            // Небольшая задержка, чтобы CSS-анимация сработала
+            requestAnimationFrame(() => {
+                altLine.classList.add("show");
+            });
+        });
     }
 
-    function showScenario(scenario) {
-        alternativesModal.classList.remove("show");
-        scenarioModal.classList.add("show");
-        currentScenario = scenario;
-        currentScenarioIndex = 0;
-        scenarioNext.disabled = false;
-        showScenarioStep(currentScenarioIndex);
+    // Функция отображения сценария (графической новеллы) прямо под альтернативной веткой
+    function showAlternativeScenario(alt, clickedEvent, parentWrapper) {
+        // Очистим предыдущий сценарий
+        let scenarioBlock = parentWrapper.querySelector(".alt-scenario-block");
+        if (scenarioBlock) {
+            scenarioBlock.remove();
+        }
+
+        scenarioBlock = document.createElement("div");
+        scenarioBlock.className = "alt-scenario-block";
+        scenarioBlock.style.backgroundColor = "#333";
+        scenarioBlock.style.padding = "20px";
+        scenarioBlock.style.borderRadius = "10px";
+        scenarioBlock.style.marginTop = "20px";
+        scenarioBlock.style.boxShadow = "0 0 15px rgba(0,0,0,0.7)";
+        scenarioBlock.style.color = "#fff";
+
+        const scenarioTitle = document.createElement("h3");
+        scenarioTitle.textContent = `${clickedEvent.year} год — Альтернативный сценарий: ${alt.title}`;
+        scenarioTitle.style.marginBottom = "10px";
+
+        const scenarioText = document.createElement("div");
+        scenarioText.style.whiteSpace = "pre-wrap";
+        scenarioText.textContent = clickedEvent.text;
+
+        scenarioBlock.appendChild(scenarioTitle);
+        scenarioBlock.appendChild(scenarioText);
+        parentWrapper.appendChild(scenarioBlock);
     }
 
     // Загрузка данных из файла timeline_data.json
@@ -193,7 +191,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     modalDescription.textContent = event.description || "Нет описания для этого события.";
                     modal.classList.add("show");
 
-                    // === Новое ===
                     // Проверяем, есть ли альтернативы
                     const key = `${eventYear}-${event.title}`;
                     let altButton = document.getElementById("view-alternatives-btn");
@@ -203,11 +200,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         altButton.textContent = "Альтернативные сценарии";
                         modal.querySelector(".modal-content").appendChild(altButton);
                     }
+
                     const eventAlternatives = alternativesData[key];
                     if (eventAlternatives && eventAlternatives.length > 0) {
                         altButton.style.display = "inline-block";
                         altButton.onclick = () => {
-                            showAlternatives(eventYear, event.title);
+                            modal.classList.remove("show");
+                            createAlternativeTimelines(eventAlternatives, eventYear, event.title);
                         };
                     } else {
                         altButton.style.display = "none";
