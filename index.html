@@ -13,8 +13,6 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
-
-    <!-- Иконки -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
@@ -31,6 +29,8 @@
         <!-- Контейнер таймлайна -->
         <div id="timeline-container">
             <div id="timeline"></div>
+            <!-- Перемещаем альтернативный контейнер сюда -->
+            <div id="alternative-timelines-container"></div>
         </div> <!-- Закрываем #timeline-container -->
 
         <!-- Основной модальное окно для события -->
@@ -39,38 +39,9 @@
                 <span id="close-modal">&times;</span>
                 <h2 id="event-title"></h2>
                 <p id="event-description">Описание события появится здесь...</p>
-                <!-- Здесь будет кнопка "Альтернативные сценарии", которая при нажатии будет выводить альтернативные таймлайны -->
+                <!-- Кнопка для просмотра альтернативных сценариев будет добавляться через JS -->
             </div>
         </div>
-
-        <!-- Новая секция для альтернативных таймлайнов -->
-        <section id="alternative-timelines-container">
-            <!-- Сюда JS будет добавлять дополнительные линии (SVG или div-элементы) и их метки событий -->
-        </section>
-
-        <!-- 
-        Ранее использовавшиеся модальные окна для альтернатив и сценария
-        теперь не нужны, т.к. будет визуализация альтернативных таймлайнов.
-        Закомментируем их, но оставим в коде на случай возврата к идее.
-
-        <div id="alternatives-modal" class="hidden">
-            <div class="modal-content">
-                <span id="close-alternatives">&times;</span>
-                <h2 id="alternatives-title">Альтернативные сценарии</h2>
-                <div id="alternatives-list">
-                </div>
-            </div>
-        </div>
-
-        <div id="scenario-modal" class="hidden">
-            <div class="modal-content scenario-content">
-                <span id="close-scenario">&times;</span>
-                <h2 id="scenario-title">Сценарий развития</h2>
-                <div id="scenario-text"></div>
-                <button id="scenario-next">Далее</button>
-            </div>
-        </div>
-        -->
     </main>
 
     <script>
@@ -166,12 +137,12 @@
                         (stars[i].x - stars[j].x) ** 2 +
                         (stars[i].y - stars[j].y) ** 2
                     );
-                    if (distance < maxLineDistance) {
+                    if (distance < 100) {
                         ctx.beginPath();
                         ctx.moveTo(stars[i].x, stars[i].y);
                         ctx.lineTo(stars[j].x, stars[j].y);
                         ctx.strokeStyle = `rgba(255, 255, 255, ${
-                            1 - distance / maxLineDistance
+                            1 - distance / 100
                         })`;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
@@ -186,12 +157,12 @@
                 const distance = Math.sqrt(
                     (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
                 );
-                if (distance < mouseRadius) {
+                if (distance < 150) {
                     ctx.beginPath();
                     ctx.moveTo(stars[i].x, stars[i].y);
                     ctx.lineTo(mouse.x, mouse.y);
                     ctx.strokeStyle = `rgba(255, 255, 255, ${
-                        1 - distance / mouseRadius
+                        1 - distance / 150
                     })`;
                     ctx.lineWidth = 0.8;
                     ctx.stroke();
@@ -212,3 +183,4 @@
     </script>
 </body>
 </html>
+
