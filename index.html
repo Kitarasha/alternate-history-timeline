@@ -33,28 +33,35 @@
             <div id="timeline"></div>
         </div> <!-- Закрываем #timeline-container -->
 
-        <!-- Модальное окно для основного события -->
+        <!-- Основной модальное окно для события -->
         <div id="modal" class="hidden">
             <div class="modal-content">
                 <span id="close-modal">&times;</span>
                 <h2 id="event-title"></h2>
                 <p id="event-description">Описание события появится здесь...</p>
-                <!-- Кнопка для просмотра альтернативных сценариев будет добавляться через JS -->
+                <!-- Здесь будет кнопка "Альтернативные сценарии", которая при нажатии будет выводить альтернативные таймлайны -->
             </div>
         </div>
 
-        <!-- Модальное окно для выбора альтернативных сценариев -->
+        <!-- Новая секция для альтернативных таймлайнов -->
+        <section id="alternative-timelines-container">
+            <!-- Сюда JS будет добавлять дополнительные линии (SVG или div-элементы) и их метки событий -->
+        </section>
+
+        <!-- 
+        Ранее использовавшиеся модальные окна для альтернатив и сценария
+        теперь не нужны, т.к. будет визуализация альтернативных таймлайнов.
+        Закомментируем их, но оставим в коде на случай возврата к идее.
+
         <div id="alternatives-modal" class="hidden">
             <div class="modal-content">
                 <span id="close-alternatives">&times;</span>
                 <h2 id="alternatives-title">Альтернативные сценарии</h2>
                 <div id="alternatives-list">
-                    <!-- Список альтернатив будет генерироваться JavaScript-ом -->
                 </div>
             </div>
         </div>
 
-        <!-- Модальное окно для показа сценария (графической новеллы) -->
         <div id="scenario-modal" class="hidden">
             <div class="modal-content scenario-content">
                 <span id="close-scenario">&times;</span>
@@ -63,6 +70,7 @@
                 <button id="scenario-next">Далее</button>
             </div>
         </div>
+        -->
     </main>
 
     <script>
