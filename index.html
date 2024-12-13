@@ -1,98 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time Shifter</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <!-- РџРѕРґРєР»СЋС‡РµРЅРёРµ СЃС‚РёР»РµР№ -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- РџРѕРґРєР»СЋС‡РµРЅРёРµ С€СЂРёС„С‚Р° Orbitron -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+
+    <!-- РРєРѕРЅРєРё -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="assets/icons/site.webmanifest">
 </head>
 <body>
+    <!-- Canvas РґР»СЏ Р·РІС‘Р·РґРЅРѕРіРѕ С„РѕРЅР° -->
     <canvas id="stars-canvas"></canvas>
+
     <header>
         <h1>Time Shifter</h1>
     </header>
     <main>
+        <!-- РљРѕРЅС‚РµР№РЅРµСЂ С‚Р°Р№РјР»Р°Р№РЅР° -->
         <div id="timeline-container">
             <div id="timeline"></div>
-            <div id="alternative-timelines-container"></div>
-        </div>
+        </div> <!-- Р—Р°РєСЂС‹РІР°РµРј #timeline-container -->
 
+        <!-- РњРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ РґР»СЏ РѕСЃРЅРѕРІРЅРѕРіРѕ СЃРѕР±С‹С‚РёСЏ -->
         <div id="modal" class="hidden">
             <div class="modal-content">
                 <span id="close-modal">&times;</span>
                 <h2 id="event-title"></h2>
-                <p id="event-description">Описание события появится здесь...</p>
+                <p id="event-description">РћРїРёСЃР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ РїРѕСЏРІРёС‚СЃСЏ Р·РґРµСЃСЊ...</p>
+                <!-- РљРЅРѕРїРєР° РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹С… СЃС†РµРЅР°СЂРёРµРІ Р±СѓРґРµС‚ РґРѕР±Р°РІР»СЏС‚СЊСЃСЏ С‡РµСЂРµР· JS -->
+            </div>
+        </div>
+
+        <!-- РњРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ РґР»СЏ РІС‹Р±РѕСЂР° Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹С… СЃС†РµРЅР°СЂРёРµРІ -->
+        <div id="alternatives-modal" class="hidden">
+            <div class="modal-content">
+                <span id="close-alternatives">&times;</span>
+                <h2 id="alternatives-title">РђР»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Рµ СЃС†РµРЅР°СЂРёРё</h2>
+                <div id="alternatives-list">
+                    <!-- РЎРїРёСЃРѕРє Р°Р»СЊС‚РµСЂРЅР°С‚РёРІ Р±СѓРґРµС‚ РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊСЃСЏ JavaScript-РѕРј -->
+                </div>
+            </div>
+        </div>
+
+        <!-- РњРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ РґР»СЏ РїРѕРєР°Р·Р° СЃС†РµРЅР°СЂРёСЏ (РіСЂР°С„РёС‡РµСЃРєРѕР№ РЅРѕРІРµР»Р»С‹) -->
+        <div id="scenario-modal" class="hidden">
+            <div class="modal-content scenario-content">
+                <span id="close-scenario">&times;</span>
+                <h2 id="scenario-title">РЎС†РµРЅР°СЂРёР№ СЂР°Р·РІРёС‚РёСЏ</h2>
+                <div id="scenario-text"></div>
+                <button id="scenario-next">Р”Р°Р»РµРµ</button>
             </div>
         </div>
     </main>
 
+    <script>
+        // РћС‚Р»Р°РґРєР° РґР»СЏ РїСЂРѕРІРµСЂРєРё СЂР°Р·РјРµСЂРѕРІ С‚Р°Р№РјР»Р°Р№РЅР°
+        document.addEventListener("DOMContentLoaded", () => {
+            const timeline = document.getElementById("timeline");
+            console.log(`РЁРёСЂРёРЅР° СЌР»РµРјРµРЅС‚Р° #timeline: ${timeline.offsetWidth}px`);
+        });
+    </script>
+
     <script src="script.js"></script>
 
-    <!-- Скрипт для звёздного фона -->
+    <!-- РЎРєСЂРёРїС‚ РґР»СЏ Р·РІС‘Р·РґРЅРѕРіРѕ С„РѕРЅР° -->
     <script>
         const canvas = document.getElementById("stars-canvas");
         const ctx = canvas.getContext("2d");
+
+        // РЈСЃС‚Р°РЅРѕРІРєР° СЂР°Р·РјРµСЂРѕРІ canvas
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        // РњР°СЃСЃРёРІ Р·РІС‘Р·Рґ
         let stars = [];
-        const numStars = 250;
-        const maxLineDistance = 100;
-        const mouseRadius = 150;
-        const mouse = { x: null, y: null };
+        const numStars = 250; // РљРѕР»РёС‡РµСЃС‚РІРѕ Р·РІС‘Р·Рґ
+        const maxLineDistance = 100; // РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° Р»РёРЅРёРё
+        const mouseRadius = 150; // Р Р°РґРёСѓСЃ РґР»СЏ СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ РјС‹С€РєРѕР№
 
+        // РџРѕР·РёС†РёСЏ РјС‹С€РєРё
+        const mouse = {
+            x: null,
+            y: null,
+        };
+
+        // РћР±РЅРѕРІР»СЏРµРј РїРѕР·РёС†РёСЋ РјС‹С€РєРё
         window.addEventListener("mousemove", (event) => {
             mouse.x = event.x;
             mouse.y = event.y;
         });
 
+        // РЈР±РёСЂР°РµРј РјС‹С€РєСѓ РёР· С„РѕРєСѓСЃР°
         window.addEventListener("mouseout", () => {
             mouse.x = null;
             mouse.y = null;
         });
 
+        // РЎРѕР·РґР°С‘Рј Р·РІРµР·РґСѓ
         class Star {
             constructor(x, y, dx, dy, size) {
-                this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size;
+                this.x = x;
+                this.y = y;
+                this.dx = dx;
+                this.dy = dy;
+                this.size = size;
             }
+
             draw() {
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-                ctx.fillStyle="white";
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = "white";
                 ctx.fill();
             }
+
             update() {
-                if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-                if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-                this.x += this.dx; this.y += this.dy;
+                if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                    this.dx = -this.dx;
+                }
+                if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                    this.dy = -this.dy;
+                }
+                this.x += this.dx;
+                this.y += this.dy;
+
                 this.draw();
             }
         }
 
         function initStars() {
             stars = [];
-            for (let i=0; i<numStars; i++) {
-                const size = Math.random()*2+1;
-                const x = Math.random()*canvas.width;
-                const y = Math.random()*canvas.height;
-                const dx=(Math.random()-0.5);
-                const dy=(Math.random()-0.5);
-                stars.push(new Star(x,y,dx,dy,size));
+            for (let i = 0; i < numStars; i++) {
+                const size = Math.random() * 2 + 1; // Р Р°Р·РјРµСЂ Р·РІРµР·РґС‹
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const dx = (Math.random() - 0.5) * 1; // РЎРєРѕСЂРѕСЃС‚СЊ РїРѕ x
+                const dy = (Math.random() - 0.5) * 1; // РЎРєРѕСЂРѕСЃС‚СЊ РїРѕ y
+                stars.push(new Star(x, y, dx, dy, size));
             }
         }
 
         function connectStars() {
-            for (let i=0; i<stars.length; i++) {
-                for (let j=i+1; j<stars.length; j++) {
-                    const dist = Math.sqrt((stars[i].x - stars[j].x)**2+(stars[i].y - stars[j].y)**2);
-                    if(dist<maxLineDistance) {
+            for (let i = 0; i < stars.length; i++) {
+                for (let j = i + 1; j < stars.length; j++) {
+                    const distance = Math.sqrt(
+                        (stars[i].x - stars[j].x) ** 2 +
+                        (stars[i].y - stars[j].y) ** 2
+                    );
+                    if (distance < maxLineDistance) {
                         ctx.beginPath();
                         ctx.moveTo(stars[i].x, stars[i].y);
                         ctx.lineTo(stars[j].x, stars[j].y);
-                        ctx.strokeStyle=`rgba(255,255,255,${1-dist/maxLineDistance})`;
-                        ctx.lineWidth=0.5;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${
+                            1 - distance / maxLineDistance
+                        })`;
+                        ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
                 }
@@ -100,34 +173,31 @@
         }
 
         function connectToMouse() {
-            if (mouse.x!==null && mouse.y!==null) {
-                for(let i=0; i<stars.length;i++){
-                    const dist = Math.sqrt((stars[i].x-mouse.x)**2+(stars[i].y-mouse.y)**2);
-                    if(dist<mouseRadius) {
-                        ctx.beginPath();
-                        ctx.moveTo(stars[i].x, stars[i].y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle=`rgba(255,255,255,${1-dist/mouseRadius})`;
-                        ctx.lineWidth=0.8;
-                        ctx.stroke();
-                    }
+            if (mouse.x === null || mouse.y === null) return;
+            for (let i = 0; i < stars.length; i++) {
+                const distance = Math.sqrt(
+                    (stars[i].x - mouse.x) ** 2 + (stars[i].y - mouse.y) ** 2
+                );
+                if (distance < mouseRadius) {
+                    ctx.beginPath();
+                    ctx.moveTo(stars[i].x, stars[i].y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${
+                        1 - distance / mouseRadius
+                    })`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
                 }
             }
         }
 
         function animate() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            stars.forEach(s=>s.update());
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach((star) => star.update());
             connectStars();
             connectToMouse();
             requestAnimationFrame(animate);
         }
-
-        window.addEventListener("resize",()=>{
-            canvas.width=window.innerWidth;
-            canvas.height=window.innerHeight;
-            initStars();
-        });
 
         initStars();
         animate();
