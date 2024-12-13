@@ -164,38 +164,33 @@ body {
     color: #ff5252;
 }
 
-/* Ранее используемые модалки можно оставить на случай возврата, но они не будут задействованы.
-   Здесь стили для #alternatives-modal, #scenario-modal, .alternative-option и т.д.
-   Можно оставить их закомментированными или просто проигнорировать.
-
-#alternatives-modal, #scenario-modal {
-    ...
-}
-*/
-
 /* ========================================================= */
 /* Новые стили для альтернативных таймлайнов */
 /* ========================================================= */
 
-/* Контейнер для альтернативных таймлайнов */
+/* Изменено:
+   Теперь position: absolute; чтобы можно было позиционировать ветки
+   относительно события. Убираем margin-top и gap.
+*/
 #alternative-timelines-container {
-    position: relative;
-    width: 80vw;
-    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Убираем margin-top и gap */
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 50px; /* Отступ сверху, чтобы они располагались ниже основного таймлайна */
-    gap: 30px; /* Расстояние между альтернативными таймлайнами */
 }
 
-/* Альтернативный таймлайн */
+/* Альтернативный таймлайн:
+   Теперь тоже абсолютно позиционируется, чтобы можно было ставить его там,
+   где нужно. Мы будем задавать его top/left через JS.
+*/
 .alternative-timeline {
-    position: relative;
-    width: 80%;
+    position: absolute;
     height: 4px;
-    background-color: #ff5555; /* можно менять цвет в зависимости от сценария */
-    margin: 0 auto;
+    background-color: #ff5555;
     border-radius: 3px;
     transform: scaleX(0);
     transform-origin: left center;
@@ -220,6 +215,7 @@ body {
     white-space: nowrap;
     pointer-events: none;
 }
+
 .alternative-timeline-mark::after {
     content: "";
     display: block;
@@ -232,7 +228,7 @@ body {
 /* События на альтернативных таймлайнах */
 .alternative-event {
     position: absolute;
-    top: 50%; 
+    top: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
     z-index: 5;
@@ -241,7 +237,7 @@ body {
 .alternative-event .circle {
     width: 12px;
     height: 12px;
-    background-color: #ff5555; /* цвет можно менять для каждой ветки */
+    background-color: #ff5555;
     border-radius: 50%;
     box-shadow: 0 0 5px #ff5555;
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
@@ -252,7 +248,6 @@ body {
     background-color: #ff8888;
 }
 
-/* Подсказки для альтернативных событий, если нужны */
 .alternative-event::after {
     content: attr(data-title);
     position: absolute;
