@@ -24,3 +24,5 @@ jobs:
         run: |
           cd server
           node server.js
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
