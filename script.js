@@ -372,3 +372,30 @@ document.addEventListener("DOMContentLoaded", () => {
     resizeCanvas();
     animate();
 });
+document.getElementById('feedback-button').addEventListener('click', function () {
+    // Получаем информацию о текущем сценарии и событии
+    const scenario = this.getAttribute('data-scenario');
+    const event = this.getAttribute('data-event');
+    const feedback = prompt("Введите ваш отзыв:");
+
+    if (feedback) {
+        // Отправляем данные на сервер
+        fetch('/send-feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ scenario, event, feedback }),
+        })
+        .then((response) => {
+            if (response.ok) {
+                alert('Ваш отзыв успешно отправлен!');
+            } else {
+                alert('Ошибка при отправке отзыва.');
+            }
+        })
+        .catch(() => {
+            alert('Ошибка соединения с сервером.');
+        });
+    } else {
+        alert('Вы не ввели отзыв.');
+    }
+});
