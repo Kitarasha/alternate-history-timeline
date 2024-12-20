@@ -30,13 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Пример альтернативных сценариев. В будущем можно вынести в отдельный файл или дополнять при загрузке данных.
     // Ключ формата: "год - название события"
     const alternativesData = {
-        "476-The Fall of the Roman Empire": [
+        "476-Падение Римской Империи": [
             {
-                title: "The Roman Empire did not collapse",
+                title: "Римская империя не распалась",
                 color: "#aabbcc",
                 scenario: [
-                    { year: 500, text: "By the year 500, the empire was thriving... Technology, art, culture..." },
-                    { year: 800, text: "By the year 800, Rome had mastered new territories and technologies..." }
+                    { year: 500, text: "К 500 году империя процветала... Технологии, искусство, культура..." },
+                    { year: 600, text: "К 600 году Рим освоил новые территории и технологии..." }
                 ]
             },
             {
@@ -363,5 +363,3 @@ document.addEventListener("DOMContentLoaded", () => {
     resizeCanvas();
     animate();
 });
-
-
