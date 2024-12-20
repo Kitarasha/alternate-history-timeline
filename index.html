@@ -10,6 +10,14 @@
 
     <!-- Подключение шрифта Orbitron -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Проверяем авторизацию -->
+    <script>
+        if (!localStorage.getItem('loggedIn') || localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = 'register.html'; // Перенаправляем на страницу регистрации
+        }
+    </script>
+</head>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
