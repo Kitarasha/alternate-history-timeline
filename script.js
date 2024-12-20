@@ -107,27 +107,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function showScenarioStep(index) {
-    scenarioNext.disabled = false;
-    scenarioText.textContent = "";
-    const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
-    let charIndex = 0;
-
-    const interval = setInterval(() => {
-        scenarioText.textContent += fullText.charAt(charIndex);
-        charIndex++;
-        if (charIndex >= fullText.length) {
-            clearInterval(interval);
-
-            // Показ кнопки "Оставить отзыв", если это последний шаг
-            if (index >= currentScenario.length - 1) {
-                const scenarioEnd = document.getElementById('scenario-end');
-                scenarioEnd.classList.remove('hidden'); // Показываем кнопку
-                scenarioNext.disabled = true; // Отключаем кнопку "Далее"
+        scenarioNext.disabled = false;
+        scenarioText.textContent = "";
+        const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
+        let charIndex = 0;
+        const interval = setInterval(() => {
+            scenarioText.textContent += fullText.charAt(charIndex);
+            charIndex++;
+            if (charIndex >= fullText.length) {
+                clearInterval(interval);
             }
-        }
-    }, 25);
-}
-
+        }, 25);
+    }
 
     function showAlternatives(year, title) {
         const key = `${year}-${title}`;
@@ -372,29 +363,3 @@ document.addEventListener("DOMContentLoaded", () => {
     resizeCanvas();
     animate();
 });
-document.getElementById('feedback-button').addEventListener('click', function () {
-    // Получаем информацию о текущем сценарии и событии
-    const scenario = this.getAttribute('data-scenario');
-    const event = this.getAttribute('data-event');
-    const feedback = prompt("Введите ваш отзыв:");
-
-    if (feedback) {
-        // Отправляем данные на сервер
-fetch('https://alternate-history-timeline-production.up.railway.app/send-feedback', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ scenario, event, feedback }),
-})
-    .then((response) => {
-        if (response.ok) {
-            alert('Ваш отзыв успешно отправлен!');
-        } else {
-            alert('Ошибка при отправке отзыва.');
-        }
-    })
-    .catch(() => {
-        alert('Ошибка соединения с сервером.');
-    });
-} else {
-    alert('Вы не ввели отзыв.');
-}
