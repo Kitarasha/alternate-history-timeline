@@ -380,7 +380,7 @@ document.getElementById('feedback-button').addEventListener('click', function ()
 
     if (feedback) {
         // Отправляем данные на сервер
-        fetch('/send-feedback', {
+        fetch('alternate-history-timeline-production.up.railway.app', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ scenario, event, feedback }),
