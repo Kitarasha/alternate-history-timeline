@@ -1,10 +1,13 @@
-name: Run Server
+name: Install and Run Server
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  run-server:
+  setup-server:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,10 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd server
           npm install
+          npm install dotenv nodemailer
 
-      - name: Start server
-        run: |
-          cd server
-          node server.js
+      - name: Run Server
+        run: node server.js
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
