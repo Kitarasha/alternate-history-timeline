@@ -1,56 +1,58 @@
-document.getElementById('registration-form').addEventListener('submit', async function (e) {
-    e.preventDefault();
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
 
-    // Получаем значения логина и пароля
-    const login = document.getElementById('login').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const message = document.getElementById('message');
-
-    // Проверяем длину пароля
-    if (password.length < 6) {
-        message.textContent = 'Пароль должен быть не менее 6 символов!';
-        message.style.color = 'red';
-        return;
-    }
-
-    try {
-        // Отправляем данные на сервер для регистрации
-        const response = await fetch('/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ login, password }),
-        });
-
-        if (response.ok) {
-            // Успешная регистрация
-            message.textContent = 'Регистрация успешна! Перенаправляем...';
-            message.style.color = 'green';
-
-            // Сохраняем информацию о входе (например, в localStorage)
-            localStorage.setItem('loggedIn', 'true');
-            localStorage.setItem('login', login);
-
-            // Перенаправляем на главную страницу
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
-        } else {
-            // Если сервер вернул ошибку
-            const error = await response.json();
-            message.textContent = `Ошибка: ${error.error}`;
-            message.style.color = 'red';
-        }
-    } catch (err) {
-        // Ошибка подключения к серверу
-        message.textContent = 'Ошибка соединения с сервером.';
-        message.style.color = 'red';
+// Подключение базы данных
+const db = new sqlite3.Database('./database.db', (err) => {
+    if (err) {
+        console.error('Ошибка подключения к базе данных:', err.message);
+    } else {
+        console.log('Успешное подключение к SQLite!');
     }
 });
 
-// Проверяем, авторизован ли пользователь
-document.addEventListener('DOMContentLoaded', () => {
-    const loggedIn = localStorage.getItem('loggedIn');
-    if (loggedIn !== 'true') {
-        window.location.href = 'register.html'; // Перенаправляем на страницу регистрации
+// Создаём таблицу пользователей, если её нет
+db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+)`);
+
+// Middleware для обработки JSON
+app.use(bodyParser.json());
+
+// Маршрут для регистрации
+app.post('/register', (req, res) => {
+    const { login, password } = req.body;
+
+    if (!login || !password) {
+        return res.status(400).json({ error: 'Логин и пароль обязательны' });
     }
+
+    if (password.length < 6) {
+        return res.status(400).json({ error: 'Пароль должен быть не менее 6 символов' });
+    }
+
+    db.run(
+        `INSERT INTO users (login, password) VALUES (?, ?)`,
+        [login, password],
+        function (err) {
+            if (err) {
+                if (err.message.includes('UNIQUE')) {
+                    res.status(400).json({ error: 'Логин уже занят' });
+                } else {
+                    res.status(500).json({ error: 'Ошибка базы данных' });
+                }
+            } else {
+                res.status(201).json({ id: this.lastID });
+            }
+        }
+    );
+});
+
+// Запуск сервера
+app.listen(port, () => {
+    console.log(`Сервер запущен на http://localhost:${port}`);
 });
