@@ -27,6 +27,18 @@
     <header>
         <h1>Time Shifter</h1>
     </header>
+    <!-- Форма регистрации -->
+<form id="registration-form">
+  <h2>Регистрация</h2>
+  <label for="login">Логин:</label>
+  <input type="text" id="login" name="login" required />
+  <label for="password">Пароль (не менее 6 символов):</label>
+  <input type="password" id="password" name="password" required minlength="6" />
+  <button type="submit">Зарегистрироваться</button>
+  <p id="message"></p>
+</form>
+
+<main>
     <main>
         <!-- Контейнер таймлайна -->
         <div id="timeline-container">
