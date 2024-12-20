@@ -107,18 +107,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function showScenarioStep(index) {
-        scenarioNext.disabled = false;
-        scenarioText.textContent = "";
-        const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
-        let charIndex = 0;
-        const interval = setInterval(() => {
-            scenarioText.textContent += fullText.charAt(charIndex);
-            charIndex++;
-            if (charIndex >= fullText.length) {
-                clearInterval(interval);
+    scenarioNext.disabled = false;
+    scenarioText.textContent = "";
+    const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
+    let charIndex = 0;
+
+    const interval = setInterval(() => {
+        scenarioText.textContent += fullText.charAt(charIndex);
+        charIndex++;
+        if (charIndex >= fullText.length) {
+            clearInterval(interval);
+
+            // Показ кнопки "Оставить отзыв", если это последний шаг
+            if (index >= currentScenario.length - 1) {
+                const scenarioEnd = document.getElementById('scenario-end');
+                scenarioEnd.classList.remove('hidden'); // Показываем кнопку
+                scenarioNext.disabled = true; // Отключаем кнопку "Далее"
             }
-        }, 25);
-    }
+        }
+    }, 25);
+}
+
 
     function showAlternatives(year, title) {
         const key = `${year}-${title}`;
