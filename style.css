@@ -234,7 +234,10 @@ body {
 .alternative-option:hover {
     background-color: #666;
 }
-
+/* Скрытие элемента */
+.hidden {
+    display: none;
+}
 /* Стиль для сценария (графической новеллы) */
 .scenario-content {
     display: flex;
