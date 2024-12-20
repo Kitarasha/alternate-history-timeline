@@ -363,3 +363,36 @@ document.addEventListener("DOMContentLoaded", () => {
     resizeCanvas();
     animate();
 });
+document.getElementById('registration-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const login = document.getElementById('login').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const message = document.getElementById('message');
+
+  if (password.length < 6) {
+    message.textContent = 'Пароль должен быть не менее 6 символов!';
+    message.style.color = 'red';
+    return;
+  }
+
+  try {
+    const response = await fetch('/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ login, password }),
+    });
+
+    if (response.ok) {
+      message.textContent = 'Регистрация успешна!';
+      message.style.color = 'green';
+    } else {
+      const error = await response.json();
+      message.textContent = `Ошибка: ${error.error}`;
+      message.style.color = 'red';
+    }
+  } catch (err) {
+    message.textContent = 'Ошибка соединения с сервером.';
+    message.style.color = 'red';
+  }
+});
