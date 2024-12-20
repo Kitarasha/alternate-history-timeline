@@ -21,10 +21,4 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install dotenv nodemailer
-
-      - name: Run Server
-        run: node server.js
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          npm start
