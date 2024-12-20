@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // === Новое ===
     // Пример альтернативных сценариев. В будущем можно вынести в отдельный файл или дополнять при загрузке данных.
     // Ключ формата: "год - название события"
-	  const alternativesData = {
+    const alternativesData = {
         "476-Падение Римской Империи": [
             {
                 title: "Римская империя не распалась",
-                color: "#b2dfdb",
+                color: "#aabbcc",
                 scenario: [
                     { year: 500, text: "К 500 году империя процветала... Технологии, искусство, культура..." },
                     { year: 600, text: "К 600 году Рим освоил новые территории и технологии..." }
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             {
                 title: "Империя распалась, но позже",
-                color: "#80cbc4",
+                color: "#ffcc00",
                 scenario: [
                     { year: 500, text: "Империя держалась, но трещины были очевидны..." },
                     { year: 550, text: "К 550 году империя всё же пала, но последствия были иными..." }
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             {
                 title: "Открытие электричества в Риме",
-                color: "#4db6ac",
+                color: "#66ff66",
                 scenario: [
                     { year: 480, text: "В 480 году римляне случайно открыли электричество, шокируя современников..." },
                     { year: 550, text: "К 550 году электричество изменило всё: началась досрочная индустриализация..." }
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         ]
     };
-	
+
     // === Новое ===
     // Получаем элементы новых модалок
     const alternativesModal = document.getElementById("alternatives-modal");
@@ -363,4 +363,5 @@ document.addEventListener("DOMContentLoaded", () => {
     resizeCanvas();
     animate();
 });
+
 
