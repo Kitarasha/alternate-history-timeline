@@ -23,34 +23,6 @@ db.run(`CREATE TABLE IF NOT EXISTS users (
 // Middleware для обработки JSON
 app.use(bodyParser.json());
 
-// Маршрут для регистрации
-app.post('/register', (req, res) => {
-    const { login, password } = req.body;
-
-    if (!login || !password) {
-        return res.status(400).json({ error: 'Логин и пароль обязательны' });
-    }
-
-    if (password.length < 6) {
-        return res.status(400).json({ error: 'Пароль должен быть не менее 6 символов' });
-    }
-
-    db.run(
-        `INSERT INTO users (login, password) VALUES (?, ?)`,
-        [login, password],
-        function (err) {
-            if (err) {
-                if (err.message.includes('UNIQUE')) {
-                    res.status(400).json({ error: 'Логин уже занят' });
-                } else {
-                    res.status(500).json({ error: 'Ошибка базы данных' });
-                }
-            } else {
-                res.status(201).json({ id: this.lastID });
-            }
-        }
-    );
-});
 
 // Запуск сервера
 app.listen(port, () => {
