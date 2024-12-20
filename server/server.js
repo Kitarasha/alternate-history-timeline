@@ -1,39 +1,59 @@
-// Загружаем зависимости
-require('dotenv').config(); // Подключаем файл с переменными окружения
 const express = require('express');
-const { Pool } = require('pg'); // Подключение к PostgreSQL
-
-// Создаём сервер
+const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const port = 3000;
 
-// Указываем, что сервер может обрабатывать JSON
 app.use(express.json());
 
-// Подключение к базе данных PostgreSQL
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL, // Берём строку подключения из переменной окружения
-    ssl: {
-        rejectUnauthorized: false, // Для работы с Railway
-    },
-});
-
-// Проверка подключения к базе данных
-pool.query('SELECT NOW()', (err, res) => {
+// Подключаем SQLite
+const db = new sqlite3.Database('./database.db', (err) => {
     if (err) {
-        console.error('Ошибка подключения к базе данных:', err);
+        console.error('Ошибка подключения к базе данных:', err.message);
     } else {
-        console.log('Успешное подключение к базе данных:', res.rows);
+        console.log('Успешное подключение к SQLite!');
     }
 });
 
-// Простой маршрут для проверки работы сервера
+// Создаём таблицу, если её нет
+db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE
+)`);
+
+// Маршрут для проверки работы сервера
 app.get('/', (req, res) => {
-    res.send('Сервер работает!');
+    res.send('Сервер работает с SQLite!');
+});
+
+// Добавление пользователя
+app.post('/users', (req, res) => {
+    const { name, email } = req.body;
+    db.run(
+        `INSERT INTO users (name, email) VALUES (?, ?)`,
+        [name, email],
+        function (err) {
+            if (err) {
+                res.status(500).json({ error: err.message });
+            } else {
+                res.status(201).json({ id: this.lastID });
+            }
+        }
+    );
+});
+
+// Получение списка пользователей
+app.get('/users', (req, res) => {
+    db.all(`SELECT * FROM users`, [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(rows);
+        }
+    });
 });
 
 // Запуск сервера
 app.listen(port, () => {
     console.log(`Сервер запущен на http://localhost:${port}`);
 });
-
