@@ -377,24 +377,35 @@ let currentInterval;
 
 function showScenarioStep(index) {
     scenarioNext.disabled = false;
-    scenarioText.textContent = "";
+    scenarioText.textContent = ""; // Очищаем текстовый контейнер
     const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
     let charIndex = 0;
 
-    // Очищаем предыдущий интервал, если он существует
-    if (currentInterval) {
-        clearInterval(currentInterval);
+    // Путь к изображению для текущего сценария
+    const imagePath = currentScenario[index].image || ""; // Убедитесь, что в данных сценария есть поле image
+
+    // Настройка изображения
+    if (imagePath) {
+        scenarioImage.src = imagePath; // Устанавливаем путь к изображению
+        scenarioImage.style.display = "block"; // Показываем картинку
+    } else {
+        scenarioImage.style.display = "none"; // Скрываем картинку, если её нет
     }
 
-    // Запускаем новый интервал
+    // Печатаем текст
+    if (currentInterval) {
+        clearInterval(currentInterval); // Очищаем предыдущий интервал
+    }
+
     currentInterval = setInterval(() => {
         scenarioText.textContent += fullText.charAt(charIndex);
         charIndex++;
         if (charIndex >= fullText.length) {
             clearInterval(currentInterval); // Останавливаем интервал, когда текст завершён
         }
-    }, 5);
+    }, 25); // Настройте скорость печати
 }
+
 
 
     function showAlternatives(year, title) {
