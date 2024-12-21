@@ -292,37 +292,50 @@ body {
 #view-alternatives-btn:hover {
     background-color: #757575;
 }
-/* Стили для приветственного текста */
-.intro-text {
-    margin: 30px auto;
-    max-width: 800px; /* Ограничаем ширину текста для улучшения читаемости */
-    padding: 20px; /* Добавляем отступы вокруг текста */
-    font-size: 1.2em;
-    line-height: 1.8; /* Увеличиваем межстрочное расстояние для удобства чтения */
-    text-align: center;
-    color: #00bcd4; /* Яркий акцентный цвет */
-    background-color: #2c2c3d; /* Фон для выделения текста */
-    border-radius: 10px; /* Скругляем углы */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Лёгкая тень для глубины */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Лёгкая тень текста */
+/* Главный контейнер для приветствия и FAQ */
+.main-container {
+    display: flex; /* Устанавливаем Flexbox для размещения элементов в строку */
+    justify-content: space-between; /* Размещаем элементы с расстоянием между ними */
+    align-items: flex-start; /* Выравниваем элементы по верхнему краю */
+    gap: 20px; /* Добавляем расстояние между колонками */
+    max-width: 1200px; /* Ограничиваем ширину контейнера */
+    margin: 50px auto; /* Центрируем по горизонтали */
 }
 
+/* Стили для приветственного текста */
+.intro-text {
+    flex: 1; /* Задаём равное место в контейнере для обоих блоков */
+    margin: 0; /* Убираем внешние отступы */
+    max-width: none; /* Убираем ограничение ширины */
+    height: auto; /* Делаем текст автоматически подстраиваться под содержимое */
+    padding: 30px; /* Увеличиваем внутренние отступы */
+    font-size: 1.2em;
+    line-height: 1.8;
+    text-align: left; /* Располагаем текст по левому краю */
+    color: #00bcd4;
+    background-color: #2c2c3d;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
 
 /* Стили для секции FAQ */
 #faq {
-    margin: 50px auto;
-    max-width: 800px;
-    padding: 20px;
-    background-color: #2c2c3d; /* Темный фон для контраста с текстом */
+    flex: 1; /* Задаём равное место в контейнере для обоих блоков */
+    margin: 0; /* Убираем внешние отступы */
+    max-width: none; /* Убираем ограничение ширины */
+    height: auto; /* Делаем секцию автоматически подстраиваться под содержимое */
+    padding: 30px; /* Увеличиваем внутренние отступы */
+    background-color: #2c2c3d;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Лёгкая тень для глубины */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 #faq h2 {
     text-align: center;
     font-size: 1.8em;
     margin-bottom: 20px;
-    color: #00bcd4; /* Акцентный цвет для заголовка */
+    color: #00bcd4;
 }
 
 .faq-item {
@@ -331,12 +344,13 @@ body {
 
 .faq-item h3 {
     font-size: 1.4em;
-    color: #03a9f4; /* Цвет для вопросов */
+    color: #03a9f4;
     margin-bottom: 10px;
 }
 
 .faq-item p {
     font-size: 1em;
     line-height: 1.5;
-    color: #fff; /* Белый текст для читаемости */
+    color: #fff;
 }
+
