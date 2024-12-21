@@ -1,52 +1,52 @@
 [
     {
-        "title": "Великое переселение народов",
-        "description": "Массовые миграции германских и других племён на территорию Римской Империи, приведшие к серьёзным политическим, социальным и культурным изменениям.",
+        "title": "Great Migration of Peoples",
+        "description": "Mass migrations of Germanic and other tribes into the Roman Empire, leading to significant political, social, and cultural changes.",
         "year": 300
     },
     {
-        "title": "Падение Римской Империи",
-        "description": "Одно из ключевых событий, ознаменовавших окончание Античности и переход к Средневековью.",
+        "title": "Fall of the Roman Empire",
+        "description": "One of the key events marking the end of Antiquity and the transition to the Middle Ages.",
         "year": 476
     },
     {
-        "title": "Первый крестовый поход",
-        "description": "Начало серии военных экспедиций западноевропейских христиан в Святую Землю, повлиявших на межкультурные контакты и расклад сил в Средиземноморье.",
+        "title": "First Crusade",
+        "description": "The beginning of a series of military expeditions by Western European Christians to the Holy Land, influencing intercultural contacts and the balance of power in the Mediterranean.",
         "year": 1096
     },
     {
-        "title": "Изобретение печатного станка",
-        "description": "Иоганн Гутенберг создал печатный станок, что привело к революции в распространении знаний, росту грамотности и формированию массовой культуры чтения.",
+        "title": "Invention of the Printing Press",
+        "description": "Johannes Gutenberg created the printing press, revolutionizing knowledge dissemination, increasing literacy, and forming a mass reading culture.",
         "year": 1440
     },
     {
-        "title": "Открытие Америки Колумбом",
-        "description": "В 1492 году Христофор Колумб достиг берегов Нового Света, что стало началом эпохи Великих географических открытий и коренным образом изменило мировую экономику и культуру.",
+        "title": "Discovery of America by Columbus",
+        "description": "In 1492, Christopher Columbus reached the shores of the New World, initiating the Age of Great Geographical Discoveries and fundamentally changing the global economy and culture.",
         "year": 1492
     },
     {
-        "title": "Промышленная революция в Англии",
-        "description": "С середины XVIII века стремительно развивалась механизация производства и индустриализация, что привело к радикальным переменам в экономике и обществе.",
+        "title": "Industrial Revolution in England",
+        "description": "From the mid-18th century, rapid mechanization of production and industrialization brought radical changes to the economy and society.",
         "year": 1760
     },
     {
-        "title": "Первая мировая война",
-        "description": "Глобальный конфликт (1914–1918), кардинально изменивший политическую карту мира, социальные структуры и международные отношения.",
+        "title": "World War I",
+        "description": "A global conflict (1914–1918) that drastically reshaped the world's political map, social structures, and international relations.",
         "year": 1914
     },
     {
-        "title": "Высадка человека на Луну",
-        "description": "В 1969 году Нил Армстронг стал первым человеком, ступившим на поверхность Луны, что ознаменовало новый этап в истории космических исследований.",
+        "title": "Moon Landing",
+        "description": "In 1969, Neil Armstrong became the first person to set foot on the Moon, marking a new era in space exploration.",
         "year": 1969
     },
     {
-        "title": "Создание World Wide Web",
-        "description": "В 1991 году Тим Бернерс-Ли представил концепцию WWW, открыв эру свободного обмена информацией и заложив фундамент современного интернета.",
+        "title": "Creation of the World Wide Web",
+        "description": "In 1991, Tim Berners-Lee introduced the concept of the WWW, ushering in the era of free information exchange and laying the foundation for the modern internet.",
         "year": 1991
     },
     {
-        "title": "Основание компании SpaceX",
-        "description": "В 2002 году Илон Маск основал SpaceX, частную космическую компанию, совершившую прорыв в доступности и эффективности космических полётов.",
+        "title": "Foundation of SpaceX",
+        "description": "In 2002, Elon Musk founded SpaceX, a private space company that revolutionized the accessibility and efficiency of space exploration.",
         "year": 2002
     }
 ]
