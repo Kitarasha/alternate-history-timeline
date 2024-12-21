@@ -353,16 +353,4 @@ body {
     line-height: 1.5;
     color: #fff;
 }
-#scenario-display {
-    display: flex;
-    flex-direction: column; /* Располагаем элементы вертикально */
-    align-items: center;
-    margin-top: 20px;
-}
-#scenario-text {
-    font-size: 1.2em;
-    line-height: 1.5;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-}
+
