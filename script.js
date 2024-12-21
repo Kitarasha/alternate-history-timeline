@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const endYear = 2100; // Конец шкалы времени
     const totalYears = endYear - startYear; // Всего лет на таймлайне
 
-    console.log(Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear}));
+    console.log(`Общий диапазон лет: ${totalYears} (от ${startYear} до ${endYear})`);
 
     // Генерация меток на таймлайне
     const createTimelineMarks = (start, end, step) => {
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const positionPercent = ((year - start) / totalYears) * 100;
             const mark = document.createElement("div");
             mark.className = "timeline-mark";
-            mark.style.left = ${positionPercent}%;
+            mark.style.left = `${positionPercent}%`;
             mark.textContent = year;
             timeline.appendChild(mark);
         }
@@ -37,12 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 title: "Римская империя не распалась",
                 color: "#80cbc4",
                 scenario: [
-                    { year: 500, text: "Рим успешно реорганизовал свои провинции...", 
-                    image: "assets/mem/жак фреско.jpg" },
-                    { year: 600, text: "Благодаря стабильности и развитию инфраструктуры...",
-                    image: "assets/mem/жак фреско.jpg" },
-                    { year: 800, text: "Изобретение первых прототипов часов...", 
-                    image: "assets/mem/жак фреско.jpg" }
+                    { year: 500, text: "Рим успешно реорганизовал свои провинции..." },
+                    { year: 600, text: "Благодаря стабильности и развитию инфраструктуры..." },
+                    { year: 800, text: "Изобретение первых прототипов часов..." }
                 ]
             },
             {
@@ -381,12 +378,11 @@ let currentInterval;
 function showScenarioStep(index) {
     scenarioNext.disabled = false;
     scenarioText.textContent = ""; // Очищаем текстовый контейнер
-    const fullText = ${currentScenario[index].year} год:\n${currentScenario[index].text};
+    const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
     let charIndex = 0;
 
     // Путь к изображению для текущего сценария
-    const imagePath = "assets/mem/жак фреско.jpg"; // Убедитесь, что в данных сценария есть поле image
-
+    const imagePath = currentScenario[index].image || ""; // Убедитесь, что в данных сценария есть поле image
     // Настройка изображения
     if (imagePath) {
         scenarioImage.src = imagePath; // Устанавливаем путь к изображению
@@ -394,25 +390,24 @@ function showScenarioStep(index) {
     } else {
         scenarioImage.style.display = "none"; // Скрываем картинку, если её нет
     }
-
     // Печатаем текст
     if (currentInterval) {
         clearInterval(currentInterval); // Очищаем предыдущий интервал
     }
 
+    // Запускаем новый интервал
     currentInterval = setInterval(() => {
         scenarioText.textContent += fullText.charAt(charIndex);
         charIndex++;
         if (charIndex >= fullText.length) {
             clearInterval(currentInterval); // Останавливаем интервал, когда текст завершён
         }
-    }, 25); // Настройте скорость печати
+    }, 5);
 }
 
 
-
     function showAlternatives(year, title) {
-        const key = ${year}-${title};
+        const key = `${year}-${title}`;
         const eventAlternatives = alternativesData[key];
         if (!eventAlternatives) return;
 
@@ -444,7 +439,7 @@ function showScenarioStep(index) {
     fetch('timeline_data.json')
         .then(response => {
             if (!response.ok) {
-                throw new Error(Ошибка загрузки файла: ${response.status});
+                throw new Error(`Ошибка загрузки файла: ${response.status}`);
             }
             return response.json();
         })
@@ -456,21 +451,21 @@ function showScenarioStep(index) {
 
             data.forEach(event => {
                 const eventYear = event.year;
-                console.log(Обработка события: ${JSON.stringify(event)});
+                console.log(`Обработка события: ${JSON.stringify(event)}`);
 
                 if (!eventYear || isNaN(eventYear)) {
-                    console.error(Некорректный год у события: ${JSON.stringify(event)});
+                    console.error(`Некорректный год у события: ${JSON.stringify(event)}`);
                     return;
                 }
 
                 const positionPercent = ((eventYear - startYear) / totalYears) * 100;
-                console.log(Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%);
+                console.log(`Событие "${event.title}": Год = ${eventYear}, Позиция = ${positionPercent.toFixed(2)}%`);
 
                 const eventDiv = document.createElement("div");
                 eventDiv.className = "event";
-                eventDiv.style.left = ${positionPercent}%;
+                eventDiv.style.left = `${positionPercent}%`;
 
-                eventDiv.setAttribute("data-title", ${eventYear} — ${event.title});
+                eventDiv.setAttribute("data-title", `${eventYear} — ${event.title}`);
                 eventDiv.setAttribute("data-description", event.description);
 
                 const circle = document.createElement("div");
@@ -480,13 +475,13 @@ function showScenarioStep(index) {
                 timeline.appendChild(eventDiv);
 
                 eventDiv.addEventListener("click", () => {
-                    modalTitle.textContent = ${eventYear} — ${event.title};
+                    modalTitle.textContent = `${eventYear} — ${event.title}`;
                     modalDescription.textContent = event.description || "Нет описания для этого события.";
                     modal.classList.add("show");
 
                     // === Новое ===
                     // Проверяем, есть ли альтернативы
-                    const key = ${eventYear}-${event.title};
+                    const key = `${eventYear}-${event.title}`;
                     let altButton = document.getElementById("view-alternatives-btn");
                     if (!altButton) {
                         altButton = document.createElement("button");
@@ -506,7 +501,7 @@ function showScenarioStep(index) {
                 });
             });
         })
-        .catch(error => console.error(Ошибка обработки данных: ${error.message}));
+        .catch(error => console.error(`Ошибка обработки данных: ${error.message}`));
 
     closeModal.addEventListener("click", () => {
         modal.classList.remove("show");
@@ -610,7 +605,7 @@ function showScenarioStep(index) {
                     ctx.beginPath();
                     ctx.moveTo(stars[i].x, stars[i].y);
                     ctx.lineTo(stars[j].x, stars[j].y);
-                    ctx.strokeStyle = rgba(255, 255, 255, ${1 - distance / maxLineDistance});
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / maxLineDistance})`;
                     ctx.lineWidth = 0.5;
                     ctx.stroke();
                 }
@@ -628,7 +623,7 @@ function showScenarioStep(index) {
                     ctx.beginPath();
                     ctx.moveTo(stars[i].x, stars[i].y);
                     ctx.lineTo(mouse.x, mouse.y);
-                    ctx.strokeStyle = rgba(255, 255, 255, ${1 - distance / mouseRadius});
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / mouseRadius})`;
                     ctx.lineWidth = 0.8;
                     ctx.stroke();
                 }
