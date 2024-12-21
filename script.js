@@ -382,7 +382,7 @@ function showScenarioStep(index) {
     let charIndex = 0;
 
     // Путь к изображению для текущего сценария
-    const imagePath = currentScenario[index].image || ""; // Убедитесь, что в данных сценария есть поле image
+    const imagePath = "assets/mem/жак фреско.jpg"; // Убедитесь, что в данных сценария есть поле image
 
     // Настройка изображения
     if (imagePath) {
