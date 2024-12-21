@@ -359,15 +359,6 @@ body {
     align-items: center;
     margin-top: 20px;
 }
-
-#scenario-image {
-    max-width: 100%; /* Ограничиваем ширину изображения */
-    max-height: 300px; /* Ограничиваем высоту */
-    margin-bottom: 15px; /* Расстояние между изображением и текстом */
-    border-radius: 10px; /* Скругляем углы */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
-}
-
 #scenario-text {
     font-size: 1.2em;
     line-height: 1.5;
