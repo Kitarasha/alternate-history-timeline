@@ -381,20 +381,7 @@ function showScenarioStep(index) {
     const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
     let charIndex = 0;
 
-    // Путь к изображению для текущего сценария
-    const imagePath = currentScenario[index].image || ""; // Убедитесь, что в данных сценария есть поле image
-    // Настройка изображения
-    if (imagePath) {
-        scenarioImage.src = imagePath; // Устанавливаем путь к изображению
-        scenarioImage.style.display = "block"; // Показываем картинку
-    } else {
-        scenarioImage.style.display = "none"; // Скрываем картинку, если её нет
-    }
-    // Печатаем текст
-    if (currentInterval) {
-        clearInterval(currentInterval); // Очищаем предыдущий интервал
-    }
-
+    
     // Запускаем новый интервал
     currentInterval = setInterval(() => {
         scenarioText.textContent += fullText.charAt(charIndex);
