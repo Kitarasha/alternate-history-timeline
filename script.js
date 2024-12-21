@@ -384,10 +384,8 @@ function showScenarioStep(index) {
     const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
     let charIndex = 0;
 
-    // Путь к изображению для текущего сценария
-    const imagePath = "assets/mem/жак фреско.jpg"; // Убедитесь, что в данных сценария есть поле image
-
     // Настройка изображения
+    const imagePath = currentScenario[index].image || ""; // Убедитесь, что в данных есть поле image
     if (imagePath) {
         scenarioImage.src = imagePath; // Устанавливаем путь к изображению
         scenarioImage.style.display = "block"; // Показываем картинку
@@ -408,8 +406,6 @@ function showScenarioStep(index) {
         }
     }, 25); // Настройте скорость печати
 }
-
-
 
     function showAlternatives(year, title) {
         const key = `${year}-${title}`;
