@@ -57,6 +57,26 @@
             <div id="timeline"></div>
         </div> <!-- Закрываем #timeline-container -->
 
+        <!-- Модальное окно для показа сценария (графической новеллы) с текстом и изображением -->
+        <div id="scenario-modal" class="hidden">
+            <div class="modal-content scenario-content">
+                <span id="close-scenario">&times;</span>
+                <h2 id="scenario-title">Сценарий развития</h2>
+                <div id="scenario-display">
+                    <div id="scenario-text"></div>
+                    <img id="scenario-image" src="" alt="Сценарий изображения" style="display: none;" />
+                </div>
+                <!-- Блок для завершения сценария и отзыва -->
+                <div id="scenario-end" class="hidden">
+                    <h3>Спасибо за прочтение!</h3>
+                    <button id="feedback-button" data-scenario="Сценарий развития" data-event="Историческое событие">
+                        Оставить отзыв
+                    </button>
+                </div>
+                <button id="scenario-next">Далее</button>
+            </div>
+        </div>
+
         <!-- Модальное окно для основного события -->
         <div id="modal" class="hidden">
             <div class="modal-content">
@@ -75,23 +95,6 @@
                 <div id="alternatives-list">
                     <!-- Список альтернатив будет генерироваться JavaScript-ом -->
                 </div>
-            </div>
-        </div>
-
-        <!-- Модальное окно для показа сценария (графической новеллы) -->
-        <div id="scenario-modal" class="hidden">
-            <div class="modal-content scenario-content">
-                <span id="close-scenario">&times;</span>
-                <h2 id="scenario-title">Сценарий развития</h2>
-                <div id="scenario-text"></div>
-                <!-- Блок для завершения сценария и отзыва -->
-                <div id="scenario-end" class="hidden">
-                    <h3>Спасибо за прочтение!</h3>
-                    <button id="feedback-button" data-scenario="Сценарий развития" data-event="Историческое событие">
-                        Оставить отзыв
-                    </button>
-                </div>
-                <button id="scenario-next">Далее</button>
             </div>
         </div>
     </main>
