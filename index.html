@@ -29,22 +29,22 @@
         <div class="main-container">
             <!-- Приветствие -->
             <p class="intro-text">
-                Здравствуйте! Мы — Марат и Владимир, разработчики этого сайта. Мы хотим представить вам наш проект "Time Shifter", созданный в рамках курса Harvard CS50. Этот сайт позволяет изучать историю через интерактивный таймлайн, а также предлагает возможность исследовать альтернативные сценарии. Надеемся, вам понравится!
+                Hello! We are Marat and Vladimir, the developers of this website. We’re excited to introduce you to our project, "Time Shifter," created as part of the Harvard CS50 course. This site allows you to explore history through an interactive timeline and offers the opportunity to delve into alternative scenarios. We hope you enjoy it!
             </p>
             <!-- Секция FAQ -->
             <section id="faq">
-                <h2>Часто задаваемые вопросы (FAQ)</h2>
+                <h2>Frequently Asked Questions (FAQ)</h2>
                 <div class="faq-item">
-                    <h3>Что такое "Time Shifter"?</h3>
-                    <p>"Time Shifter" — это интерактивный инструмент для изучения исторических событий и экспериментов с альтернативными сценариями.</p>
+                    <h3>What is "Time Shifter""?</h3>
+                    <p>"Time Shifter" is an interactive platform for exploring historical events and alternative scenarios.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>Зачем он нужен?</h3>
-                    <p>Сайт предназначен для образовательных целей, чтобы сделать изучение истории более увлекательным и интерактивным.</p>
+                    <h3>How do I use the interactive timeline?</h3>
+                    <p>Navigate through the timeline by scrolling or clicking on specific events. You can read detailed descriptions and explore possible alternative outcomes for key moments in history.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>Кто разработал этот проект?</h3>
-                    <p>Проект создан Маратом и Владимиром в рамках курса CS50 Гарвардского университета.</p>
+                    <h3>Who created "Time Shifter"?</h3>
+                    <p>The project was developed by Marat and Vladimir as part of the Harvard CS50 course.</p>
                 </div>
             </section>
         </div>
@@ -59,7 +59,7 @@
             <div class="modal-content">
                 <span id="close-modal">&times;</span>
                 <h2 id="event-title"></h2>
-                <p id="event-description">Описание события появится здесь...</p>
+                <p id="event-description">The event description will appear here...</p>
                 <!-- Кнопка для просмотра альтернативных сценариев будет добавляться через JS -->
             </div>
         </div>
@@ -68,7 +68,7 @@
         <div id="alternatives-modal" class="hidden">
             <div class="modal-content">
                 <span id="close-alternatives">&times;</span>
-                <h2 id="alternatives-title">Альтернативные сценарии</h2>
+                <h2 id="alternatives-title">Alternative Scenarios</h2>
                 <div id="alternatives-list">
                     <!-- Список альтернатив будет генерироваться JavaScript-ом -->
                 </div>
@@ -79,16 +79,16 @@
         <div id="scenario-modal" class="hidden">
             <div class="modal-content scenario-content">
                 <span id="close-scenario">&times;</span>
-                <h2 id="scenario-title">Сценарий развития</h2>
+                <h2 id="scenario-title">Development Scenario</h2>
                 <div id="scenario-text"></div>
                 <!-- Блок для завершения сценария и отзыва -->
                 <div id="scenario-end" class="hidden">
-                    <h3>Спасибо за прочтение!</h3>
+                    <h3>Thank you for reading!</h3>
                     <button id="feedback-button" data-scenario="Сценарий развития" data-event="Историческое событие">
-                        Оставить отзыв
+                        Leave a Review
                     </button>
                 </div>
-                <button id="scenario-next">Ладно</button>
+                <button id="scenario-next">OK(Ладно)</button>
             </div>
         </div>
     </main>
