@@ -372,16 +372,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Глобальная переменная для хранения текущего интервала
+// Глобальная переменная для хранения текущего интервала
 let currentInterval;
 
 function showScenarioStep(index) {
     scenarioNext.disabled = false;
-    scenarioText.textContent = ""; // Очищаем текстовый контейнер
+    scenarioText.textContent = "";
     const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
     let charIndex = 0;
 
-    
+    // Очищаем предыдущий интервал, если он существует
+    if (currentInterval) {
+        clearInterval(currentInterval);
+    }
+
     // Запускаем новый интервал
     currentInterval = setInterval(() => {
         scenarioText.textContent += fullText.charAt(charIndex);
@@ -389,7 +393,7 @@ function showScenarioStep(index) {
         if (charIndex >= fullText.length) {
             clearInterval(currentInterval); // Останавливаем интервал, когда текст завершён
         }
-    }, 5);
+    }, 15);
 }
 
 
