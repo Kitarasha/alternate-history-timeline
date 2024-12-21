@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (charIndex >= fullText.length) {
                 clearInterval(interval);
             }
-        }, 10);
+        }, 25);
     }
 
     function showAlternatives(year, title) {
