@@ -31,295 +31,295 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ключ формата: "год - название события"
 
 
-   const alternativesData = {
-        "300-Великое переселение народов": [
-            {
-                title: "Интеграция и Федерация",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 345, text: "Римская империя заключает договоры с переселенцами, предоставляя им земли и включая в легионы. Это укрепляет границы и снижает конфликты. Племена получают статус федератов и обязуются защищать империю." },
-                    { year: 412, text: "Вандалы заключают союз с римским императором, получая земли в Северной Африке. Это становится началом процветания Карфагена как торгового центра, где смешиваются римская и варварская культуры." },
-                    { year: 590, text: "Потомки переселенцев занимают ключевые роли в управлении империей. Первый гот становится консулом, официально представляя интересы федератов в римском сенате." }
-                ]
-            },
-            {
-                title: "Полное Разрушение",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 376, text: "Переселенцы привносят свои традиции, ремёсла и верования. Готы обучают римлян новым методам ковки оружия, а римляне делятся архитектурными знаниями. Варварские племена начинают принимать христианство." },
-                    { year: 410, text: "Период Второго Возрождения..." },
-                    { year: 512, text: "Вместо феодальной раздробленности Европа под управлением..." }
-                ]
-            },
-            {
-                title: "Союз Востока и Запада",
-                color: "#009688",
-                scenario: [
-                    { year: 395, text: "Восточная и Западная Римская империи совместно организуют переселение вандалов и аланов в Северную Африку. Варвары получают контроль над территорией, обещая защищать её от вторжений берберов." },
-                    { year: 450, text: "На Востоке усиливаются культурные связи с германцами. В Константинополе открывается школа, где изучают как латинский язык, так и германские наречия. Это приводит к первым переводам германских эпосов." },
-                    { year: 705, text: "Империя расширяет своё влияние на Восток. Потомки мигрантов основывают новые города в Малой Азии, где смешиваются римские технологии и варварские традиции в строительстве." }
-                ]
-            }
-        ],
-        "476-Падение Римской Империи": [
-            {
-                title: "Германская Империя",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 476, text: "Одоакр создаёт Германскую империю, объединяя варварские племена под своей властью. Римская администрация сохраняется, но германские традиции начинают проникать в управление." },
-                    { year: 600, text: "Германская империя расширяет свои территории на север и восток, включая Скандинавию. Варварская культура постепенно ассимилируется с римской, создавая новую мультикультурную цивилизацию." },
-                    { year: 750, text: "Империя достигает своего пика, становясь мощным центром торговли и науки. Латинский остаётся официальным языком, но новые наречия развиваются в регионах, укрепляя региональную идентичность." }
-                ]
-            },
-            {
-                title: "Восточный Контроль",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 476, text: "После падения Западной империи Константинополь укрепляет своё влияние. Восточная империя направляет войска для защиты Равенны и других стратегических городов." },
-                    { year: 650, text: "Византия сохраняет контроль над Италией, Балканами и частью Испании. Бывшие западные провинции начинают перенимать восточные традиции и архитектуру." },
-                    { year: 800, text: "Восточная империя становится доминирующей силой в Средиземноморье. Новая культура, объединяющая римские и греческие элементы, определяет дальнейшее развитие Европы." }
-                ]
-            },
-            {
-                title: "Разделённая Европа",
-                color: "#009688",
-                scenario: [
-                    { year: 476, text: "После распада Западной империи племена германцев создают независимые королевства. Франки занимают Галлию, вестготы — Испанию, вандалы — Северную Африку." },
-                    { year: 700, text: "Европа остаётся раздробленной. Каждый регион развивается автономно, сочетая варварские традиции с остатками римской культуры." },
-                    { year: 950, text: "Христианство объединяет Европу духовно, но политически она остаётся разделённой. Первые университеты появляются в бывших римских провинциях, знаменуя начало культурного возрождения." }
-                ]
-            }
-           ],
-           "1096-Первый крестовый поход": [
-            {
-                title: "Успех Крестоносцев",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 1096, text: "Крестоносцы под единым командованием успешно добиваются своей цели — захвата Иерусалима. Они основывают Иерусалимское королевство, которое становится центром христианского присутствия на Востоке." },
-                    { year: 1296, text: "Крестоносные государства укрепляют свои позиции, став посредниками между Европой и Востоком. Европа активно перенимает восточные технологии, медицину и философию, что ускоряет её развитие и закладывает основу для Возрождения." },
-                    { year: 1496, text: "Обогащённая знаниями и ресурсами с Востока, Европа становится экономически и культурно доминирующим регионом. Крестоносные государства всё ещё существуют, что приводит к формированию уникальной христианско-мусульманской культуры." }
-                ]
-            },
-            {
-                title: "Провал Крестоносцев",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 1096, text: "Крестоносцы сталкиваются с мощным сопротивлением сельджуков. Большая часть армии погибает, а оставшиеся разрозненные отряды возвращаются в Европу. Попытка объединить силы проваливается." },
-                    { year: 1296, text: "Отсутствие влияния Востока тормозит развитие Европы. Османская империя укрепляется и захватывает ключевые византийские территории, включая Константинополь. Европа остаётся изолированной и погружается в экономический застой." },
-                    { year: 1596, text: "Османская империя доминирует на Востоке и в Средиземноморье, угрожая даже западным европейским державам. Европейская культура остаётся на локальном уровне, и технологическое развитие сильно отстаёт." }
-                ]
-            },
-            {
-                title: "Альтернативный Поход Знаний",
-                color: "#009688",
-                scenario: [
-                    { year: 1096, text: "Вместо военного похода христианские лидеры решают организовать «Крестовый поход знаний». Вместо захвата Иерусалима, крестоносцы направляют усилия на установление культурных и научных связей с Востоком." },
-                    { year: 1296, text: "Европа превращается в центр науки благодаря знаниям, привезённым с Востока. Развиваются математика, медицина и астрономия. Город Тулуза становится европейским аналогом Багдада — центром мировой науки." },
-                    { year: 1596, text: "Научное сотрудничество между Востоком и Западом приводит к технологической революции. Первая паровая машина создаётся в 16 веке, а корабли с ранними механическими двигателями бороздят моря, открывая новые земли." }
-                ]
-            }
-          ],
-          "1440-Изобретение печатного станкa": [
-            {
-                title: "Быстрое распространение знаний",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 1440, text: "Иоганн Гутенберг изобретает печатный станок, и первые книги, включая Библию, начинают массово печататься. Информация становится доступной широкой аудитории, изменяя общество." },
-                    { year: 1640, text: "Благодаря печатным изданиям научные открытия распространяются по всей Европе. Реформация ускоряется, создавая новые социальные и религиозные движения. Образование становится доступным для среднего класса." },
-                    { year: 1840, text: "Печатный станок стимулирует промышленную революцию, формируя основу для газетной и книжной индустрии. Распространение знаний по всему миру помогает развитию демократий и социальных реформ." }
-                ]
-            },
-            {
-                title: "Ограничение печати",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 1440, text: "Печатный станок изобретён, но его использование строго контролируется церковью и монархией. Книги разрешено печатать только с одобрения властей, что ограничивает свободное распространение знаний." },
-                    { year: 1640, text: "Печать остаётся редким явлением, доступным лишь элите. Общество развивает устные традиции, а массовая грамотность отстаёт. Реформация и научные революции замедляются." },
-                    { year: 1840, text: "Европа отстаёт в развитии по сравнению с другими регионами, где печатное дело распространяется свободнее. Америка и Китай, где печатное дело не контролируется, становятся мировыми лидерами." }
-                ]
-            },
-            {
-                title: "Ранний глобальный прорыв",
-                color: "#009688",
-                scenario: [
-                    { year: 1440, text: "Гутенберг передаёт свою технологию путешествующим купцам, и печатный станок быстро распространяется по миру. В течение 50 лет печать достигает Османской империи, Индии и Китая." },
-                    { year: 1640, text: "Глобальное распространение печатных технологий приводит к синтезу знаний между культурами. Китайские открытия в медицине и сельском хозяйстве становятся доступными в Европе, а европейские научные труды читают на Ближнем Востоке." },
-                    { year: 1840, text: "Глобализация знаний приводит к раннему развитию технологий, включая электричество и механизацию. В мире создаётся единая научная сеть, а паровые двигатели начинают использоваться на всех континентах." }
-                ]
-            }
-          ],
-          "1492-Открытие Америки Колумбом": [
-            {
-                title: "Быстрая Колонизация",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 1492, text: "Колумб открывает Америку, и Испания быстро начинает экспансию. Первые колонии появляются в Карибском бассейне, за ними следуют исследования материка." },
-                    { year: 1692, text: "Колонии охватывают обе Америки. Золото и серебро из Нового Света стимулируют экономическое развитие Европы, но приводят к инфляции. Коренное население страдает от болезней и эксплуатации." },
-                    { year: 1892, text: "Америка становится ключевым регионом мира, определяя глобальную торговлю и экономику. Иммигранты из Европы продолжают заселять континенты, создавая многокультурное общество." }
-                ]
-            },
-            {
-                title: "Ограниченное освоение",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 1492, text: "Колумб открывает Америку, но его открытия вызывают слабый интерес. Другие европейские державы не спешат финансировать дальнейшие экспедиции." },
-                    { year: 1692, text: "Европейцы ограничиваются торговлей с местным населением на побережье. Внутренние территории Америки остаются неосвоенными. Коренные цивилизации, такие как ацтеки и инки, продолжают развиваться." },
-                    { year: 1892, text: "Америка остаётся преимущественно независимой. Местные государства формируют собственные альянсы и начинают индустриализацию, вдохновляясь европейскими технологиями." }
-                ]
-            },
-            {
-                title: "Американская Империя",
-                color: "#009688",
-                scenario: [
-                    { year: 1492, text: "После открытия Америки Колумб сталкивается с мощными местными цивилизациями. Вместо завоевания он договаривается о союзе с правителями, такими как Монтесума, привозя технологии и создавая торговую сеть." },
-                    { year: 1692, text: "Американские цивилизации интегрируют европейские технологии, формируя объединённую империю, охватывающую обе Америки. Европа становится зависимой от американских товаров, таких как какао, табак и картофель." },
-                    { year: 1892, text: "Американская Империя становится сверхдержавой, соперничающей с Европой. В её городах смешиваются европейская архитектура и коренные традиции, создавая уникальную культуру, доминирующую на мировой арене." }
-                ]
-            }
-          ],
-            "1760-Промышленная революция в Англии": [
-            {
-                title: "Римская империя не распалась",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 1760, text: "Начинается промышленная революция в Англии. Паровые машины, механизация текстильного производства и развитие металлургии приводят к росту промышленного производства." },
-                    { year: 1860, text: "Англия становится мировой фабрикой, распространяя свои технологии по всему миру. Быстрый рост городов и транспортных сетей создаёт урбанизированное общество, стимулируя научные открытия и инженерные инновации." },
-                    { year: 1960, text: "Промышленная революция приводит к раннему развитию электроники, космических исследований и биотехнологий. Англия остаётся мировым центром технологического прогресса, задавая тон глобальной индустрии." }
-                ]
-            },
-            {
-                title: "Революция тормозится",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 1760, text: "Промышленная революция начинается, но быстро сталкивается с сопротивлением общества. Рабочие движения и страх перед механизацией ограничивают внедрение новых технологий." },
-                    { year: 1860, text: "Англия остаётся аграрной державой с минимальным индустриальным развитием. США и Германия обгоняют её, становясь лидерами в мировой промышленности." },
-                    { year: 1960, text: "Англия теряет своё влияние на мировую экономику. Промышленный прогресс в других странах создаёт мощные технологические центры, в то время как Англия фокусируется на сельском хозяйстве и торговле." }
-                ]
-            },
-            {
-                title: "Ранняя глобализация",
-                color: "#009688",
-                scenario: [
-                    { year: 1760, text: "Промышленная революция в Англии сразу получает международный отклик. Технологии распространяются в Европу, Индию и Китай благодаря активной торговле и инвестициям в колонии." },
-                    { year: 1860, text: "Благодаря глобальному обмену технологий, промышленная революция становится мировым явлением. Китай и Индия активно развивают свои производства, сокращая разрыв между Западом и Востоком." },
-                    { year: 1960, text: "Глобализация, начатая в 18 веке, приводит к созданию международных корпораций и ранних форм цифровой экономики. Мир более равномерно развит, а Англия сохраняет ключевую роль как торговый и финансовый центр." }
-                ]
-            }
-           ],
-            "1914-Первая мировая война": [
-            {
-                title: "Короткая война",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 1914, text: "Конфликт между державами разгорается, но благодаря успешным дипломатическим усилиям и ограниченным военным действиям война заканчивается уже к концу 1915 года. Договариваются о восстановлении довоенных границ." },
-                    { year: 1940, text: "Европа переживает экономический подъём, избегая разрушений мирового масштаба. Германия и Франция становятся партнёрами в промышленности, а США остаются нейтральной державой." },
-                    { year: 1990, text: "Европейские страны формируют ранний союз, способствующий экономической интеграции. Вторая мировая война не происходит, и мир входит в XXI век без крупных военных конфликтов." }
-                ]
-            },
-            {
-                title: "Долгая и разрушительная война",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 1914, text: "Первая мировая война начинается с агрессивных действий Германии и Австро-Венгрии. Конфликт перерастает в глобальное противостояние с активным участием колоний." },
-                    { year: 1930, text: "Война продолжается почти два десятилетия, опустошая Европу. Экономические и социальные кризисы охватывают весь мир, приводя к распаду империй и усилению локальных конфликтов." },
-                    { year: 1960, text: "После долгой войны мировая система остаётся раздробленной. Технологическое развитие замедляется, а многие страны остаются в состоянии экономической депрессии." }
-                ]
-            },
-            {
-                title: "Конфликт предотвращён",
-                color: "#009688",
-                scenario: [
-                    { year: 1914, text: "Сараевское убийство вызывает напряжение, но кризис предотвращается благодаря посредничеству США и Швейцарии. Дипломатические переговоры приводят к созданию Лиги Наций раньше, чем в реальной истории." },
-                    { year: 1940, text: "Без мировой войны колониальные державы начинают мирный процесс деколонизации. Страны, избежавшие разрушений, концентрируются на науке, медицине и транспорте." },
-                    { year: 1990, text: "Мир развивается без крупных конфликтов, и космическая эра начинается раньше. Первая колония на Луне появляется к концу века, а международное сотрудничество становится нормой." }
-                ]
-            }
-          ],
-            "1969-Высадка человека на Луну": [
-            {
-                title: "Ускорение космической гонки",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 1969, text: "Человечество впервые ступает на Луну. США утверждают своё лидерство в космической гонке, вдохновляя другие страны на усиление собственных космических программ." },
-                    { year: 1999, text: "Лунная база становится реальностью. США и СССР сотрудничают в строительстве постоянной станции, что приводит к началу международной колонизации космоса." },
-                    { year: 2069, text: "Первая миссия на Марс завершается успешно. Международные усилия по исследованию дальнего космоса объединяют человечество, создавая единую космическую экономику." }
-                ]
-            },
-            {
-                title: "Отказ от космических исследований",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 1969, text: "Высадка на Луну проходит успешно, но высокая стоимость миссий приводит к сокращению финансирования. США и СССР решают сосредоточиться на решении земных проблем." },
-                    { year: 1999, text: "Космические исследования ограничиваются спутниковыми технологиями и изучением ближайших планет. Мечта о космической колонизации откладывается на неопределённый срок." },
-                    { year: 2069, text: "Лунные миссии остаются историческим достижением, но человечество не возвращается на Луну. Космос остаётся малоизученной территорией, а исследования концентрируются на Земле." }
-                ]
-            },
-            {
-                title: "Ранняя космическая цивилизация",
-                color: "#009688",
-                scenario: [
-                    { year: 1969, text: "После успешной высадки на Луну США объявляют о планах постоянного присутствия на спутнике. СССР начинает активное развитие собственной лунной программы, что усиливает конкуренцию." },
-                    { year: 1999, text: "Кооперация между США, Россией, Европой и Китаем приводит к созданию первых обитаемых станций на Луне. Лунные ресурсы начинают использоваться для производства энергии и топлива." },
-                    { year: 2069, text: "Человечество основывает первые автономные города на Луне. Лунные технологии позволяют осуществить прорыв в межпланетных полётах, открывая дорогу для исследования Солнечной системы." }
-                ]
-            }
-          ],
-          "1991-Создание World Wide Web": [
-            {
-                title: "Быстрое развитие интернета",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 1991, text: "Тим Бернерс-Ли запускает World Wide Web. Учёные и университеты первыми начинают использовать сеть для обмена данными." },
-                    { year: 2021, text: "Интернет становится ключевой инфраструктурой для экономики, культуры и образования. Искусственный интеллект, автоматизация и облачные технологии ускоряют развитие человечества." },
-                    { year: 2091, text: "Интернет перерастает в глобальную нейросеть, связывающую людей и машины. Физические границы стираются, создавая единое виртуальное пространство для взаимодействия и творчества." }
-                ]
-            },
-            {
-                title: "Замедленный рост",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 1991, text: "World Wide Web запускается, но из-за экономических и политических препятствий его развитие замедляется. Интернет остаётся нишевой технологией для учёных и крупных корпораций." },
-                    { year: 2021, text: "Интернет ограничен. Доступ к сети имеют только крупные организации, а массовая коммуникация происходит через традиционные медиа. Технологический прогресс замедляется." },
-                    { year: 2091, text: "Мир остаётся разделённым, так как интернет не стал универсальным средством связи. Локальные инновации возникают, но без глобального обмена знаний их потенциал ограничен." }
-                ]
-            },
-            {
-                title: "Альтернативный цифровой мир",
-                color: "#009688",
-                scenario: [
-                    { year: 1991, text: "World Wide Web не создаётся. Вместо этого доминирующей технологией становится спутниковая связь с закрытыми локальными сетями для регионов и стран." },
-                    { year: 2021, text: "Каждая страна развивает свои собственные сетевые технологии, ограничивая международное сотрудничество. Конкуренция в киберпространстве становится частью геополитики." },
-                    { year: 2091, text: "Цифровые технологии развиваются неравномерно. Виртуальные миры существуют только в пределах отдельных государств, а глобальная сеть знаний так и не возникает. Однако локальные цифровые проекты приводят к созданию уникальных культурных и технологических экосистем." }
-                ]
-            }
-          ],
-          "2002-Основание компании SpaceX": [
-            {
-                title: "Успешное лидерство в космосе",
-                color: "#80cbc4",
-                scenario: [
-                    { year: 2002, text: "Элон Маск основывает SpaceX с целью удешевить космические полёты и сделать возможным освоение Марса. Первые годы компания сосредотачивается на разработке ракет-носителей." },
-                    { year: 2052, text: "SpaceX становится ведущей космической компанией, управляя лунными базами и доставляя оборудование для международных марсианских миссий. Коммерческие полёты на Луну становятся реальностью для состоятельных клиентов." },
-                    { year: 2102, text: "Благодаря усилиям SpaceX и партнёрству с другими компаниями и государствами, на Марсе построена первая полностью автономная колония. Космическая инфраструктура охватывает весь Солнечный системы." }
-                ]
-            },
-            {
-                title: "Ограниченные успехи",
-                color: "#4db6ac",
-                scenario: [
-                    { year: 2002, text: "SpaceX начинает работу, но из-за экономических и технологических сложностей компания сталкивается с чередой неудач. Государственные космические агентства сохраняют доминирование в отрасли." },
-                    { year: 2052, text: "Частные компании играют лишь вспомогательную роль в космосе, занимаясь доставкой спутников и научного оборудования. Колонизация Марса остаётся далёкой перспективой, а исследования сосредотачиваются на Луне." },
-                    { year: 2102, text: "SpaceX ограничивается работой с низкоорбитальными спутниками. Освоение космоса продвигается медленно, с акцентом на автоматические станции и зонды." }
-                ]
-            },
-            {
-                title: "Космическая конкуренция",
-                color: "#009688",
-                scenario: [
-                    { year: 2002, text: "SpaceX закладывает основу для частных космических полётов, вдохновляя другие компании и страны создавать собственные космические программы. Конкуренция в космической индустрии растёт." },
-                    { year: 2052, text: "В мире появляется множество частных компаний, соревнующихся за лидерство в космосе. США, Китай, Индия и ЕС совместно разрабатывают международные станции на Марсе, но каждая страна борется за технологическое преимущество." },
-                    { year: 2102, text: "Мир вступает в эпоху «космического капитализма», где крупные корпорации контролируют добычу ресурсов на астероидах и Луне. Космос становится новым экономическим фронтиром, но вопрос об экологическом и политическом контроле остаётся нерешённым." }
-                ]
+	const alternativesData = {
+    "300-Great Migration of Peoples": [
+        {
+            title: "Integration and Federation",
+            color: "#80cbc4",
+            scenario: [
+                { year: 345, text: "The Roman Empire makes treaties with migrants, granting them land and including them in the legions. This strengthens the borders and reduces conflicts. Tribes receive the status of federates and are obliged to defend the empire." },
+                { year: 412, text: "The Vandals form an alliance with the Roman emperor, receiving lands in North Africa. This marks the beginning of Carthage's prosperity as a trade center, blending Roman and barbarian cultures." },
+                { year: 590, text: "Descendants of migrants occupy key positions in the administration of the empire. The first Goth becomes a consul, officially representing the interests of federates in the Roman Senate." }
+            ]
+        },
+        {
+            title: "Complete Destruction",
+            color: "#4db6ac",
+            scenario: [
+                { year: 376, text: "Migrants bring their traditions, crafts, and beliefs. The Goths teach the Romans new methods of forging weapons, while the Romans share architectural knowledge. Barbarian tribes begin adopting Christianity." },
+                { year: 410, text: "The period of the Second Renaissance begins..." },
+                { year: 512, text: "Instead of feudal fragmentation, Europe develops under unified governance..." }
+            ]
+        },
+        {
+            title: "Union of East and West",
+            color: "#009688",
+            scenario: [
+                { year: 395, text: "The Eastern and Western Roman Empires jointly organize the resettlement of Vandals and Alans to North Africa. The barbarians gain control of the territory, promising to protect it from Berber invasions." },
+                { year: 450, text: "In the East, cultural ties with the Germans strengthen. A school opens in Constantinople where both Latin and Germanic dialects are studied. This leads to the first translations of Germanic epics." },
+                { year: 705, text: "The empire expands its influence to the East. Descendants of migrants establish new cities in Asia Minor, blending Roman technology with barbarian building traditions." }
+            ]
+        }
+    ],
+    "476-Fall of the Roman Empire": [
+        {
+            title: "Germanic Empire",
+            color: "#80cbc4",
+            scenario: [
+                { year: 476, text: "Odoacer creates the Germanic Empire, uniting barbarian tribes under his rule. Roman administration is preserved, but Germanic traditions begin to influence governance." },
+                { year: 600, text: "The Germanic Empire expands its territories to the north and east, including Scandinavia. Barbarian culture gradually assimilates with Roman culture, creating a new multicultural civilization." },
+                { year: 750, text: "The empire reaches its peak, becoming a powerful center of trade and science. Latin remains the official language, but new dialects develop in regions, strengthening regional identity." }
+            ]
+        },
+        {
+            title: "Eastern Control",
+            color: "#4db6ac",
+            scenario: [
+                { year: 476, text: "After the fall of the Western Empire, Constantinople strengthens its influence. The Eastern Empire sends troops to protect Ravenna and other strategic cities." },
+                { year: 650, text: "Byzantium retains control over Italy, the Balkans, and parts of Spain. Former western provinces begin adopting eastern traditions and architecture." },
+                { year: 800, text: "The Eastern Empire becomes the dominant force in the Mediterranean. A new culture blending Roman and Greek elements shapes the future development of Europe." }
+            ]
+        },
+        {
+            title: "Divided Europe",
+            color: "#009688",
+            scenario: [
+                { year: 476, text: "After the collapse of the Western Empire, Germanic tribes establish independent kingdoms. The Franks take Gaul, the Visigoths take Spain, and the Vandals take North Africa." },
+                { year: 700, text: "Europe remains fragmented. Each region develops autonomously, combining barbarian traditions with remnants of Roman culture." },
+                { year: 950, text: "Christianity unites Europe spiritually, but politically it remains divided. The first universities appear in former Roman provinces, marking the beginning of cultural revival." }
+            ]
+        }
+    ],
+    "1096-First Crusade": [
+        {
+            title: "Success of the Crusaders",
+            color: "#80cbc4",
+            scenario: [
+                { year: 1096, text: "The Crusaders, under unified command, achieve their goal of capturing Jerusalem. They establish the Kingdom of Jerusalem, which becomes a center of Christian presence in the East." },
+                { year: 1296, text: "Crusader states strengthen their positions, acting as intermediaries between Europe and the East. Europe actively adopts Eastern technologies, medicine, and philosophy, accelerating its development and laying the groundwork for the Renaissance." },
+                { year: 1496, text: "Enriched by knowledge and resources from the East, Europe becomes the economically and culturally dominant region. Crusader states still exist, leading to the formation of a unique Christian-Muslim culture." }
+            ]
+        },
+        {
+            title: "Failure of the Crusaders",
+            color: "#4db6ac",
+            scenario: [
+                { year: 1096, text: "The Crusaders face strong resistance from the Seljuks. Most of the army perishes, and the remaining scattered groups return to Europe. Attempts to unite the forces fail." },
+                { year: 1296, text: "The lack of influence from the East slows Europe's development. The Ottoman Empire grows stronger, capturing key Byzantine territories, including Constantinople. Europe remains isolated and falls into economic stagnation." },
+                { year: 1596, text: "The Ottoman Empire dominates the East and the Mediterranean, even threatening Western European powers. European culture remains localized, and technological progress lags significantly." }
+            ]
+        },
+        {
+            title: "Alternative Crusade of Knowledge",
+            color: "#009688",
+            scenario: [
+                { year: 1096, text: "Instead of a military campaign, Christian leaders organize a 'Crusade of Knowledge.' Instead of capturing Jerusalem, the Crusaders focus on establishing cultural and scientific connections with the East." },
+                { year: 1296, text: "Europe becomes a center of science thanks to knowledge brought from the East. Mathematics, medicine, and astronomy flourish. The city of Toulouse becomes Europe's counterpart to Baghdad—a hub of global science." },
+                { year: 1596, text: "Scientific cooperation between the East and West leads to a technological revolution. The first steam engine is developed in the 16th century, and early mechanically powered ships explore new lands." }
+            ]
+        }
+    ],
+   "1440-Invention of the Printing Press": [
+    {
+        title: "Rapid Spread of Knowledge",
+        color: "#80cbc4",
+        scenario: [
+            { year: 1440, text: "Johannes Gutenberg invents the printing press, and the first books, including the Bible, begin to be mass-produced. Information becomes accessible to a wide audience, transforming society." },
+            { year: 1640, text: "Thanks to printed materials, scientific discoveries spread across Europe. The Reformation accelerates, creating new social and religious movements. Education becomes available to the middle class." },
+            { year: 1840, text: "The printing press stimulates the Industrial Revolution, forming the foundation for the newspaper and book industries. The spread of knowledge worldwide helps foster democracies and social reforms." }
+        ]
+    },
+    {
+        title: "Restricted Printing",
+        color: "#4db6ac",
+        scenario: [
+            { year: 1440, text: "The printing press is invented, but its use is strictly controlled by the church and monarchy. Books can only be printed with official approval, limiting the free dissemination of knowledge." },
+            { year: 1640, text: "Printing remains rare, accessible only to the elite. Society relies on oral traditions, and widespread literacy lags. The Reformation and scientific revolutions slow down." },
+            { year: 1840, text: "Europe falls behind in development compared to other regions where printing spreads more freely. America and China, where printing is less controlled, become global leaders." }
+        ]
+    },
+    {
+        title: "Early Global Breakthrough",
+        color: "#009688",
+        scenario: [
+            { year: 1440, text: "Gutenberg shares his technology with traveling merchants, and the printing press quickly spreads worldwide. Within 50 years, printing reaches the Ottoman Empire, India, and China." },
+            { year: 1640, text: "The global spread of printing technology leads to a synthesis of knowledge between cultures. Chinese discoveries in medicine and agriculture become accessible in Europe, while European scientific works are read in the Middle East." },
+            { year: 1840, text: "The globalization of knowledge leads to early technological development, including electricity and mechanization. A unified scientific network emerges, and steam engines begin to be used on all continents." }
+        ]
+    }
+],
+"1492-Discovery of America by Columbus": [
+    {
+        title: "Rapid Colonization",
+        color: "#80cbc4",
+        scenario: [
+            { year: 1492, text: "Columbus discovers America, and Spain quickly begins expansion. The first colonies appear in the Caribbean, followed by mainland exploration." },
+            { year: 1692, text: "Colonies span both Americas. Gold and silver from the New World stimulate Europe's economic development but lead to inflation. Indigenous populations suffer from diseases and exploitation." },
+            { year: 1892, text: "America becomes a key global region, shaping trade and economy worldwide. Immigrants from Europe continue to populate the continents, creating a multicultural society." }
+        ]
+    },
+    {
+        title: "Limited Development",
+        color: "#4db6ac",
+        scenario: [
+            { year: 1492, text: "Columbus discovers America, but his findings generate little interest. Other European powers are hesitant to finance further expeditions." },
+            { year: 1692, text: "Europeans limit themselves to trade with local populations along the coasts. The interior of America remains undeveloped. Indigenous civilizations like the Aztecs and Incas continue to thrive." },
+            { year: 1892, text: "America remains largely independent. Local states form alliances and begin industrialization, inspired by European technologies." }
+        ]
+    },
+    {
+        title: "American Empire",
+        color: "#009688",
+        scenario: [
+            { year: 1492, text: "After discovering America, Columbus encounters powerful indigenous civilizations. Instead of conquest, he negotiates alliances with rulers like Montezuma, bringing technology and creating trade networks." },
+            { year: 1692, text: "American civilizations integrate European technologies, forming a united empire spanning both Americas. Europe becomes dependent on American goods like cocoa, tobacco, and potatoes." },
+            { year: 1892, text: "The American Empire becomes a superpower rivaling Europe. Its cities blend European architecture with indigenous traditions, creating a unique culture dominating the global stage." }
+        ]
+    }
+],
+"1760-Industrial Revolution in England": [
+    {
+        title: "Rome Never Fell",
+        color: "#80cbc4",
+        scenario: [
+            { year: 1760, text: "The Industrial Revolution begins in England. Steam engines, textile mechanization, and metallurgy development lead to industrial growth." },
+            { year: 1860, text: "England becomes the world's factory, spreading its technologies worldwide. Rapid urbanization and transport networks stimulate scientific discoveries and engineering innovations." },
+            { year: 1960, text: "The Industrial Revolution leads to early development in electronics, space exploration, and biotechnology. England remains a global center of technological progress, setting the tone for global industry." }
+        ]
+    },
+    {
+        title: "Revolution Stalls",
+        color: "#4db6ac",
+        scenario: [
+            { year: 1760, text: "The Industrial Revolution begins but quickly faces societal resistance. Workers' movements and fears of mechanization limit the adoption of new technologies." },
+            { year: 1860, text: "England remains an agrarian power with minimal industrial development. The USA and Germany overtake it, becoming leaders in global industry." },
+            { year: 1960, text: "England loses its influence on the global economy. Industrial progress in other countries creates powerful technological hubs, while England focuses on agriculture and trade." }
+        ]
+    },
+    {
+        title: "Early Globalization",
+        color: "#009688",
+        scenario: [
+            { year: 1760, text: "The Industrial Revolution in England receives immediate international response. Technologies spread to Europe, India, and China through active trade and colonial investments." },
+            { year: 1860, text: "Thanks to global technology exchange, the Industrial Revolution becomes a worldwide phenomenon. China and India actively develop their industries, narrowing the gap between the West and East." },
+            { year: 1960, text: "Globalization, initiated in the 18th century, leads to the creation of international corporations and early forms of the digital economy. The world develops more evenly, with England retaining a key role as a trade and financial center." }
+        ]
+    }
+],
+"1914-World War I": [
+    {
+        title: "Short War",
+        color: "#80cbc4",
+        scenario: [
+            { year: 1914, text: "The conflict between the powers flares up, but thanks to successful diplomatic efforts and limited military actions, the war ends by the end of 1915. Agreements are made to restore pre-war borders." },
+            { year: 1940, text: "Europe experiences an economic boom, avoiding large-scale destruction. Germany and France become industrial partners, while the USA remains a neutral power." },
+            { year: 1990, text: "European countries form an early union promoting economic integration. World War II does not occur, and the world enters the 21st century without major military conflicts." }
+        ]
+    },
+    {
+        title: "Long and Destructive War",
+        color: "#4db6ac",
+        scenario: [
+            { year: 1914, text: "World War I begins with aggressive actions by Germany and Austria-Hungary. The conflict escalates into a global confrontation with active involvement from colonies." },
+            { year: 1930, text: "The war lasts nearly two decades, devastating Europe. Economic and social crises engulf the world, leading to the collapse of empires and intensified local conflicts." },
+            { year: 1960, text: "After the long war, the global system remains fragmented. Technological progress slows, and many countries remain in a state of economic depression." }
+        ]
+    },
+    {
+        title: "Conflict Prevented",
+        color: "#009688",
+        scenario: [
+            { year: 1914, text: "The Sarajevo assassination causes tension, but the crisis is averted through mediation by the USA and Switzerland. Diplomatic negotiations lead to the creation of the League of Nations earlier than in real history." },
+            { year: 1940, text: "Without a world war, colonial powers begin a peaceful process of decolonization. Nations spared from destruction focus on science, medicine, and transportation." },
+            { year: 1990, text: "The world develops without major conflicts, and the space age begins earlier. The first colony on the Moon appears by the end of the century, and international cooperation becomes the norm." }
+        ]
+    }
+],
+"1969-Moon Landing": [
+    {
+        title: "Accelerated Space Race",
+        color: "#80cbc4",
+        scenario: [
+            { year: 1969, text: "Humanity sets foot on the Moon for the first time. The USA asserts its leadership in the space race, inspiring other countries to strengthen their space programs." },
+            { year: 1999, text: "A lunar base becomes a reality. The USA and the USSR collaborate to build a permanent station, marking the beginning of international space colonization." },
+            { year: 2069, text: "The first mission to Mars is successfully completed. International efforts to explore deep space unite humanity, creating a unified space economy." }
+        ]
+    },
+    {
+        title: "Abandoning Space Exploration",
+        color: "#4db6ac",
+        scenario: [
+            { year: 1969, text: "The Moon landing is successful, but the high cost of missions leads to reduced funding. The USA and the USSR decide to focus on solving Earth's problems." },
+            { year: 1999, text: "Space exploration is limited to satellite technologies and the study of nearby planets. The dream of space colonization is postponed indefinitely." },
+            { year: 2069, text: "Lunar missions remain a historical achievement, but humanity does not return to the Moon. Space remains largely unexplored, with research focused on Earth." }
+        ]
+    },
+    {
+        title: "Early Space Civilization",
+        color: "#009688",
+        scenario: [
+            { year: 1969, text: "After a successful Moon landing, the USA announces plans for a permanent lunar presence. The USSR actively develops its own lunar program, intensifying competition." },
+            { year: 1999, text: "Cooperation between the USA, Russia, Europe, and China leads to the creation of the first inhabited stations on the Moon. Lunar resources begin to be used for energy and fuel production." },
+            { year: 2069, text: "Humanity establishes the first autonomous cities on the Moon. Lunar technologies enable breakthroughs in interplanetary travel, opening the way for exploring the Solar System." }
+        ]
+    }
+],
+"1991-Creation of the World Wide Web": [
+    {
+        title: "Rapid Internet Development",
+        color: "#80cbc4",
+        scenario: [
+            { year: 1991, text: "Tim Berners-Lee launches the World Wide Web. Scientists and universities are the first to use the network for data exchange." },
+            { year: 2021, text: "The internet becomes key infrastructure for the economy, culture, and education. Artificial intelligence, automation, and cloud technologies accelerate human progress." },
+            { year: 2091, text: "The internet evolves into a global neural network, connecting people and machines. Physical borders disappear, creating a unified virtual space for interaction and creativity." }
+        ]
+    },
+    {
+        title: "Slowed Growth",
+        color: "#4db6ac",
+        scenario: [
+            { year: 1991, text: "The World Wide Web is launched, but economic and political obstacles slow its development. The internet remains a niche technology for scientists and large corporations." },
+            { year: 2021, text: "The internet is limited. Only large organizations have access to the network, while mass communication occurs through traditional media. Technological progress slows." },
+            { year: 2091, text: "The world remains divided as the internet fails to become a universal communication tool. Local innovations emerge, but without global knowledge exchange, their potential is limited." }
+        ]
+    },
+    {
+        title: "Alternative Digital World",
+        color: "#009688",
+        scenario: [
+            { year: 1991, text: "The World Wide Web is not created. Instead, satellite communication with closed local networks for regions and countries becomes the dominant technology." },
+            { year: 2021, text: "Each country develops its own network technologies, limiting international cooperation. Cyber competition becomes part of geopolitics." },
+            { year: 2091, text: "Digital technologies develop unevenly. Virtual worlds exist only within individual states, and a global knowledge network never emerges. However, local digital projects lead to unique cultural and technological ecosystems." }
+        ]
+    }
+],
+"2002-Foundation of SpaceX": [
+    {
+        title: "Successful Space Leadership",
+        color: "#80cbc4",
+        scenario: [
+            { year: 2002, text: "Elon Musk founds SpaceX to make space flights cheaper and enable Mars exploration. In its early years, the company focuses on developing launch vehicles." },
+            { year: 2052, text: "SpaceX becomes the leading space company, managing lunar bases and delivering equipment for international Mars missions. Commercial flights to the Moon become a reality for wealthy clients." },
+            { year: 2102, text: "Thanks to SpaceX's efforts and partnerships with other companies and governments, the first fully autonomous colony is built on Mars. Space infrastructure spans the entire Solar System." }
+        ]
+    },
+    {
+        title: "Limited Success",
+        color: "#4db6ac",
+        scenario: [
+            { year: 2002, text: "SpaceX begins operations, but economic and technological challenges lead to a series of setbacks. Government space agencies maintain dominance in the field." },
+            { year: 2052, text: "Private companies play only a supportive role in space, handling satellite and scientific equipment deliveries. Mars colonization remains a distant prospect, with research focused on the Moon." },
+            { year: 2102, text: "SpaceX is limited to working with low-orbit satellites. Space exploration progresses slowly, focusing on automated stations and probes." }
+        ]
+    },
+    {
+        title: "Space Competition",
+        color: "#009688",
+        scenario: [
+            { year: 2002, text: "SpaceX lays the foundation for private space flights, inspiring other companies and countries to develop their own space programs. Competition in the space industry grows." },
+            { year: 2052, text: "Numerous private companies emerge globally, competing for space leadership. The USA, China, India, and the EU jointly develop international Mars stations, but each country strives for technological superiority." },
+            { year: 2102, text: "The world enters an era of 'space capitalism,' where large corporations control resource extraction on asteroids and the Moon. Space becomes a new economic frontier, but environmental and political control issues remain unresolved." }
+              ]
             },
         ]
     };
