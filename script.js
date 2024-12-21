@@ -383,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (charIndex >= fullText.length) {
                 clearInterval(interval);
             }
-        }, 25);
+        }, 5);
     }
 
     function showAlternatives(year, title) {
