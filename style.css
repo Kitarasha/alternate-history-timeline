@@ -355,16 +355,23 @@ body {
 }
 #scenario-display {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Располагаем элементы вертикально */
     align-items: center;
     margin-top: 20px;
 }
 
 #scenario-image {
-    max-width: 100%; /* Изображение адаптируется по ширине контейнера */
-    max-height: 300px; /* Ограничиваем максимальную высоту */
-    margin-top: 15px;
-    border-radius: 10px; /* Скруглённые углы */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    max-width: 100%; /* Ограничиваем ширину изображения */
+    max-height: 300px; /* Ограничиваем высоту */
+    margin-bottom: 15px; /* Расстояние между изображением и текстом */
+    border-radius: 10px; /* Скругляем углы */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
 }
 
+#scenario-text {
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
