@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentScenarioIndex < currentScenario.length) {
             showScenarioStep(currentScenarioIndex);
         } else {
-            scenarioText.textContent += "\n\nКонец альтернативного сценария.";
+            scenarioText.textContent += "\n\nEnd of alternative scenario.";
             scenarioNext.disabled = true;
         }
     });
@@ -378,7 +378,7 @@ let currentInterval;
 function showScenarioStep(index) {
     scenarioNext.disabled = false;
     scenarioText.textContent = "";
-    const fullText = `${currentScenario[index].year} год:\n${currentScenario[index].text}`;
+    const fullText = `${currentScenario[index].year} year:\n${currentScenario[index].text}`;
     let charIndex = 0;
 
     // Очищаем предыдущий интервал, если он существует
@@ -467,7 +467,7 @@ function showScenarioStep(index) {
 
                 eventDiv.addEventListener("click", () => {
                     modalTitle.textContent = `${eventYear} — ${event.title}`;
-                    modalDescription.textContent = event.description || "Нет описания для этого события.";
+                    modalDescription.textContent = event.description || "No decription for this event.";
                     modal.classList.add("show");
 
                     // === Новое ===
@@ -477,7 +477,7 @@ function showScenarioStep(index) {
                     if (!altButton) {
                         altButton = document.createElement("button");
                         altButton.id = "view-alternatives-btn";
-                        altButton.textContent = "Альтернативные сценарии";
+                        altButton.textContent = "Alternative Scenarios";
                         modal.querySelector(".modal-content").appendChild(altButton);
                     }
                     const eventAlternatives = alternativesData[key];
