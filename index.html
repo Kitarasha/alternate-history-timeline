@@ -26,14 +26,11 @@
 
     <header>
         <h1>Time Shifter</h1>
-    </header>
-    <main>
         <div class="main-container">
             <!-- Приветствие -->
             <p class="intro-text">
                 Здравствуйте! Мы — Марат и Владимир, разработчики этого сайта. Мы хотим представить вам наш проект "Time Shifter", созданный в рамках курса Harvard CS50. Этот сайт позволяет изучать историю через интерактивный таймлайн, а также предлагает возможность исследовать альтернативные сценарии. Надеемся, вам понравится!
             </p>
-
             <!-- Секция FAQ -->
             <section id="faq">
                 <h2>Часто задаваемые вопросы (FAQ)</h2>
@@ -57,26 +54,6 @@
             <div id="timeline"></div>
         </div> <!-- Закрываем #timeline-container -->
 
-        <!-- Модальное окно для показа сценария (графической новеллы) с текстом и изображением -->
-        <div id="scenario-modal" class="hidden">
-            <div class="modal-content scenario-content">
-                <span id="close-scenario">&times;</span>
-                <h2 id="scenario-title">Сценарий развития</h2>
-                <div id="scenario-display">
-                    <img id="scenario-image" src="" alt="Сценарий изображения" style="display: none;" />
-                    <div id="scenario-text"></div>
-                </div>
-                <!-- Блок для завершения сценария и отзыва -->
-                <div id="scenario-end" class="hidden">
-                    <h3>Спасибо за прочтение!</h3>
-                    <button id="feedback-button" data-scenario="Сценарий развития" data-event="Историческое событие">
-                        Оставить отзыв
-                    </button>
-                </div>
-                <button id="scenario-next">Далее</button>
-            </div>
-        </div>
-
         <!-- Модальное окно для основного события -->
         <div id="modal" class="hidden">
             <div class="modal-content">
@@ -95,6 +72,23 @@
                 <div id="alternatives-list">
                     <!-- Список альтернатив будет генерироваться JavaScript-ом -->
                 </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для показа сценария (графической новеллы) -->
+        <div id="scenario-modal" class="hidden">
+            <div class="modal-content scenario-content">
+                <span id="close-scenario">&times;</span>
+                <h2 id="scenario-title">Сценарий развития</h2>
+                <div id="scenario-text"></div>
+                <!-- Блок для завершения сценария и отзыва -->
+                <div id="scenario-end" class="hidden">
+                    <h3>Спасибо за прочтение!</h3>
+                    <button id="feedback-button" data-scenario="Сценарий развития" data-event="Историческое событие">
+                        Оставить отзыв
+                    </button>
+                </div>
+                <button id="scenario-next">Далее</button>
             </div>
         </div>
     </main>
