@@ -294,13 +294,19 @@ body {
 }
 /* Стили для приветственного текста */
 .intro-text {
-    margin: 20px 0;
+    margin: 30px auto;
+    max-width: 800px; /* Ограничаем ширину текста для улучшения читаемости */
+    padding: 20px; /* Добавляем отступы вокруг текста */
     font-size: 1.2em;
-    line-height: 1.5;
+    line-height: 1.8; /* Увеличиваем межстрочное расстояние для удобства чтения */
     text-align: center;
-    color: #FFE8A8;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    color: #00bcd4; /* Яркий акцентный цвет */
+    background-color: #2c2c3d; /* Фон для выделения текста */
+    border-radius: 10px; /* Скругляем углы */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Лёгкая тень для глубины */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Лёгкая тень текста */
 }
+
 
 /* Стили для секции FAQ */
 #faq {
